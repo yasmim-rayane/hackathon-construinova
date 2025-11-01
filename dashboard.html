@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Público | HUB - Dados Urbanos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ocean-blue': '#0077B6',
+                        'turquoise': '#90E0EF',
+                        'sand': '#F5E6CA',
+                        'aqua-green': '#00B4D8',
+                        'dark-gray': '#2E2E2E',
+                        'ice-white': '#FAFAFA',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+    <script src="dashboard.js" defer></script>
+</head>
+
+<body class="bg-ice-white">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-ocean-blue">🌊 HUB</span>
+                        <span class="hidden md:inline ml-2 text-sm text-gray-600">Baixada Santista</span>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Início</a>
+                    <a href="sobre.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Sobre</a>
+                    <a href="dashboard.html" class="text-ocean-blue px-3 py-2 font-medium border-b-2 border-ocean-blue">Dashboard</a>
+                    <a href="recompensas.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Recompensas</a>
+                    <a href="empresa.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Empresas</a>
+                    <a href="login.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Entrar</a>
+                    <a href="signup.html" class="bg-ocean-blue text-white px-5 py-2 rounded-full hover:bg-aqua-green transition shadow-md">Criar conta</a>
+                </div>
+
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-dark-gray hover:text-ocean-blue focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="index.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Início</a>
+                <a href="sobre.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Sobre</a>
+                <a href="dashboard.html" class="block text-ocean-blue px-3 py-2 font-semibold">Dashboard</a>
+                <a href="recompensas.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Recompensas</a>
+                <a href="empresa.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Empresas</a>
+                <a href="login.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Entrar</a>
+                <a href="signup.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Criar conta</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-ocean-blue to-aqua-green text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 class="text-3xl md:text-5xl font-bold mb-4">Dashboard Público</h1>
+            <p class="text-lg md:text-xl text-blue-100">
+                Visualize dados em tempo real sobre a Baixada Santista
+            </p>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="py-8 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-gradient-to-br from-ocean-blue to-aqua-green text-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">2,548</div>
+                    <div class="text-sm text-blue-100">Total de Reclamações</div>
+                </div>
+                <div class="bg-gradient-to-br from-green-600 to-emerald-600 text-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">1,892</div>
+                    <div class="text-sm text-green-100">Resolvidas</div>
+                </div>
+                <div class="bg-gradient-to-br from-orange-500 to-yellow-500 text-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">656</div>
+                    <div class="text-sm text-orange-100">Em Análise</div>
+                </div>
+                <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-3xl md:text-4xl font-bold mb-2">74%</div>
+                    <div class="text-sm text-purple-100">Taxa de Resolução</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Charts Section -->
+    <section class="py-12 bg-ice-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Reclamações por Categoria -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+                <h2 class="text-2xl font-bold text-dark-gray mb-6">Reclamações por Categoria</h2>
+                <div class="h-80">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Two charts side by side -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Reclamações por ODS -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-dark-gray mb-6">Distribuição por ODS</h2>
+                    <div class="h-80">
+                        <canvas id="odsChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Tendência Mensal -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h2 class="text-2xl font-bold text-dark-gray mb-6">Tendência Mensal</h2>
+                    <div class="h-80">
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Map Section -->
+            <div class="bg-white rounded-2xl shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-dark-gray mb-6">Mapa de Calor - Baixada Santista</h2>
+                <p class="text-gray-600 mb-4">
+                    Regiões com maior volume de reclamações
+                </p>
+                
+                <!-- Simulated map -->
+                <div class="bg-gradient-to-br from-sand to-turquoise/20 rounded-xl p-8 relative overflow-hidden" style="height: 400px;">
+                    <div class="text-center text-gray-500 absolute inset-0 flex items-center justify-center">
+                        <div>
+                            <div class="text-6xl mb-4">🗺️</div>
+                            <p class="text-lg font-semibold">Mapa Interativo da Baixada Santista</p>
+                            <p class="text-sm mt-2">(Integração com Google Maps em desenvolvimento)</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Simulated hotspots -->
+                    <div class="absolute top-1/4 left-1/3 bg-red-500 rounded-full w-16 h-16 opacity-50 animate-pulse"></div>
+                    <div class="absolute top-1/2 left-1/2 bg-orange-500 rounded-full w-12 h-12 opacity-50 animate-pulse"></div>
+                    <div class="absolute top-2/3 left-2/3 bg-yellow-500 rounded-full w-10 h-10 opacity-50 animate-pulse"></div>
+                </div>
+
+                <!-- Cities Legend -->
+                <div class="grid grid-cols-3 md:grid-cols-9 gap-4 mt-6">
+                    <div class="text-center">
+                        <div class="bg-red-500 w-8 h-8 rounded-full mx-auto mb-1"></div>
+                        <span class="text-xs text-gray-600">Santos</span>
+                        <p class="text-xs font-bold text-dark-gray">842</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-orange-500 w-8 h-8 rounded-full mx-auto mb-1"></div>
+                        <span class="text-xs text-gray-600">SV</span>
+                        <p class="text-xs font-bold text-dark-gray">456</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-yellow-500 w-8 h-8 rounded-full mx-auto mb-1"></div>
+                        <span class="text-xs text-gray-600">Guarujá</span>
+                        <p class="text-xs font-bold text-dark-gray">321</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-green-500 w-8 h-8 rounded-full mx-auto mb-1"></div>
+                        <span class="text-xs text-gray-600">Praia Gr.</span>
+                        <p class="text-xs font-bold text-dark-gray">287</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-blue-500 w-8 h-8 rounded-full mx-auto mb-1"></div>
+                        <span class="text-xs text-gray-600">Cubatão</span>
+                        <p class="text-xs font-bold text-dark-gray">198</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-indigo-500 w-8 h-8 rounded-full mx-auto mb-1"></div>
+                        <span class="text-xs text-gray-600">Itanhaém</span>
+                        <p class="text-xs font-bold text-dark-gray">156</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-purple-500 w-8 h-8 rounded-full mx-auto mb-1"></div>
+                        <span class="text-xs text-gray-600">Mongaguá</span>
+                        <p class="text-xs font-bold text-dark-gray">124</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-pink-500 w-8 h-8 rounded-full mx-auto mb-1"></div>
+                        <span class="text-xs text-gray-600">Peruíbe</span>
+                        <p class="text-xs font-bold text-dark-gray">98</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-gray-500 w-8 h-8 rounded-full mx-auto mb-1"></div>
+                        <span class="text-xs text-gray-600">Bertioga</span>
+                        <p class="text-xs font-bold text-dark-gray">66</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insights Section -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-bold text-dark-gray mb-8 text-center">Principais Insights</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-gradient-to-br from-sand to-turquoise/20 p-6 rounded-xl">
+                    <div class="text-4xl mb-3">🏗️</div>
+                    <h3 class="text-xl font-bold text-dark-gray mb-2">Infraestrutura</h3>
+                    <p class="text-gray-700 mb-2">
+                        33% das reclamações estão relacionadas a problemas de infraestrutura urbana.
+                    </p>
+                    <span class="text-sm text-ocean-blue font-semibold">ODS 9, 11</span>
+                </div>
+
+                <div class="bg-gradient-to-br from-turquoise/20 to-sand p-6 rounded-xl">
+                    <div class="text-4xl mb-3">💧</div>
+                    <h3 class="text-xl font-bold text-dark-gray mb-2">Saneamento</h3>
+                    <p class="text-gray-700 mb-2">
+                        28% das reclamações envolvem questões de água e esgoto.
+                    </p>
+                    <span class="text-sm text-ocean-blue font-semibold">ODS 6, 14</span>
+                </div>
+
+                <div class="bg-gradient-to-br from-sand to-turquoise/20 p-6 rounded-xl">
+                    <div class="text-4xl mb-3">⚡</div>
+                    <h3 class="text-xl font-bold text-dark-gray mb-2">Energia</h3>
+                    <p class="text-gray-700 mb-2">
+                        18% das reclamações são sobre iluminação pública e energia.
+                    </p>
+                    <span class="text-sm text-ocean-blue font-semibold">ODS 7</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-12 bg-gradient-to-r from-ocean-blue to-aqua-green text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-4">
+                Quer acesso a dados mais detalhados?
+            </h2>
+            <p class="text-lg mb-6 text-blue-100">
+                Empresas e investidores podem acessar relatórios completos, filtros avançados e simulações de ROI
+            </p>
+            <a href="empresa.html" class="inline-block bg-white text-ocean-blue px-8 py-3 rounded-full font-semibold hover:bg-sand transition shadow-xl">
+                Acessar Painel de Empresas
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-gray text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-turquoise">🌊 HUB</h3>
+                    <p class="text-gray-400">Dados urbanos inteligentes para a Baixada Santista</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Navegação</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="index.html" class="hover:text-turquoise transition">Início</a></li>
+                        <li><a href="sobre.html" class="hover:text-turquoise transition">Sobre</a></li>
+                        <li><a href="dashboard.html" class="hover:text-turquoise transition">Dashboard</a></li>
+                        <li><a href="recompensas.html" class="hover:text-turquoise transition">Recompensas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Para Empresas</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="empresa.html" class="hover:text-turquoise transition">Painel de Dados</a></li>
+                        <li><a href="login.html" class="hover:text-turquoise transition">Login</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contato</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>📧 contato@hub.com.br</li>
+                        <li>📱 (13) 99999-9999</li>
+                        <li>📍 Santos, SP - Brasil</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 HUB - Hackathon Construinova. Todos os direitos reservados.</p>
+                <p class="mt-2 text-sm">Alinhado com os Objetivos de Desenvolvimento Sustentável da ONU</p>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

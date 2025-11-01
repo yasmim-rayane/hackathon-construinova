@@ -4,70 +4,387 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HUB</title>
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>HUB - Dados Urbanos Inteligentes | Baixada Santista</title>
+    <meta name="description" content="Transformamos reclamações de cidadãos em dados estratégicos para empresas investirem de forma sustentável na Baixada Santista.">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'ocean-blue': '#0077B6',
+                        'turquoise': '#90E0EF',
+                        'sand': '#F5E6CA',
+                        'aqua-green': '#00B4D8',
+                        'dark-gray': '#2E2E2E',
+                        'ice-white': '#FAFAFA',
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+    <script src="app.js" defer></script>
 </head>
 
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">HUB</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse end" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Página principal</a>
+<body class="bg-ice-white">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="flex items-center">
+                        <span class="text-2xl font-bold text-ocean-blue">🌊 HUB</span>
+                        <span class="hidden md:inline ml-2 text-sm text-gray-600">Baixada Santista</span>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Início</a>
+                    <a href="sobre.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Sobre</a>
+                    <a href="dashboard.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Dashboard</a>
+                    <a href="recompensas.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Recompensas</a>
+                    <a href="empresa.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Empresas</a>
+                    <a href="login.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Entrar</a>
+                    <a href="signup.html" class="bg-ocean-blue text-white px-5 py-2 rounded-full hover:bg-aqua-green transition shadow-md">Criar conta</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-dark-gray hover:text-ocean-blue focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden pb-4">
+                <a href="index.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Início</a>
+                <a href="sobre.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Sobre</a>
+                <a href="dashboard.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Dashboard</a>
+                <a href="recompensas.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Recompensas</a>
+                <a href="empresa.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Empresas</a>
+                <a href="login.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Entrar</a>
+                <a href="signup.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Criar conta</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-ocean-blue via-aqua-green to-turquoise text-white py-20 md:py-32 relative overflow-hidden">
+        <!-- Wave decoration -->
+        <div class="absolute bottom-0 left-0 right-0 opacity-20">
+            <svg viewBox="0 0 1440 320" xmlns="http://www.w3.org/2000/svg">
+                <path fill="#ffffff" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,101.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fade-in">
+                    Transformando Dados Urbanos em Oportunidades
+                </h1>
+                <p class="text-xl md:text-2xl mb-4 text-blue-100">
+                    🏖️ Conectamos cidadãos da Baixada Santista com empresas investidoras
+                </p>
+                <p class="text-lg md:text-xl mb-10 text-blue-100 max-w-3xl mx-auto">
+                    Coletamos reclamações via WhatsApp, processamos no Firebase e convertemos em métricas ODS para decisões estratégicas e sustentáveis
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="https://wa.me/5513999999999?text=Quero%20enviar%20uma%20reclama%C3%A7%C3%A3o" 
+                       target="_blank"
+                       class="bg-green-500 text-white px-8 py-4 rounded-full font-semibold hover:bg-green-600 transition shadow-xl inline-flex items-center justify-center">
+                        <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                        Enviar Reclamação
+                    </a>
+                    <a href="dashboard.html" class="border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-ocean-blue transition shadow-xl">
+                        Ver Dashboard
+                    </a>
+                    <a href="empresa.html" class="bg-white text-ocean-blue px-8 py-4 rounded-full font-semibold hover:bg-sand transition shadow-xl">
+                        Sou uma Empresa
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it Works Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-dark-gray mb-4">
+                Como Funciona
+            </h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">
+                Do cidadão à empresa: veja como transformamos problemas urbanos em dados estratégicos
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="text-center">
+                    <div class="bg-gradient-to-br from-ocean-blue to-aqua-green text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
+                        1
+                    </div>
+                    <div class="text-4xl mb-3">📱</div>
+                    <h3 class="text-xl font-bold text-dark-gray mb-2">Cidadão Reclama</h3>
+                    <p class="text-gray-600">
+                        Envio de reclamações via WhatsApp sobre problemas urbanos
+                    </p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center">
+                    <div class="bg-gradient-to-br from-ocean-blue to-aqua-green text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
+                        2
+                    </div>
+                    <div class="text-4xl mb-3">🔥</div>
+                    <h3 class="text-xl font-bold text-dark-gray mb-2">Firebase Processa</h3>
+                    <p class="text-gray-600">
+                        Dados são armazenados e organizados automaticamente
+                    </p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center">
+                    <div class="bg-gradient-to-br from-ocean-blue to-aqua-green text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
+                        3
+                    </div>
+                    <div class="text-4xl mb-3">📊</div>
+                    <h3 class="text-xl font-bold text-dark-gray mb-2">Métricas ODS</h3>
+                    <p class="text-gray-600">
+                        Conversão em indicadores de desenvolvimento sustentável
+                    </p>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="text-center">
+                    <div class="bg-gradient-to-br from-ocean-blue to-aqua-green text-white w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4 shadow-lg">
+                        4
+                    </div>
+                    <div class="text-4xl mb-3">🏢</div>
+                    <h3 class="text-xl font-bold text-dark-gray mb-2">Empresas Investem</h3>
+                    <p class="text-gray-600">
+                        Decisões estratégicas baseadas em dados reais
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ODS Section -->
+    <section class="py-16 bg-gradient-to-r from-sand to-turquoise/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold text-center text-dark-gray mb-4">
+                Alinhados com os ODS da ONU
+            </h2>
+            <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
+                Nossos dados contribuem diretamente para os Objetivos de Desenvolvimento Sustentável
+            </p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition">
+                    <div class="text-4xl mb-2">🏙️</div>
+                    <h4 class="font-bold text-dark-gray text-sm">ODS 11</h4>
+                    <p class="text-xs text-gray-600">Cidades Sustentáveis</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition">
+                    <div class="text-4xl mb-2">💧</div>
+                    <h4 class="font-bold text-dark-gray text-sm">ODS 6</h4>
+                    <p class="text-xs text-gray-600">Água e Saneamento</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition">
+                    <div class="text-4xl mb-2">⚡</div>
+                    <h4 class="font-bold text-dark-gray text-sm">ODS 7</h4>
+                    <p class="text-xs text-gray-600">Energia Limpa</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition">
+                    <div class="text-4xl mb-2">🏗️</div>
+                    <h4 class="font-bold text-dark-gray text-sm">ODS 9</h4>
+                    <p class="text-xs text-gray-600">Infraestrutura</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center hover:shadow-xl transition">
+                    <div class="text-4xl mb-2">🌊</div>
+                    <h4 class="font-bold text-dark-gray text-sm">ODS 14</h4>
+                    <p class="text-xs text-gray-600">Vida na Água</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="bg-ocean-blue text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                <div class="transform hover:scale-105 transition">
+                    <div class="text-4xl md:text-5xl font-bold mb-2">2.5k+</div>
+                    <div class="text-turquoise">Reclamações Processadas</div>
+                </div>
+                <div class="transform hover:scale-105 transition">
+                    <div class="text-4xl md:text-5xl font-bold mb-2">9</div>
+                    <div class="text-turquoise">Cidades da Baixada</div>
+                </div>
+                <div class="transform hover:scale-105 transition">
+                    <div class="text-4xl md:text-5xl font-bold mb-2">45+</div>
+                    <div class="text-turquoise">Empresas Parceiras</div>
+                </div>
+                <div class="transform hover:scale-105 transition">
+                    <div class="text-4xl md:text-5xl font-bold mb-2">12</div>
+                    <div class="text-turquoise">Indicadores ODS</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-dark-gray mb-6">
+                        Para Empresas e Investidores
+                    </h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-aqua-green text-2xl mr-3">✓</span>
+                            <div>
+                                <h4 class="font-bold text-dark-gray">Dados Éticos e Transparentes</h4>
+                                <p class="text-gray-600">Informações coletadas com consentimento dos cidadãos</p>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Recursos</a>
+                        <li class="flex items-start">
+                            <span class="text-aqua-green text-2xl mr-3">✓</span>
+                            <div>
+                                <h4 class="font-bold text-dark-gray">Métricas ODS Validadas</h4>
+                                <p class="text-gray-600">Alinhamento com padrões internacionais da ONU</p>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Preços</a>
+                        <li class="flex items-start">
+                            <span class="text-aqua-green text-2xl mr-3">✓</span>
+                            <div>
+                                <h4 class="font-bold text-dark-gray">ROI Calculado</h4>
+                                <p class="text-gray-600">Simulações de retorno sobre investimento por região</p>
+                            </div>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Desativado</a>
+                        <li class="flex items-start">
+                            <span class="text-aqua-green text-2xl mr-3">✓</span>
+                            <div>
+                                <h4 class="font-bold text-dark-gray">Relatórios Customizados</h4>
+                                <p class="text-gray-600">Filtros por cidade, bairro e categoria</p>
+                            </div>
                         </li>
+                    </ul>
+                    <a href="empresa.html" class="inline-block mt-6 bg-ocean-blue text-white px-8 py-3 rounded-full font-semibold hover:bg-aqua-green transition shadow-lg">
+                        Acessar Painel de Empresas
+                    </a>
+                </div>
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-dark-gray mb-6">
+                        Para Cidadãos
+                    </h2>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="text-aqua-green text-2xl mr-3">✓</span>
+                            <div>
+                                <h4 class="font-bold text-dark-gray">Voz Ativa</h4>
+                                <p class="text-gray-600">Suas reclamações geram mudanças reais</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-aqua-green text-2xl mr-3">✓</span>
+                            <div>
+                                <h4 class="font-bold text-dark-gray">Recompensas</h4>
+                                <p class="text-gray-600">Ganhe descontos em parceiros como iFood</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-aqua-green text-2xl mr-3">✓</span>
+                            <div>
+                                <h4 class="font-bold text-dark-gray">Simplicidade</h4>
+                                <p class="text-gray-600">Basta enviar pelo WhatsApp</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-aqua-green text-2xl mr-3">✓</span>
+                            <div>
+                                <h4 class="font-bold text-dark-gray">Impacto Mensurável</h4>
+                                <p class="text-gray-600">Acompanhe como seus dados ajudam a cidade</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <a href="recompensas.html" class="inline-block mt-6 bg-ocean-blue text-white px-8 py-3 rounded-full font-semibold hover:bg-aqua-green transition shadow-lg">
+                        Ver Recompensas
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-ocean-blue to-aqua-green text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                Faça Parte da Transformação
+            </h2>
+            <p class="text-xl mb-8 text-blue-100">
+                Junte-se a nós na construção de uma Baixada Santista mais inteligente e sustentável
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="signup.html" class="inline-block bg-white text-ocean-blue px-8 py-3 rounded-full font-semibold hover:bg-sand transition shadow-xl">
+                    Criar Conta Grátis
+                </a>
+                <a href="sobre.html" class="inline-block border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-ocean-blue transition shadow-xl">
+                    Saiba Mais
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-gray text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 text-turquoise">🌊 HUB</h3>
+                    <p class="text-gray-400">Dados urbanos inteligentes para a Baixada Santista</p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Navegação</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="index.html" class="hover:text-turquoise transition">Início</a></li>
+                        <li><a href="sobre.html" class="hover:text-turquoise transition">Sobre</a></li>
+                        <li><a href="dashboard.html" class="hover:text-turquoise transition">Dashboard</a></li>
+                        <li><a href="recompensas.html" class="hover:text-turquoise transition">Recompensas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Para Empresas</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="empresa.html" class="hover:text-turquoise transition">Painel de Dados</a></li>
+                        <li><a href="login.html" class="hover:text-turquoise transition">Login</a></li>
+                        <li><a href="#" class="hover:text-turquoise transition">Planos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contato</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li>📧 contato@hub.com.br</li>
+                        <li>📱 (13) 99999-9999</li>
+                        <li>📍 Santos, SP - Brasil</li>
                     </ul>
                 </div>
             </div>
-        </nav>
-    </header>
-
-    <main>
-        <div class="container mt-5">
-            <h1>Bem-vindo ao HUB</h1>
-            <p>Seu ponto central para todos os recursos e informações.</p>
-        </div>
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">Recurso 1</h5>
-                            <p class="card-text">Descrição do recurso 1.</p>
-                            <a href="#" class="btn btn-primary">Acessar</a>
-                        </div>
-                    </div>
-                </div>
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 HUB - Hackathon Construinova. Todos os direitos reservados.</p>
+                <p class="mt-2 text-sm">Alinhado com os Objetivos de Desenvolvimento Sustentável da ONU</p>
             </div>
         </div>
-    </main>
-
-    <footer class="bg-light text-center text-lg-start mt-5">
-        <div class="text-center p-3">
-            © 2024 HUB. Todos os direitos reservados.
-        </div>
     </footer>
-
-    <!-- Bootstrap Bundle JS (includes Popper) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
