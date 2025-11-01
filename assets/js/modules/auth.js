@@ -56,7 +56,7 @@ class AuthSystem {
                 senha: await this.hashPassword(userData.senha), // Em produção, usar bcrypt
                 telefone: userData.telefone || '',
                 cidade: userData.cidade || '',
-                tipo: userData.tipo || 'cidadao', // cidadao, empresa, admin
+                tipo: userData.tipo || 'cidadao', // cidadao, empresa
                 pontos: 0,
                 nivel: 1,
                 avatar: userData.avatar || this.getDefaultAvatar(userData.nome),
@@ -91,24 +91,40 @@ class AuthSystem {
      */
     async login(email, senha) {
         try {
+            console.log('🔐 [AUTH] Iniciando login para:', email);
+            
             if (!email || !senha) {
                 throw new Error('Preencha e-mail e senha');
             }
 
             // Busca o usuário pelo e-mail
+            console.log('🔍 [AUTH] Buscando usuário no banco...');
             const user = await this.getUserByEmail(email.toLowerCase());
             
+            console.log('👤 [AUTH] Usuário encontrado:', user ? 'SIM' : 'NÃO');
+            if (user) {
+                console.log('📧 [AUTH] Email do usuário:', user.email);
+                console.log('🏷️ [AUTH] Tipo do usuário:', user.tipo);
+                console.log('✅ [AUTH] Usuário ativo:', user.ativo);
+            }
+            
             if (!user) {
+                console.error('❌ [AUTH] Usuário não encontrado para email:', email);
                 throw new Error('E-mail ou senha incorretos');
             }
 
             // Verifica a senha
+            console.log('🔑 [AUTH] Verificando senha...');
             const senhaValida = await this.verifyPassword(senha, user.senha);
+            console.log('🔑 [AUTH] Senha válida:', senhaValida);
+            
             if (!senhaValida) {
+                console.error('❌ [AUTH] Senha incorreta');
                 throw new Error('E-mail ou senha incorretos');
             }
 
             if (!user.ativo) {
+                console.error('❌ [AUTH] Usuário inativo');
                 throw new Error('Usuário inativo. Entre em contato com o suporte.');
             }
 
@@ -119,7 +135,7 @@ class AuthSystem {
             this.createSession(user);
             this.currentUser = user;
 
-            console.log('✅ Login realizado com sucesso:', user.nome);
+            console.log('✅ [AUTH] Login realizado com sucesso:', user.nome);
             return {
                 success: true,
                 user: user,
@@ -127,7 +143,7 @@ class AuthSystem {
             };
 
         } catch (error) {
-            console.error('❌ Erro ao fazer login:', error);
+            console.error('❌ [AUTH] Erro ao fazer login:', error);
             return {
                 success: false,
                 message: error.message
@@ -139,12 +155,31 @@ class AuthSystem {
      * Faz logout do usuário
      */
     logout() {
-        localStorage.removeItem(this.sessionKey);
-        this.currentUser = null;
-        console.log('✅ Logout realizado');
-        
-        // Redireciona para a home
-        window.location.href = '../index.html';
+        try {
+            // Limpar todas as chaves possíveis de sessão
+            localStorage.removeItem(this.sessionKey);
+            localStorage.removeItem('hubbs_session');
+            localStorage.removeItem('hub_current_user');
+            localStorage.removeItem('currentUser');
+            
+            // Limpar sessionStorage também
+            sessionStorage.clear();
+            
+            // Resetar currentUser
+            this.currentUser = null;
+            
+            console.log('✅ Logout realizado com sucesso');
+            console.log('🧹 LocalStorage limpo');
+            console.log('🧹 SessionStorage limpo');
+            
+            return true;
+        } catch (error) {
+            console.error('❌ Erro ao fazer logout:', error);
+            // Mesmo com erro, tentar limpar manualmente
+            localStorage.clear();
+            sessionStorage.clear();
+            return true;
+        }
     }
 
     /**

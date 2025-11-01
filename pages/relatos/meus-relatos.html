@@ -104,6 +104,9 @@
             color: white;
         }
     </style>
+    
+    <!-- Sistema de Logout Universal -->
+    <script src="../../assets/js/logout.js"></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -115,17 +118,49 @@
                     HubBS
                 </a>
                 <div class="hidden md:flex items-center gap-6">
-                    <a href="../../index.html" class="hover:text-solar-yellow transition">Início</a>
-                    <a href="../sistema/sobre.html" class="hover:text-solar-yellow transition">Sobre</a>
-                    <a href="enviar-relato.html" class="hover:text-solar-yellow transition">Enviar Relato</a>
-                    <a href="whatsapp-bot.html" class="hover:text-solar-yellow transition">
-                        <i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot
+                    <a href="../sistema/dashboard.html" class="hover:text-solar-yellow transition">
+                        <i class="fas fa-chart-line mr-1"></i>Dashboard
                     </a>
-                    <a href="../sistema/dashboard.html" class="hover:text-solar-yellow transition">Dashboard</a>
-                    <a href="meus-relatos.html" class="text-solar-yellow font-bold border-b-2 border-solar-yellow">Meus Relatos</a>
-                    <a href="../sistema/recompensas.html" class="hover:text-solar-yellow transition">Recompensas</a>
-                    <a href="../sistema/planos.html" class="hover:text-solar-yellow transition">Planos</a>
-                    <a href="../login.html" class="bg-vibrant-teal px-4 py-2 rounded-lg hover:bg-ods-green transition">Login</a>
+                    <a href="enviar-relato.html" class="hover:text-solar-yellow transition">
+                        <i class="fas fa-paper-plane mr-1"></i>Novo Relato
+                    </a>
+                    <a href="meus-relatos.html" class="text-solar-yellow font-bold border-b-2 border-solar-yellow">
+                        <i class="fas fa-list mr-1"></i>Meus Relatos
+                    </a>
+                    <a href="../sistema/recompensas.html" class="hover:text-solar-yellow transition">
+                        <i class="fas fa-gift mr-1"></i>Recompensas
+                    </a>
+                    
+                    <!-- User Menu -->
+                    <div class="relative group">
+                        <button class="flex items-center gap-2 hover:text-solar-yellow transition">
+                            <div class="w-8 h-8 rounded-full bg-solar-yellow text-deep-blue flex items-center justify-center font-bold">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <span id="user-name-display">Usuário</span>
+                            <i class="fas fa-chevron-down text-xs"></i>
+                        </button>
+                        
+                        <!-- Dropdown Menu -->
+                        <div class="hidden group-hover:block absolute right-0 mt-2 w-48 bg-white text-gray-800 rounded-lg shadow-xl py-2 z-50">
+                            <a href="meus-relatos.html" class="block px-4 py-2 hover:bg-gray-100 transition">
+                                <i class="fas fa-list mr-2 text-deep-blue"></i>Meus Relatos
+                            </a>
+                            <a href="../sistema/recompensas.html" class="block px-4 py-2 hover:bg-gray-100 transition">
+                                <i class="fas fa-gift mr-2 text-deep-blue"></i>Minhas Recompensas
+                            </a>
+                            <a href="../sistema/planos.html" class="block px-4 py-2 hover:bg-gray-100 transition">
+                                <i class="fas fa-crown mr-2 text-deep-blue"></i>Planos
+                            </a>
+                            <div class="border-t border-gray-200 my-2"></div>
+                            <a href="../../index.html" class="block px-4 py-2 hover:bg-gray-100 transition">
+                                <i class="fas fa-home mr-2 text-deep-blue"></i>Página Inicial
+                            </a>
+                            <button id="logout-btn" class="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 transition">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="md:hidden">
                     <button id="mobile-menu-button" class="text-white hover:text-solar-yellow focus:outline-none">
@@ -136,17 +171,34 @@
                 </div>
             </div>
             <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2">
-                <a href="../../index.html" class="block py-2 hover:text-solar-yellow transition">Início</a>
-                <a href="../sistema/sobre.html" class="block py-2 hover:text-solar-yellow transition">Sobre</a>
-                <a href="enviar-relato.html" class="block py-2 hover:text-solar-yellow transition">Enviar Relato</a>
-                <a href="whatsapp-bot.html" class="block py-2 hover:text-solar-yellow transition">
-                    <i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot
+                <div class="flex items-center gap-3 mb-4 pb-4 border-b border-white/20">
+                    <div class="w-10 h-10 rounded-full bg-solar-yellow text-deep-blue flex items-center justify-center font-bold">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span id="user-name-mobile" class="font-semibold">Usuário</span>
+                </div>
+                <a href="../sistema/dashboard.html" class="block py-2 hover:text-solar-yellow transition">
+                    <i class="fas fa-chart-line mr-2"></i>Dashboard
                 </a>
-                <a href="../sistema/dashboard.html" class="block py-2 hover:text-solar-yellow transition">Dashboard</a>
-                <a href="meus-relatos.html" class="block py-2 text-solar-yellow font-bold">Meus Relatos</a>
-                <a href="../sistema/recompensas.html" class="block py-2 hover:text-solar-yellow transition">Recompensas</a>
-                <a href="../sistema/planos.html" class="block py-2 hover:text-solar-yellow transition">Planos</a>
-                <a href="../login.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Login</a>
+                <a href="enviar-relato.html" class="block py-2 hover:text-solar-yellow transition">
+                    <i class="fas fa-paper-plane mr-2"></i>Novo Relato
+                </a>
+                <a href="meus-relatos.html" class="block py-2 text-solar-yellow font-bold">
+                    <i class="fas fa-list mr-2"></i>Meus Relatos
+                </a>
+                <a href="../sistema/recompensas.html" class="block py-2 hover:text-solar-yellow transition">
+                    <i class="fas fa-gift mr-2"></i>Recompensas
+                </a>
+                <a href="../sistema/planos.html" class="block py-2 hover:text-solar-yellow transition">
+                    <i class="fas fa-crown mr-2"></i>Planos
+                </a>
+                <div class="border-t border-white/20 my-2"></div>
+                <a href="../../index.html" class="block py-2 hover:text-solar-yellow transition">
+                    <i class="fas fa-home mr-2"></i>Página Inicial
+                </a>
+                <button id="logout-btn-mobile" class="w-full text-left py-2 text-red-400 hover:text-red-300 transition">
+                    <i class="fas fa-sign-out-alt mr-2"></i>Sair
+                </button>
             </div>
         </div>
     </nav>
@@ -224,8 +276,36 @@
     <!-- Database Scripts -->
     <script src="../../assets/js/modules/database.js"></script>
     <script src="../../assets/js/modules/api.js"></script>
+    <script src="../../assets/js/modules/auth.js"></script>
 
     <script>
+        // Load user info and setup logout
+        document.addEventListener('DOMContentLoaded', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            const userName = currentUser.nome || currentUser.username || 'Usuário';
+            
+            // Update user name in header
+            const userNameDisplay = document.getElementById('user-name-display');
+            const userNameMobile = document.getElementById('user-name-mobile');
+            if (userNameDisplay) userNameDisplay.textContent = userName;
+            if (userNameMobile) userNameMobile.textContent = userName;
+            
+            // Setup logout buttons
+            const logoutBtn = document.getElementById('logout-btn');
+            const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+            
+            const handleLogout = () => {
+                if (confirm('Deseja realmente sair?')) {
+                    localStorage.removeItem('currentUser');
+                    localStorage.removeItem('authToken');
+                    window.location.href = '../../index.html';
+                }
+            };
+            
+            if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+            if (logoutBtnMobile) logoutBtnMobile.addEventListener('click', handleLogout);
+        });
+
         let todosRelatos = [];
         let filtroAtual = 'todos';
 

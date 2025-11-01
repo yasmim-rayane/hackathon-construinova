@@ -23,10 +23,10 @@ class HubDatabase {
                 reject(request.error);
             };
 
-            request.onsuccess = () => {
+            request.onsuccess = async () => {
                 this.db = request.result;
                 console.log('✅ Banco de dados HubBS inicializado');
-                this.seedDatabase(); // Popular com dados simulados
+                await this.seedDatabase(); // Popular com dados simulados - AGUARDAR
                 resolve(this.db);
             };
 
@@ -174,9 +174,11 @@ class HubDatabase {
 
         const novoUsuario = {
             ...usuario,
+            email: usuario.email.toLowerCase(), // Garantir lowercase
             dataCriacao: new Date().toISOString(),
-            pontos: 0,
-            relatosEnviados: 0
+            pontos: usuario.pontos || 0,
+            relatosEnviados: 0,
+            ativo: usuario.ativo !== undefined ? usuario.ativo : true
         };
 
         return new Promise((resolve, reject) => {
@@ -190,14 +192,27 @@ class HubDatabase {
      * Buscar usuário por email
      */
     async getUsuarioByEmail(email) {
+        console.log('[DB] 🔍 Buscando usuário por email:', email);
+        
+        // Primeiro, vamos listar todos os usuários para debug
+        const todosUsuarios = await this.getUsuarios();
+        console.log('[DB] 📋 Total de usuários no banco:', todosUsuarios.length);
+        console.log('[DB] 📋 Emails cadastrados:', todosUsuarios.map(u => u.email));
+        
         const transaction = this.db.transaction(['usuarios'], 'readonly');
         const store = transaction.objectStore('usuarios');
         const index = store.index('email');
 
         return new Promise((resolve, reject) => {
-            const request = index.get(email);
-            request.onsuccess = () => resolve(request.result);
-            request.onerror = () => reject(request.error);
+            const request = index.get(email.toLowerCase()); // Garantir lowercase
+            request.onsuccess = () => {
+                console.log('[DB] ✅ Resultado da busca por', email.toLowerCase(), ':', request.result);
+                resolve(request.result);
+            };
+            request.onerror = () => {
+                console.error('[DB] ❌ Erro na busca:', request.error);
+                reject(request.error);
+            };
         });
     }
 
@@ -303,14 +318,60 @@ class HubDatabase {
      */
     async seedDatabase() {
         try {
-            // Verificar se já tem dados
+            console.log('🌱 Verificando usuários demo...');
+
+            // Função auxiliar para hash de senha
+            const hashPassword = (senha) => btoa(senha + 'hubbs_salt_2025');
+
+            // Verificar e criar usuário cidadão se não existir
+            const cidadaoExiste = await this.getUsuarioByEmail('joao@exemplo.com');
+            if (!cidadaoExiste) {
+                console.log('👤 Criando usuário cidadão demo...');
+                await this.addUsuario({
+                    nome: 'João Silva',
+                    email: 'joao@exemplo.com',
+                    senha: hashPassword('123456'),
+                    tipo: 'cidadao',
+                    cidade: 'santos',
+                    telefone: '13999999999',
+                    pontos: 0,
+                    ativo: true
+                });
+                console.log('✅ Usuário cidadão criado: joao@exemplo.com');
+            } else {
+                console.log('✓ Usuário cidadão já existe: joao@exemplo.com');
+            }
+
+            // Verificar e criar usuário empresa se não existir
+            const empresaExiste = await this.getUsuarioByEmail('empresa@demo.com');
+            if (!empresaExiste) {
+                console.log('🏢 Criando usuário empresa demo...');
+                await this.addUsuario({
+                    nome: 'Empresa Demo Ltda',
+                    email: 'empresa@demo.com',
+                    senha: hashPassword('empresa123'),
+                    tipo: 'empresa',
+                    cidade: 'santos',
+                    telefone: '1333334444',
+                    cnpj: '12.345.678/0001-00',
+                    pontos: 0,
+                    ativo: true
+                });
+                console.log('✅ Usuário empresa criado: empresa@demo.com');
+            } else {
+                console.log('✓ Usuário empresa já existe: empresa@demo.com');
+            }
+
+            console.log('✅ Verificação de usuários demo concluída');
+
+            // Verificar se já existem relatos antes de criar
             const relatos = await this.getRelatos();
-            if (relatos.length > 0) {
-                console.log('📊 Banco já possui dados');
+            if (relatos && relatos.length > 0) {
+                console.log('📊 Banco já possui relatos cadastrados');
                 return;
             }
 
-            console.log('🌱 Populando banco de dados...');
+            console.log('📊 Criando relatos simulados...');
 
             const cidades = ['santos', 'sao-vicente', 'guaruja', 'praia-grande', 'cubatao', 'bertioga', 'mongagua', 'itanhaem', 'peruibe'];
             const categorias = {
@@ -356,34 +417,7 @@ class HubDatabase {
                 await this.addRelato(relato);
             }
 
-            // Criar usuário demo
-            await this.addUsuario({
-                nome: 'João Silva',
-                email: 'joao@exemplo.com',
-                senha: '123456',
-                tipo: 'cidadao',
-                cidade: 'santos',
-                telefone: '13999999999'
-            });
-
-            // Criar empresa demo
-            const transaction = this.db.transaction(['empresas'], 'readwrite');
-            const store = transaction.objectStore('empresas');
-            
-            await new Promise((resolve, reject) => {
-                const request = store.add({
-                    nome: 'Empresa Demo',
-                    cnpj: '12.345.678/0001-00',
-                    email: 'admin@empresa.com',
-                    senha: 'admin',
-                    plano: 'professional',
-                    dataCadastro: new Date().toISOString()
-                });
-                request.onsuccess = () => resolve();
-                request.onerror = () => reject(request.error);
-            });
-
-            console.log('✅ Banco populado com 1200 relatos simulados');
+            console.log('✅ Banco populado com 1200 relatos e 3 usuários de teste');
 
         } catch (error) {
             console.error('Erro ao popular banco:', error);

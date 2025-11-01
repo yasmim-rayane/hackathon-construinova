@@ -60,6 +60,9 @@
             }
         }
     </style>
+    
+    <!-- Sistema de Logout Universal -->
+    <script src="../../assets/js/logout.js"></script>
 </head>
 
 <body class="bg-warm-sand">
@@ -452,35 +455,92 @@
         </div>
     </footer>
 
+    <!-- Database e Auth -->
+    <script type="module" src="../../assets/js/modules/database.js"></script>
+    <script type="module" src="../../assets/js/modules/auth.js"></script>
+    
+    <!-- Menu Mobile - JavaScript Puro (executa primeiro) -->
     <script>
-        // Session Protection
-        const userRole = sessionStorage.getItem('userRole');
-        if (userRole !== 'empresa') {
-            window.location.href = 'login.html';
-        }
+        // Menu Mobile - Executado imediatamente
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            console.log('📱 Inicializando Menu Mobile...');
+            console.log('Botão:', mobileMenuBtn);
+            console.log('Menu:', mobileMenu);
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    console.log('🔄 Clique no botão hamburger detectado!');
+                    const isHidden = mobileMenu.classList.contains('hidden');
+                    
+                    if (isHidden) {
+                        mobileMenu.classList.remove('hidden');
+                        console.log('✅ Menu ABERTO');
+                    } else {
+                        mobileMenu.classList.add('hidden');
+                        console.log('✅ Menu FECHADO');
+                    }
+                });
+                console.log('✅ Menu mobile configurado com sucesso!');
+            } else {
+                console.error('❌ ERRO: Elementos não encontrados!', {
+                    botao: mobileMenuBtn,
+                    menu: mobileMenu
+                });
+            }
+        });
+    </script>
+    
+    <script type="module">
+        import { auth } from '../../assets/js/modules/auth.js';
 
-        // Mobile Menu
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
+        // Verificar autenticação
+        window.addEventListener('DOMContentLoaded', function() {
+            // Verifica se está autenticado
+            if (!auth.isAuthenticated()) {
+                console.log('❌ Usuário não autenticado, redirecionando...');
+                window.location.href = '../auth/login.html';
+                return;
+            }
 
-        // Logout Function
-        function handleLogout() {
-            sessionStorage.clear();
-            window.location.href = '../index.html';
-        }
+            const user = auth.getCurrentUser();
+            
+            // Verifica se é empresa
+            if (user.tipo !== 'empresa') {
+                console.log('❌ Usuário não é empresa, redirecionando...');
+                window.location.href = '../sistema/dashboard.html';
+                return;
+            }
 
-        const logoutBtn = document.getElementById('logout-btn');
-        const logoutBtnMobile = document.getElementById('logout-btn-mobile');
-        
-        if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
-        if (logoutBtnMobile) logoutBtnMobile.addEventListener('click', handleLogout);
+            console.log('✅ Relatórios carregados para:', user.nome);
 
+            // Logout Function
+            function handleLogout(e) {
+                e.preventDefault();
+                console.log('🚪 Fazendo logout...');
+                auth.logout();
+                console.log('✅ Sessão encerrada, redirecionando...');
+                window.location.href = '../../index.html';
+            }
+
+            const logoutBtn = document.getElementById('logout-btn');
+            const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+            
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', handleLogout);
+                console.log('✅ Botão logout desktop configurado');
+            }
+            
+            if (logoutBtnMobile) {
+                logoutBtnMobile.addEventListener('click', handleLogout);
+                console.log('✅ Botão logout mobile configurado');
+            }
+        });
+    </script>
+
+    <script>
         // Generate Report
         const generateReportBtn = document.getElementById('generate-report');
         const reportPeriod = document.getElementById('report-period');

@@ -134,6 +134,7 @@ class SessionManager {
             logoutButton.addEventListener('click', () => {
                 if (confirm('Deseja realmente sair?')) {
                     auth.logout();
+                    window.location.href = '../../index.html';
                 }
             });
         }

@@ -130,7 +130,7 @@
                     <a href="dashboard.html" class="hover:text-solar-yellow transition">Dashboard</a>
                     <a href="recompensas.html" class="hover:text-solar-yellow transition">Recompensas</a>
                     <a href="planos.html" class="text-solar-yellow font-bold border-b-2 border-solar-yellow">Planos</a>
-                    <a href="../login.html" class="bg-vibrant-teal px-4 py-2 rounded-lg hover:bg-ods-green transition">Login</a>
+                    <a href="../auth/login.html" class="bg-vibrant-teal px-4 py-2 rounded-lg hover:bg-ods-green transition">Login</a>
                 </div>
                 <div class="md:hidden">
                     <button id="mobile-menu-button" class="text-white hover:text-solar-yellow focus:outline-none">
@@ -153,7 +153,7 @@
                 <a href="dashboard.html" class="block py-2 hover:text-solar-yellow transition">Dashboard</a>
                 <a href="recompensas.html" class="block py-2 hover:text-solar-yellow transition">Recompensas</a>
                 <a href="planos.html" class="block py-2 text-solar-yellow font-bold">Planos</a>
-                <a href="../login.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Login</a>
+                <a href="../auth/login.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Login</a>
             </div>
         </div>
     </nav>
@@ -168,16 +168,16 @@
                 Planos personalizados para prefeituras e empresas comprometidas com a sustentabilidade e participação cidadã
             </p>
             
-            <!-- Toggle Mensal/Anual -->
+            <!-- Toggle Mensal/Bienal (apenas para Prefeituras) -->
             <div class="flex items-center justify-center gap-4 mb-8">
                 <span id="monthly-label" class="text-lg font-semibold">Mensal</span>
                 <label class="toggle-switch">
                     <input type="checkbox" id="billing-toggle">
                     <span class="slider"></span>
                 </label>
-                <span id="annual-label" class="text-lg opacity-60">Anual</span>
+                <span id="annual-label" class="text-lg opacity-60">Bienal</span>
                 <span class="bg-solar-yellow text-deep-blue px-3 py-1 rounded-full text-sm font-bold">
-                    Economize 20%
+                    Planos de 2 anos
                 </span>
             </div>
         </div>
@@ -204,9 +204,9 @@
                     
                     <div class="text-center mb-6">
                         <div class="text-4xl font-bold text-deep-blue mb-2">
-                            R$ <span class="price-monthly">2.499</span><span class="price-annual hidden">1.999</span>
+                            R$ <span class="price-monthly">3.515</span><span class="price-annual hidden">2.812</span>
                         </div>
-                        <p class="text-gray-500 text-sm">por mês</p>
+                        <p class="text-gray-500 text-sm billing-period">por mês</p>
                         <p class="text-xs text-gray-400 mt-1">Até 50.000 habitantes</p>
                     </div>
 
@@ -252,9 +252,9 @@
                     
                     <div class="text-center mb-6">
                         <div class="text-4xl font-bold text-vibrant-teal mb-2">
-                            R$ <span class="price-monthly">4.999</span><span class="price-annual hidden">3.999</span>
+                            R$ <span class="price-monthly">9.375</span><span class="price-annual hidden">7.500</span>
                         </div>
-                        <p class="text-gray-500 text-sm">por mês</p>
+                        <p class="text-gray-500 text-sm billing-period">por mês</p>
                         <p class="text-xs text-gray-400 mt-1">50.000 - 200.000 habitantes</p>
                     </div>
 
@@ -281,11 +281,11 @@
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-green-500 text-xl">✓</span>
-                            <span class="text-gray-700 font-semibold">Suporte prioritário 24/7</span>
+                            <span class="text-gray-700 font-semibold">IA e Machine Learning</span>
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-green-500 text-xl">✓</span>
-                            <span class="text-gray-700 font-semibold">API básica</span>
+                            <span class="text-gray-700 font-semibold">API completa</span>
                         </li>
                     </ul>
 
@@ -325,10 +325,6 @@
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-green-500 text-xl">✓</span>
-                            <span class="text-gray-700">IA e Machine Learning</span>
-                        </li>
-                        <li class="flex items-start gap-2">
-                            <span class="text-green-500 text-xl">✓</span>
                             <span class="text-gray-700">Integrações avançadas</span>
                         </li>
                         <li class="flex items-start gap-2">
@@ -337,7 +333,11 @@
                         </li>
                         <li class="flex items-start gap-2">
                             <span class="text-green-500 text-xl">✓</span>
-                            <span class="text-gray-700">API completa + White Label</span>
+                            <span class="text-gray-700">White Label</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Consultoria estratégica</span>
                         </li>
                     </ul>
 
@@ -370,7 +370,7 @@
                     
                     <div class="text-center mb-6">
                         <div class="text-4xl font-bold text-deep-blue mb-2">
-                            R$ <span class="price-monthly">1.499</span><span class="price-annual hidden">1.199</span>
+                            R$ <span class="price-monthly">5.860</span><span class="price-annual hidden">4.688</span>
                         </div>
                         <p class="text-gray-500 text-sm">por mês</p>
                     </div>
@@ -417,7 +417,7 @@
                     
                     <div class="text-center mb-6">
                         <div class="text-4xl font-bold text-vibrant-teal mb-2">
-                            R$ <span class="price-monthly">3.999</span><span class="price-annual hidden">3.199</span>
+                            R$ <span class="price-monthly">11.720</span><span class="price-annual hidden">9.376</span>
                         </div>
                         <p class="text-gray-500 text-sm">por mês</p>
                     </div>
@@ -687,10 +687,10 @@
                     <h4 class="font-bold mb-4">Navegação</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
                         <li><a href="../../index.html" class="hover:text-white">Início</a></li>
-                        <li><a href="../sistema/sobre.html" class="hover:text-white">Sobre</a></li>
-                        <li><a href="../sistema/planos.html" class="hover:text-white">Planos</a></li>
-                        <li><a href="../sistema/dashboard.html" class="hover:text-white">Dashboard</a></li>
-                        <li><a href="../sistema/recompensas.html" class="hover:text-white">Recompensas</a></li>
+                        <li><a href="sobre.html" class="hover:text-white">Sobre</a></li>
+                        <li><a href="planos.html" class="hover:text-white">Planos</a></li>
+                        <li><a href="dashboard.html" class="hover:text-white">Dashboard</a></li>
+                        <li><a href="recompensas.html" class="hover:text-white">Recompensas</a></li>
                     </ul>
                 </div>
                 <div>
@@ -736,18 +736,30 @@
 
         if (billingToggle) {
             billingToggle.addEventListener('change', function() {
+                const billingPeriods = document.querySelectorAll('.billing-period');
+                
                 if (this.checked) {
-                    // Anual
+                    // Bienal (para Prefeituras) / Anual (para Empresas)
                     monthlyLabel.classList.add('opacity-60');
                     annualLabel.classList.remove('opacity-60');
                     monthlyPrices.forEach(el => el.classList.add('hidden'));
                     annualPrices.forEach(el => el.classList.remove('hidden'));
+                    
+                    // Atualiza texto do período apenas para prefeituras
+                    billingPeriods.forEach(el => {
+                        el.textContent = 'bienal';
+                    });
                 } else {
                     // Mensal
                     monthlyLabel.classList.remove('opacity-60');
                     annualLabel.classList.add('opacity-60');
                     monthlyPrices.forEach(el => el.classList.remove('hidden'));
                     annualPrices.forEach(el => el.classList.add('hidden'));
+                    
+                    // Volta para "por mês"
+                    billingPeriods.forEach(el => {
+                        el.textContent = 'por mês';
+                    });
                 }
             });
         }

@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Cidadão | HubBS - Construindo o Amanhã</title>
+    <meta name="description" content="Painel de controle para cidadãos do HubBS">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-blue': '#005F73',
+                        'vibrant-teal': '#0A9396',
+                        'ods-green': '#94D2BD',
+                        'solar-yellow': '#E9D8A6',
+                        'warm-sand': '#FAF3E0',
+                        'dark-gray': '#2E2E2E',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-pendente { background-color: #FEF3C7; color: #92400E; }
+        .status-em-analise { background-color: #DBEAFE; color: #1E40AF; }
+        .status-em-andamento { background-color: #FED7AA; color: #9A3412; }
+        .status-resolvido { background-color: #D1FAE5; color: #065F46; }
+        .status-rejeitado { background-color: #FEE2E2; color: #991B1B; }
+    </style>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Sistema de Logout Universal -->
+    <script src="../../assets/js/logout.js"></script>
+</head>
+
+<body class="bg-warm-sand">
+    <!-- Header/Navbar -->
+    <nav class="bg-deep-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="../../index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <img src="../../assets/img/logo.jpeg" alt="HubBS Logo" class="h-10 w-10 object-contain rounded">
+                    <span class="text-2xl font-bold font-poppins">HubBS</span>
+                    <span class="bg-solar-yellow text-deep-blue px-3 py-1 rounded-full text-xs font-bold">CIDADÃO</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <span id="welcome-message" class="text-sm text-solar-yellow">Bem-vindo(a), {username}!</span>
+                    <button id="logout-btn" class="bg-red-500 px-6 py-2 rounded-full hover:bg-red-600 transition font-semibold">
+                        Sair
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <span id="welcome-message-mobile" class="block py-2 text-solar-yellow text-sm">Bem-vindo(a)!</span>
+                <button id="logout-btn-mobile" class="block w-full py-2 bg-red-500 rounded-lg hover:bg-red-600 transition mt-2">
+                    Sair
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <section class="bg-gradient-to-r from-deep-blue to-vibrant-teal text-white py-12">
+        <div class="container mx-auto px-6">
+            <h1 class="text-4xl md:text-5xl font-bold font-poppins mb-4">👤 Meu Painel</h1>
+            <p class="text-xl">Acompanhe seus relatos e ganhe recompensas por contribuir com sua cidade</p>
+        </div>
+    </section>
+
+    <!-- Dashboard Stats -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <!-- Cards de Estatísticas -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+                <!-- Pontos Card -->
+                <div class="bg-gradient-to-br from-solar-yellow to-yellow-400 p-6 rounded-2xl shadow-lg text-deep-blue">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-4xl">⭐</div>
+                        <div class="bg-white/30 px-3 py-1 rounded-full text-xs font-bold">Nível <span id="user-nivel">1</span></div>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Meus Pontos</h3>
+                    <p class="text-4xl font-bold" id="user-pontos">0</p>
+                    <p class="text-sm mt-2 opacity-80">Ganhe fazendo relatos!</p>
+                </div>
+
+                <!-- Total de Relatos -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-4xl">📊</div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Total de Relatos</h3>
+                    <p class="text-4xl font-bold text-deep-blue" id="total-relatos">0</p>
+                    <p class="text-sm text-gray-500 mt-2">Contribuições feitas</p>
+                </div>
+
+                <!-- Relatos Em Andamento -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-4xl">🔄</div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Em Andamento</h3>
+                    <p class="text-4xl font-bold text-orange-500" id="relatos-andamento">0</p>
+                    <p class="text-sm text-gray-500 mt-2">Aguardando resolução</p>
+                </div>
+
+                <!-- Relatos Resolvidos -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-4xl">✅</div>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-700 mb-2">Resolvidos</h3>
+                    <p class="text-4xl font-bold text-green-500" id="relatos-resolvidos">0</p>
+                    <p class="text-sm text-gray-500 mt-2">Problemas solucionados</p>
+                </div>
+            </div>
+
+            <!-- Recompensas Disponíveis -->
+            <div class="bg-white rounded-2xl shadow-lg p-8 mb-12">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-3xl font-bold font-poppins text-deep-blue flex items-center gap-2">
+                        🎁 Recompensas Disponíveis
+                    </h2>
+                    <a href="../sistema/recompensas.html" class="text-vibrant-teal hover:underline text-sm font-semibold">
+                        Ver todas →
+                    </a>
+                </div>
+
+                <div id="recompensas-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Recompensas serão carregadas aqui -->
+                    <div class="text-center text-gray-400 py-8 col-span-3">
+                        <i class="fas fa-spinner fa-spin text-3xl mb-2"></i>
+                        <p>Carregando recompensas...</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filtros de Relatos -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 gap-4">
+                    <h2 class="text-3xl font-bold font-poppins text-deep-blue">📋 Meus Relatos</h2>
+                    
+                    <div class="flex gap-2 flex-wrap">
+                        <button class="filter-btn active px-4 py-2 rounded-lg font-semibold transition" data-filter="todos">
+                            Todos
+                        </button>
+                        <button class="filter-btn px-4 py-2 rounded-lg font-semibold transition" data-filter="pendente">
+                            Pendentes
+                        </button>
+                        <button class="filter-btn px-4 py-2 rounded-lg font-semibold transition" data-filter="em-andamento">
+                            Em Andamento
+                        </button>
+                        <button class="filter-btn px-4 py-2 rounded-lg font-semibold transition" data-filter="resolvido">
+                            Resolvidos
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Lista de Relatos -->
+                <div id="relatos-container" class="space-y-4">
+                    <!-- Relatos serão carregados aqui -->
+                    <div class="text-center text-gray-400 py-12">
+                        <i class="fas fa-spinner fa-spin text-3xl mb-2"></i>
+                        <p>Carregando seus relatos...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-gray text-white py-8 mt-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <p class="text-gray-400">
+                    &copy; 2025 HubBS - Hackathon Construinova Litoral. Desenvolvido com 💙 para construir o amanhã.
+                </p>
+                <p class="text-gray-500 text-xs mt-2">
+                    Painel exclusivo para cidadãos • Dashboard Demo
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <!-- Database e Auth -->
+    <script type="module" src="../../assets/js/modules/database.js"></script>
+    <script type="module" src="../../assets/js/modules/auth.js"></script>
+    
+    <!-- Menu Mobile - JavaScript Puro (executa primeiro) -->
+    <script>
+        // Menu Mobile - Executado imediatamente
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            console.log('📱 Inicializando Menu Mobile...');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    const isHidden = mobileMenu.classList.contains('hidden');
+                    
+                    if (isHidden) {
+                        mobileMenu.classList.remove('hidden');
+                        console.log('✅ Menu ABERTO');
+                    } else {
+                        mobileMenu.classList.add('hidden');
+                        console.log('✅ Menu FECHADO');
+                    }
+                });
+                console.log('✅ Menu mobile configurado com sucesso!');
+            }
+
+            // Filtros de relatos
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active de todos
+                    filterButtons.forEach(b => {
+                        b.classList.remove('active', 'bg-vibrant-teal', 'text-white');
+                        b.classList.add('bg-gray-200', 'text-gray-700');
+                    });
+                    
+                    // Adiciona active no clicado
+                    this.classList.add('active', 'bg-vibrant-teal', 'text-white');
+                    this.classList.remove('bg-gray-200', 'text-gray-700');
+                    
+                    // Filtra relatos
+                    const filter = this.dataset.filter;
+                    filterRelatos(filter);
+                });
+            });
+
+            // Estilo inicial dos botões
+            filterButtons.forEach(btn => {
+                if (btn.classList.contains('active')) {
+                    btn.classList.add('bg-vibrant-teal', 'text-white');
+                } else {
+                    btn.classList.add('bg-gray-200', 'text-gray-700');
+                }
+            });
+        });
+
+        function filterRelatos(filter) {
+            const relatos = document.querySelectorAll('.relato-card');
+            relatos.forEach(card => {
+                if (filter === 'todos') {
+                    card.style.display = 'block';
+                } else {
+                    const status = card.dataset.status;
+                    card.style.display = status === filter ? 'block' : 'none';
+                }
+            });
+        }
+    </script>
+    
+    <script type="module">
+        import { auth } from '../../assets/js/modules/auth.js';
+        import { HubDatabase } from '../../assets/js/modules/database.js';
+
+        // Verificar autenticação
+        window.addEventListener('DOMContentLoaded', async function() {
+            // Verifica se está autenticado
+            if (!auth.isAuthenticated()) {
+                console.log('❌ Usuário não autenticado, redirecionando...');
+                window.location.href = '../auth/login.html';
+                return;
+            }
+
+            const user = auth.getCurrentUser();
+            
+            // Verifica se é cidadão
+            if (user.tipo !== 'cidadao') {
+                console.log('❌ Usuário não é cidadão, redirecionando...');
+                if (user.tipo === 'empresa') {
+                    window.location.href = '../empresa/empresa-dashboard.html';
+                } else {
+                    window.location.href = '../sistema/dashboard.html';
+                }
+                return;
+            }
+
+            // Atualizar mensagem de boas-vindas com nome do cidadão
+            const welcomeMessage = document.getElementById('welcome-message');
+            const welcomeMessageMobile = document.getElementById('welcome-message-mobile');
+            
+            if (user.nome) {
+                const message = `Bem-vindo(a), ${user.nome}`;
+                if (welcomeMessage) {
+                    welcomeMessage.textContent = message;
+                    console.log('✅ Mensagem de boas-vindas atualizada (desktop):', message);
+                }
+                if (welcomeMessageMobile) {
+                    welcomeMessageMobile.textContent = message;
+                    console.log('✅ Mensagem de boas-vindas atualizada (mobile):', message);
+                }
+            }
+
+            // Atualizar pontos e nível do usuário
+            document.getElementById('user-pontos').textContent = user.pontos || 0;
+            document.getElementById('user-nivel').textContent = user.nivel || 1;
+
+            console.log('✅ Dashboard cidadão carregado para:', user.nome);
+
+            // Carregar dados do dashboard
+            await carregarDadosDashboard(user);
+
+            // CONFIGURAR LOGOUT - VERSÃO SIMPLIFICADA E DIRETA
+            const logoutBtn = document.getElementById('logout-btn');
+            const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+
+            console.log('🔧 Verificando botões de logout...');
+            console.log('Botão desktop:', logoutBtn);
+            console.log('Botão mobile:', logoutBtnMobile);
+
+            function doLogout() {
+                console.log('🚪🚪🚪 LOGOUT INICIADO! 🚪🚪🚪');
+                
+                try {
+                    // Limpar tudo
+                    console.log('Limpando localStorage...');
+                    localStorage.clear();
+                    
+                    console.log('Limpando sessionStorage...');
+                    sessionStorage.clear();
+                    
+                    console.log('✅ Tudo limpo! Redirecionando...');
+                    
+                    // Redirecionar
+                    window.location.href = '../auth/login.html';
+                    
+                } catch (error) {
+                    console.error('Erro:', error);
+                    // Tentar de qualquer forma
+                    window.location.href = '../auth/login.html';
+                }
+            }
+
+            if (logoutBtn) {
+                console.log('✅ Configurando botão desktop...');
+                logoutBtn.onclick = function(e) {
+                    e.preventDefault();
+                    console.log('CLIQUE NO BOTÃO DESKTOP DETECTADO!');
+                    doLogout();
+                    return false;
+                };
+            }
+            
+            if (logoutBtnMobile) {
+                console.log('✅ Configurando botão mobile...');
+                logoutBtnMobile.onclick = function(e) {
+                    e.preventDefault();
+                    console.log('CLIQUE NO BOTÃO MOBILE DETECTADO!');
+                    doLogout();
+                    return false;
+                };
+            }
+            
+            console.log('🎯 Configuração de logout concluída!')
+        });
+
+        async function carregarDadosDashboard(user) {
+            try {
+                const db = new HubDatabase();
+                await db.waitForInit();
+
+                // Buscar todos os relatos do usuário
+                const todosRelatos = await db.getAllRelatos();
+                const meusRelatos = todosRelatos.filter(r => r.usuarioId === user.id);
+
+                console.log('📊 Relatos encontrados:', meusRelatos.length);
+
+                // Calcular estatísticas
+                const totalRelatos = meusRelatos.length;
+                const relatosAndamento = meusRelatos.filter(r => 
+                    r.status === 'pendente' || r.status === 'em-analise' || r.status === 'em-andamento'
+                ).length;
+                const relatosResolvidos = meusRelatos.filter(r => r.status === 'resolvido').length;
+
+                // Atualizar cards
+                document.getElementById('total-relatos').textContent = totalRelatos;
+                document.getElementById('relatos-andamento').textContent = relatosAndamento;
+                document.getElementById('relatos-resolvidos').textContent = relatosResolvidos;
+
+                // Carregar relatos na lista
+                await renderizarRelatos(meusRelatos);
+
+                // Carregar recompensas disponíveis
+                await carregarRecompensas(db, user.pontos);
+
+            } catch (error) {
+                console.error('❌ Erro ao carregar dados:', error);
+            }
+        }
+
+        async function renderizarRelatos(relatos) {
+            const container = document.getElementById('relatos-container');
+            
+            if (relatos.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12 text-gray-400">
+                        <i class="fas fa-inbox text-5xl mb-4"></i>
+                        <p class="text-lg">Você ainda não fez nenhum relato</p>
+                        <a href="../relatos/enviar-relato.html" class="inline-block mt-4 bg-vibrant-teal text-white px-6 py-3 rounded-lg font-semibold hover:bg-ods-green transition">
+                            Fazer meu primeiro relato
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = relatos.map(relato => `
+                <div class="relato-card bg-gray-50 rounded-lg p-6 border-l-4 ${getBorderColor(relato.status)}" data-status="${relato.status}">
+                    <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+                        <div class="flex-1">
+                            <div class="flex items-start gap-3 mb-3">
+                                <span class="text-3xl">${getCategoriaIcon(relato.categoria)}</span>
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">${relato.titulo}</h3>
+                                    <p class="text-sm text-gray-500">
+                                        ${relato.categoria} • ${relato.cidade}
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="text-gray-600 mb-3">${relato.descricao}</p>
+                            <div class="flex flex-wrap gap-2 text-xs text-gray-500">
+                                <span><i class="fas fa-calendar mr-1"></i>${formatarData(relato.data)}</span>
+                                ${relato.endereco ? `<span><i class="fas fa-map-marker-alt mr-1"></i>${relato.endereco}</span>` : ''}
+                            </div>
+                        </div>
+                        <div class="flex flex-col items-end gap-2">
+                            <span class="status-badge ${getStatusClass(relato.status)}">
+                                ${getStatusLabel(relato.status)}
+                            </span>
+                            ${relato.prioridade ? `
+                                <span class="text-xs px-2 py-1 rounded ${getPrioridadeClass(relato.prioridade)}">
+                                    ${relato.prioridade}
+                                </span>
+                            ` : ''}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function carregarRecompensas(db, pontosUsuario) {
+            const container = document.getElementById('recompensas-container');
+            
+            try {
+                const recompensas = await db.getAllRecompensas();
+                const recompensasDisponiveis = recompensas
+                    .filter(r => r.pontosNecessarios <= pontosUsuario + 100) // Mostra recompensas próximas também
+                    .slice(0, 3);
+
+                if (recompensasDisponiveis.length === 0) {
+                    container.innerHTML = `
+                        <div class="col-span-3 text-center py-8 text-gray-400">
+                            <p>Continue ganhando pontos para desbloquear recompensas!</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = recompensasDisponiveis.map(rec => {
+                    const podeResgatar = pontosUsuario >= rec.pontosNecessarios;
+                    return `
+                        <div class="bg-gray-50 rounded-lg p-6 border-2 ${podeResgatar ? 'border-green-400' : 'border-gray-200'}">
+                            <div class="text-4xl mb-3 text-center">${rec.icone || '🎁'}</div>
+                            <h3 class="font-bold text-lg text-gray-800 mb-2 text-center">${rec.nome}</h3>
+                            <p class="text-sm text-gray-600 mb-4 text-center">${rec.descricao}</p>
+                            <div class="text-center mb-4">
+                                <span class="text-2xl font-bold text-vibrant-teal">${rec.pontosNecessarios}</span>
+                                <span class="text-sm text-gray-500"> pontos</span>
+                            </div>
+                            <button class="w-full py-2 rounded-lg font-semibold transition ${
+                                podeResgatar 
+                                    ? 'bg-green-500 text-white hover:bg-green-600' 
+                                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                            }" ${!podeResgatar ? 'disabled' : ''}>
+                                ${podeResgatar ? 'Resgatar' : `Faltam ${rec.pontosNecessarios - pontosUsuario} pts`}
+                            </button>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                console.error('❌ Erro ao carregar recompensas:', error);
+                container.innerHTML = `
+                    <div class="col-span-3 text-center py-8 text-red-400">
+                        <p>Erro ao carregar recompensas</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Funções auxiliares
+        function getBorderColor(status) {
+            const colors = {
+                'pendente': 'border-yellow-500',
+                'em-analise': 'border-blue-500',
+                'em-andamento': 'border-orange-500',
+                'resolvido': 'border-green-500',
+                'rejeitado': 'border-red-500'
+            };
+            return colors[status] || 'border-gray-300';
+        }
+
+        function getStatusClass(status) {
+            return `status-${status}`;
+        }
+
+        function getStatusLabel(status) {
+            const labels = {
+                'pendente': 'Pendente',
+                'em-analise': 'Em Análise',
+                'em-andamento': 'Em Andamento',
+                'resolvido': 'Resolvido',
+                'rejeitado': 'Rejeitado'
+            };
+            return labels[status] || status;
+        }
+
+        function getCategoriaIcon(categoria) {
+            const icons = {
+                'Infraestrutura': '🏗️',
+                'Saneamento': '💧',
+                'Iluminação': '💡',
+                'Segurança': '🚨',
+                'Limpeza': '🧹',
+                'Meio Ambiente': '🌳',
+                'Trânsito': '🚦',
+                'Saúde': '🏥',
+                'Educação': '🎓',
+                'Outros': '📋'
+            };
+            return icons[categoria] || '📋';
+        }
+
+        function getPrioridadeClass(prioridade) {
+            const classes = {
+                'baixa': 'bg-gray-200 text-gray-700',
+                'média': 'bg-yellow-200 text-yellow-800',
+                'alta': 'bg-red-200 text-red-800'
+            };
+            return classes[prioridade] || 'bg-gray-200 text-gray-700';
+        }
+
+        function formatarData(dataISO) {
+            const data = new Date(dataISO);
+            return data.toLocaleDateString('pt-BR', { 
+                day: '2-digit', 
+                month: 'short', 
+                year: 'numeric' 
+            });
+        }
+    </script>
+</body>
+</html>

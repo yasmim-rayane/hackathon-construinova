@@ -42,6 +42,9 @@
             font-family: 'Poppins', sans-serif;
         }
     </style>
+    
+    <!-- Sistema de Logout Universal -->
+    <script src="../../assets/js/logout.js"></script>
 </head>
 
 <body class="bg-warm-sand">
@@ -50,15 +53,15 @@
         <div class="container mx-auto px-6 py-4">
             <div class="flex justify-between items-center">
                 <!-- Logo -->
-                <a href="../index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
-                    <img src="../assets/img/logo.jpeg" alt="HubBS Logo" class="h-10 w-10 object-contain rounded">
+                <a href="../../index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <img src="../../assets/img/logo.jpeg" alt="HubBS Logo" class="h-10 w-10 object-contain rounded">
                     <span class="text-2xl font-bold font-poppins">HubBS</span>
                     <span class="bg-solar-yellow text-deep-blue px-3 py-1 rounded-full text-xs font-bold">EMPRESA</span>
                 </a>
 
                 <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <span id="welcome-message" class="text-sm text-solar-yellow">Bem-vindo(a)!</span>
+                    <span id="welcome-message" class="text-sm text-solar-yellow">Bem-vindo(a), {nome_da_empresa}!</span>
                     <button id="logout-btn" class="bg-red-500 px-6 py-2 rounded-full hover:bg-red-600 transition font-semibold">
                         Sair
                     </button>
@@ -100,8 +103,9 @@
                         <div class="text-4xl">📊</div>
                         <div class="text-sm text-gray-500">Total</div>
                     </div>
-                    <div class="text-3xl font-bold text-vibrant-teal mb-2">1.163</div>
+                    <div class="text-3xl font-bold text-vibrant-teal mb-2">1.811</div>
                     <p class="text-gray-600 text-sm">Relatos Recebidos</p>
+                    <p class="text-xs text-green-600 font-semibold mt-1">↗ +56% este mês</p>
                 </div>
 
                 <!-- Stat Card 2 -->
@@ -139,14 +143,36 @@
             <div class="grid md:grid-cols-3 gap-8">
                 <!-- Métricas ODS -->
                 <div class="md:col-span-2 bg-white p-8 rounded-2xl shadow-lg">
-                    <h2 class="text-2xl font-bold font-poppins text-deep-blue mb-6">� Visão Geral - ODS</h2>
+                    <h2 class="text-2xl font-bold font-poppins text-deep-blue mb-6">🌍 Visão Geral - Objetivos de Desenvolvimento Sustentável</h2>
                     
                     <div class="grid md:grid-cols-3 gap-6 mb-6">
+                        <!-- ODS 6 -->
+                        <div class="border-l-4 border-blue-500 bg-blue-50 p-4 rounded-lg transform hover:scale-105 transition">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="font-bold text-lg text-blue-700">ODS 6</h3>
+                                <span class="text-2xl">💧</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Água Limpa e Saneamento</p>
+                            <div class="text-3xl font-bold text-blue-600">156</div>
+                            <p class="text-xs text-gray-500 mt-1">relatos ativos</p>
+                        </div>
+
+                        <!-- ODS 7 -->
+                        <div class="border-l-4 border-yellow-400 bg-yellow-50 p-4 rounded-lg transform hover:scale-105 transition">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="font-bold text-lg text-yellow-700">ODS 7</h3>
+                                <span class="text-2xl">⚡</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Energia Limpa e Acessível</p>
+                            <div class="text-3xl font-bold text-yellow-600">203</div>
+                            <p class="text-xs text-gray-500 mt-1">relatos ativos</p>
+                        </div>
+
                         <!-- ODS 9 -->
-                        <div class="border-l-4 border-orange-500 bg-orange-50 p-4 rounded-lg">
+                        <div class="border-l-4 border-orange-500 bg-orange-50 p-4 rounded-lg transform hover:scale-105 transition">
                             <div class="flex items-center justify-between mb-2">
                                 <h3 class="font-bold text-lg text-orange-700">ODS 9</h3>
-                                <span class="text-2xl">🏭</span>
+                                <span class="text-2xl">🏗️</span>
                             </div>
                             <p class="text-sm text-gray-600 mb-3">Indústria, Inovação e Infraestrutura</p>
                             <div class="text-3xl font-bold text-orange-600">347</div>
@@ -154,7 +180,7 @@
                         </div>
 
                         <!-- ODS 11 -->
-                        <div class="border-l-4 border-yellow-500 bg-yellow-50 p-4 rounded-lg">
+                        <div class="border-l-4 border-yellow-500 bg-yellow-50 p-4 rounded-lg transform hover:scale-105 transition">
                             <div class="flex items-center justify-between mb-2">
                                 <h3 class="font-bold text-lg text-yellow-700">ODS 11</h3>
                                 <span class="text-2xl">🏙️</span>
@@ -164,11 +190,22 @@
                             <p class="text-xs text-gray-500 mt-1">relatos ativos</p>
                         </div>
 
+                        <!-- ODS 12 -->
+                        <div class="border-l-4 border-amber-600 bg-amber-50 p-4 rounded-lg transform hover:scale-105 transition">
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="font-bold text-lg text-amber-700">ODS 12</h3>
+                                <span class="text-2xl">♻️</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Consumo e Produção Responsáveis</p>
+                            <div class="text-3xl font-bold text-amber-700">289</div>
+                            <p class="text-xs text-gray-500 mt-1">relatos ativos</p>
+                        </div>
+
                         <!-- ODS 13 -->
-                        <div class="border-l-4 border-green-600 bg-green-50 p-4 rounded-lg">
+                        <div class="border-l-4 border-green-600 bg-green-50 p-4 rounded-lg transform hover:scale-105 transition">
                             <div class="flex items-center justify-between mb-2">
                                 <h3 class="font-bold text-lg text-green-700">ODS 13</h3>
-                                <span class="text-2xl">🌡️</span>
+                                <span class="text-2xl">🌱</span>
                             </div>
                             <p class="text-sm text-gray-600 mb-3">Ação Contra a Mudança do Clima</p>
                             <div class="text-3xl font-bold text-green-700">234</div>
@@ -178,8 +215,8 @@
 
                     <div class="bg-gradient-to-r from-deep-blue to-vibrant-teal p-6 rounded-lg text-white">
                         <h3 class="font-bold text-lg mb-2">💡 Acesse o Painel Completo</h3>
-                        <p class="text-sm opacity-90 mb-4">Visualize métricas detalhadas, filtros por cidade e análises temporais</p>
-                        <a href="empresa-metricas-ods.html" class="inline-block bg-white text-deep-blue px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
+                        <p class="text-sm opacity-90 mb-4">Visualize métricas detalhadas de todas as 6 ODS, filtros por cidade e análises temporais</p>
+                        <a href="metricas-ods.html" class="inline-block bg-white text-deep-blue px-6 py-2 rounded-lg font-semibold hover:bg-gray-100 transition">
                             Ver Métricas Detalhadas →
                         </a>
                     </div>
@@ -191,10 +228,10 @@
                     <div class="bg-white p-6 rounded-2xl shadow-lg">
                         <h3 class="text-xl font-bold font-poppins text-deep-blue mb-4">⚡ Ações Rápidas</h3>
                         <div class="space-y-3">
-                            <a href="empresa-metricas-ods.html" class="block w-full bg-gradient-to-r from-ods-green to-green-600 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition text-center">
+                            <a href="metricas-ods.html" class="block w-full bg-gradient-to-r from-ods-green to-green-600 text-white py-3 rounded-lg font-semibold hover:opacity-90 transition text-center">
                                 🌍 Métricas ODS
                             </a>
-                            <a href="empresa-relatorios.html" class="block w-full bg-gradient-to-r from-deep-blue to-vibrant-teal text-white py-3 rounded-lg font-semibold hover:opacity-90 transition text-center">
+                            <a href="relatorios.html" class="block w-full bg-gradient-to-r from-deep-blue to-vibrant-teal text-white py-3 rounded-lg font-semibold hover:opacity-90 transition text-center">
                                 📊 Ver Relatórios
                             </a>
                             <button class="w-full bg-gradient-to-r from-ods-green to-solar-yellow text-deep-blue py-3 rounded-lg font-semibold hover:opacity-90 transition">
@@ -231,22 +268,68 @@
                         <p class="text-sm opacity-90 mb-4">Contribuições para os ODS</p>
                         <div class="space-y-2 text-sm mb-4">
                             <div class="flex justify-between">
-                                <span>ODS 9 - Inovação</span>
+                                <span>💧 ODS 6 - Água</span>
+                                <span class="font-bold">79%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>⚡ ODS 7 - Energia</span>
+                                <span class="font-bold">82%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>🏗️ ODS 9 - Inovação</span>
                                 <span class="font-bold">87%</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>ODS 11 - Cidades</span>
+                                <span>🏙️ ODS 11 - Cidades</span>
                                 <span class="font-bold">92%</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>ODS 13 - Clima</span>
+                                <span>♻️ ODS 12 - Consumo</span>
+                                <span class="font-bold">80%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>🌱 ODS 13 - Clima</span>
                                 <span class="font-bold">78%</span>
                             </div>
                         </div>
-                        <a href="empresa-metricas-ods.html" class="block w-full bg-white/20 backdrop-blur-sm text-center py-2 rounded-lg hover:bg-white/30 transition font-semibold text-sm">
+                        <a href="metricas-ods.html" class="block w-full bg-white/20 backdrop-blur-sm text-center py-2 rounded-lg hover:bg-white/30 transition font-semibold text-sm">
                             Ver Métricas Detalhadas →
                         </a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Exportar Dados Section -->
+    <section class="py-8 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="bg-gradient-to-r from-deep-blue to-vibrant-teal p-8 rounded-2xl shadow-xl">
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl font-bold font-poppins text-white mb-2">📥 Exportar Dados</h2>
+                    <p class="text-white/90">Baixe suas métricas e relatórios em diferentes formatos</p>
+                </div>
+                
+                <div class="flex flex-col md:flex-row gap-4 justify-center items-center">
+                    <button id="export-pdf-btn" class="w-full md:w-auto bg-white text-deep-blue px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-3">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path>
+                        </svg>
+                        Exportar PDF
+                    </button>
+                    
+                    <button id="export-excel-btn" class="w-full md:w-auto bg-green-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-green-600 transition-all transform hover:scale-105 shadow-lg flex items-center justify-center gap-3">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z" clip-rule="evenodd"></path>
+                        </svg>
+                        Exportar Excel
+                    </button>
+                </div>
+
+                <div class="mt-6 text-center">
+                    <p class="text-white/80 text-sm">
+                        💡 Os relatórios incluem: métricas gerais, dados por ODS, engajamento e impacto social
+                    </p>
                 </div>
             </div>
         </div>
@@ -267,55 +350,418 @@
     </footer>
 
     <!-- Scripts -->
+    <!-- Bibliotecas de Exportação -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <!-- Database e Auth -->
+    <script type="module" src="../../assets/js/modules/database.js"></script>
+    <script type="module" src="../../assets/js/modules/auth.js"></script>
+    
+    <!-- Menu Mobile - JavaScript Puro (executa primeiro) -->
     <script>
+        // Menu Mobile - Executado imediatamente
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            console.log('📱 Inicializando Menu Mobile...');
+            console.log('Botão:', mobileMenuBtn);
+            console.log('Menu:', mobileMenu);
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    console.log('🔄 Clique no botão hamburger detectado!');
+                    const isHidden = mobileMenu.classList.contains('hidden');
+                    
+                    if (isHidden) {
+                        mobileMenu.classList.remove('hidden');
+                        console.log('✅ Menu ABERTO');
+                    } else {
+                        mobileMenu.classList.add('hidden');
+                        console.log('✅ Menu FECHADO');
+                    }
+                });
+                console.log('✅ Menu mobile configurado com sucesso!');
+            } else {
+                console.error('❌ ERRO: Elementos não encontrados!', {
+                    botao: mobileMenuBtn,
+                    menu: mobileMenu
+                });
+            }
+        });
+    </script>
+    
+    <script type="module">
+        import { auth } from '../../assets/js/modules/auth.js';
+
         // Verificar autenticação
         window.addEventListener('DOMContentLoaded', function() {
-            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
-            const userRole = sessionStorage.getItem('userRole');
-            const userName = sessionStorage.getItem('userName');
-
-            // Verificar se está logado e se é empresa
-            if (!isLoggedIn || userRole !== 'empresa') {
-                // Redirecionar para login
-                window.location.href = 'login.html';
+            // Verifica se está autenticado
+            if (!auth.isAuthenticated()) {
+                console.log('❌ Usuário não autenticado, redirecionando...');
+                window.location.href = '../auth/login.html';
                 return;
             }
 
-            // Atualizar mensagem de boas-vindas
+            const user = auth.getCurrentUser();
+            
+            // Verifica se é empresa
+            if (user.tipo !== 'empresa') {
+                console.log('❌ Usuário não é empresa, redirecionando...');
+                window.location.href = '../sistema/dashboard.html';
+                return;
+            }
+
+            // Atualizar mensagem de boas-vindas com nome da empresa
             const welcomeMessage = document.getElementById('welcome-message');
             const welcomeMessageMobile = document.getElementById('welcome-message-mobile');
             
-            if (userName) {
-                const message = `Bem-vindo(a), ${userName}!`;
-                if (welcomeMessage) welcomeMessage.textContent = message;
-                if (welcomeMessageMobile) welcomeMessageMobile.textContent = message;
+            if (user.nome) {
+                const message = `Bem-vindo(a), ${user.nome}`;
+                if (welcomeMessage) {
+                    welcomeMessage.textContent = message;
+                    console.log('✅ Mensagem de boas-vindas atualizada (desktop):', message);
+                }
+                if (welcomeMessageMobile) {
+                    welcomeMessageMobile.textContent = message;
+                    console.log('✅ Mensagem de boas-vindas atualizada (mobile):', message);
+                }
+            }
+
+            console.log('✅ Dashboard empresa carregado para:', user.nome);
+
+            // CONFIGURAR LOGOUT - VERSÃO SIMPLIFICADA E DIRETA
+            const logoutBtn = document.getElementById('logout-btn');
+            const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+
+            console.log('🔧 Verificando botões de logout...');
+            console.log('Botão desktop:', logoutBtn);
+            console.log('Botão mobile:', logoutBtnMobile);
+
+            function doLogout() {
+                console.log('🚪🚪🚪 LOGOUT INICIADO! 🚪🚪🚪');
+                
+                try {
+                    // Limpar tudo
+                    console.log('Limpando localStorage...');
+                    localStorage.clear();
+                    
+                    console.log('Limpando sessionStorage...');
+                    sessionStorage.clear();
+                    
+                    console.log('✅ Tudo limpo! Redirecionando...');
+                    
+                    // Redirecionar
+                    window.location.href = '../auth/login.html';
+                    
+                } catch (error) {
+                    console.error('Erro:', error);
+                    // Tentar de qualquer forma
+                    window.location.href = '../auth/login.html';
+                }
+            }
+
+            if (logoutBtn) {
+                console.log('✅ Configurando botão desktop...');
+                logoutBtn.onclick = function(e) {
+                    e.preventDefault();
+                    console.log('CLIQUE NO BOTÃO DESKTOP DETECTADO!');
+                    doLogout();
+                    return false;
+                };
+            }
+            
+            if (logoutBtnMobile) {
+                console.log('✅ Configurando botão mobile...');
+                logoutBtnMobile.onclick = function(e) {
+                    e.preventDefault();
+                    console.log('CLIQUE NO BOTÃO MOBILE DETECTADO!');
+                    doLogout();
+                    return false;
+                };
+            }
+            
+            console.log('🎯 Configuração de logout concluída!')
+        });
+    </script>
+
+    <!-- Script de Exportação -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const exportPdfBtn = document.getElementById('export-pdf-btn');
+            const exportExcelBtn = document.getElementById('export-excel-btn');
+
+            // Dados do dashboard
+            const dashboardData = {
+                empresa: 'Empresa Demo Ltda',
+                dataGeracao: new Date().toLocaleDateString('pt-BR'),
+                horaGeracao: new Date().toLocaleTimeString('pt-BR'),
+                metricas: {
+                    relatosAtivos: 1811,
+                    taxaResolucao: 85,
+                    tempoMedioResposta: '4.2 horas',
+                    satisfacaoCidadaos: 94
+                },
+                ods: {
+                    ods6: { nome: 'ODS 6 - Água Limpa e Saneamento', relatos: 156, percentual: 79 },
+                    ods7: { nome: 'ODS 7 - Energia Limpa e Acessível', relatos: 203, percentual: 82 },
+                    ods9: { nome: 'ODS 9 - Indústria, Inovação e Infraestrutura', relatos: 347, percentual: 87 },
+                    ods11: { nome: 'ODS 11 - Cidades e Comunidades Sustentáveis', relatos: 582, percentual: 92 },
+                    ods12: { nome: 'ODS 12 - Consumo e Produção Responsáveis', relatos: 289, percentual: 80 },
+                    ods13: { nome: 'ODS 13 - Ação Contra a Mudança do Clima', relatos: 234, percentual: 78 }
+                },
+                engajamento: {
+                    hoje: 47,
+                    semana: 312,
+                    mes: 1248
+                }
+            };
+
+            // Exportar para PDF
+            if (exportPdfBtn) {
+                exportPdfBtn.addEventListener('click', function() {
+                    exportPdfBtn.disabled = true;
+                    exportPdfBtn.innerHTML = '<svg class="w-6 h-6 animate-spin" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3a7 7 0 100 14 7 7 0 000-14z"></path></svg> Gerando PDF...';
+                    
+                    try {
+                        const { jsPDF } = window.jspdf;
+                        const doc = new jsPDF();
+                        
+                        // Configurações
+                        const pageWidth = doc.internal.pageSize.getWidth();
+                        const margin = 20;
+                        let yPos = 20;
+
+                        // Header
+                        doc.setFillColor(0, 95, 115); // deep-blue
+                        doc.rect(0, 0, pageWidth, 40, 'F');
+                        
+                        doc.setTextColor(255, 255, 255);
+                        doc.setFontSize(24);
+                        doc.setFont(undefined, 'bold');
+                        doc.text('HubBS - Dashboard Empresa', margin, 25);
+                        
+                        doc.setFontSize(10);
+                        doc.setFont(undefined, 'normal');
+                        doc.text(`Gerado em: ${dashboardData.dataGeracao} às ${dashboardData.horaGeracao}`, margin, 33);
+
+                        yPos = 55;
+
+                        // Empresa
+                        doc.setTextColor(0, 0, 0);
+                        doc.setFontSize(14);
+                        doc.setFont(undefined, 'bold');
+                        doc.text('Empresa:', margin, yPos);
+                        doc.setFont(undefined, 'normal');
+                        doc.text(dashboardData.empresa, margin + 25, yPos);
+                        
+                        yPos += 15;
+
+                        // Métricas Gerais
+                        doc.setFontSize(16);
+                        doc.setFont(undefined, 'bold');
+                        doc.setTextColor(0, 95, 115);
+                        doc.text('📊 Métricas Gerais', margin, yPos);
+                        yPos += 10;
+
+                        doc.setFontSize(11);
+                        doc.setTextColor(0, 0, 0);
+                        doc.setFont(undefined, 'normal');
+                        
+                        const metricas = [
+                            [`Relatos Ativos:`, dashboardData.metricas.relatosAtivos],
+                            [`Taxa de Resolução:`, `${dashboardData.metricas.taxaResolucao}%`],
+                            [`Tempo Médio de Resposta:`, dashboardData.metricas.tempoMedioResposta],
+                            [`Satisfação dos Cidadãos:`, `${dashboardData.metricas.satisfacaoCidadaos}%`]
+                        ];
+
+                        metricas.forEach(([label, value]) => {
+                            doc.text(label, margin + 5, yPos);
+                            doc.setFont(undefined, 'bold');
+                            doc.text(String(value), margin + 70, yPos);
+                            doc.setFont(undefined, 'normal');
+                            yPos += 7;
+                        });
+
+                        yPos += 8;
+
+                        // ODS
+                        doc.setFontSize(16);
+                        doc.setFont(undefined, 'bold');
+                        doc.setTextColor(0, 95, 115);
+                        doc.text('🌍 Impacto por ODS', margin, yPos);
+                        yPos += 10;
+
+                        doc.setFontSize(11);
+                        doc.setTextColor(0, 0, 0);
+                        doc.setFont(undefined, 'normal');
+
+                        Object.values(dashboardData.ods).forEach(ods => {
+                            doc.setFont(undefined, 'bold');
+                            doc.text(ods.nome, margin + 5, yPos);
+                            yPos += 6;
+                            doc.setFont(undefined, 'normal');
+                            doc.text(`Relatos: ${ods.relatos} | Impacto: ${ods.percentual}%`, margin + 10, yPos);
+                            yPos += 8;
+                        });
+
+                        yPos += 5;
+
+                        // Engajamento
+                        doc.setFontSize(16);
+                        doc.setFont(undefined, 'bold');
+                        doc.setTextColor(0, 95, 115);
+                        doc.text('📈 Engajamento', margin, yPos);
+                        yPos += 10;
+
+                        doc.setFontSize(11);
+                        doc.setTextColor(0, 0, 0);
+                        doc.setFont(undefined, 'normal');
+                        
+                        const engajamento = [
+                            [`Hoje:`, `+${dashboardData.engajamento.hoje}`],
+                            [`Esta Semana:`, `+${dashboardData.engajamento.semana}`],
+                            [`Este Mês:`, `+${dashboardData.engajamento.mes}`]
+                        ];
+
+                        engajamento.forEach(([label, value]) => {
+                            doc.text(label, margin + 5, yPos);
+                            doc.setFont(undefined, 'bold');
+                            doc.text(value, margin + 40, yPos);
+                            doc.setFont(undefined, 'normal');
+                            yPos += 7;
+                        });
+
+                        // Footer
+                        doc.setFontSize(8);
+                        doc.setTextColor(128, 128, 128);
+                        doc.text('© 2025 HubBS - Hackathon Construinova Litoral', pageWidth / 2, 285, { align: 'center' });
+
+                        // Download
+                        doc.save(`HubBS_Dashboard_${dashboardData.dataGeracao.replace(/\//g, '-')}.pdf`);
+                        
+                        // Reset button
+                        setTimeout(() => {
+                            exportPdfBtn.disabled = false;
+                            exportPdfBtn.innerHTML = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg> Exportar PDF';
+                        }, 1000);
+
+                        console.log('✅ PDF gerado com sucesso!');
+                    } catch (error) {
+                        console.error('❌ Erro ao gerar PDF:', error);
+                        alert('Erro ao gerar PDF. Tente novamente.');
+                        exportPdfBtn.disabled = false;
+                        exportPdfBtn.innerHTML = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z"></path></svg> Exportar PDF';
+                    }
+                });
+            }
+
+            // Exportar para Excel
+            if (exportExcelBtn) {
+                exportExcelBtn.addEventListener('click', function() {
+                    exportExcelBtn.disabled = true;
+                    exportExcelBtn.innerHTML = '<svg class="w-6 h-6 animate-spin" fill="currentColor" viewBox="0 0 20 20"><path d="M10 3a7 7 0 100 14 7 7 0 000-14z"></path></svg> Gerando Excel...';
+                    
+                    try {
+                        // Criar workbook
+                        const wb = XLSX.utils.book_new();
+
+                        // Sheet 1: Resumo
+                        const resumoData = [
+                            ['HubBS - Dashboard Empresa'],
+                            [''],
+                            ['Empresa:', dashboardData.empresa],
+                            ['Data:', dashboardData.dataGeracao],
+                            ['Hora:', dashboardData.horaGeracao],
+                            [''],
+                            ['MÉTRICAS GERAIS'],
+                            ['Relatos Ativos', dashboardData.metricas.relatosAtivos],
+                            ['Taxa de Resolução', `${dashboardData.metricas.taxaResolucao}%`],
+                            ['Tempo Médio de Resposta', dashboardData.metricas.tempoMedioResposta],
+                            ['Satisfação dos Cidadãos', `${dashboardData.metricas.satisfacaoCidadaos}%`],
+                            [''],
+                            ['ENGAJAMENTO'],
+                            ['Hoje', dashboardData.engajamento.hoje],
+                            ['Esta Semana', dashboardData.engajamento.semana],
+                            ['Este Mês', dashboardData.engajamento.mes]
+                        ];
+
+                        const wsResumo = XLSX.utils.aoa_to_sheet(resumoData);
+                        
+                        // Largura das colunas
+                        wsResumo['!cols'] = [
+                            { wch: 30 },
+                            { wch: 20 }
+                        ];
+
+                        XLSX.utils.book_append_sheet(wb, wsResumo, 'Resumo');
+
+                        // Sheet 2: ODS
+                        const odsData = [
+                            ['ODS', 'Nome Completo', 'Relatos Ativos', 'Percentual de Impacto'],
+                            ['ODS 6', dashboardData.ods.ods6.nome, dashboardData.ods.ods6.relatos, `${dashboardData.ods.ods6.percentual}%`],
+                            ['ODS 7', dashboardData.ods.ods7.nome, dashboardData.ods.ods7.relatos, `${dashboardData.ods.ods7.percentual}%`],
+                            ['ODS 9', dashboardData.ods.ods9.nome, dashboardData.ods.ods9.relatos, `${dashboardData.ods.ods9.percentual}%`],
+                            ['ODS 11', dashboardData.ods.ods11.nome, dashboardData.ods.ods11.relatos, `${dashboardData.ods.ods11.percentual}%`],
+                            ['ODS 12', dashboardData.ods.ods12.nome, dashboardData.ods.ods12.relatos, `${dashboardData.ods.ods12.percentual}%`],
+                            ['ODS 13', dashboardData.ods.ods13.nome, dashboardData.ods.ods13.relatos, `${dashboardData.ods.ods13.percentual}%`],
+                            [''],
+                            ['TOTAL', '', dashboardData.metricas.relatosAtivos, '']
+                        ];
+
+                        const wsODS = XLSX.utils.aoa_to_sheet(odsData);
+                        
+                        wsODS['!cols'] = [
+                            { wch: 10 },
+                            { wch: 45 },
+                            { wch: 15 },
+                            { wch: 20 }
+                        ];
+
+                        XLSX.utils.book_append_sheet(wb, wsODS, 'ODS');
+
+                        // Sheet 3: Engajamento Detalhado
+                        const engajamentoData = [
+                            ['Período', 'Novos Relatos', 'Variação'],
+                            ['Hoje', dashboardData.engajamento.hoje, '+47'],
+                            ['Esta Semana', dashboardData.engajamento.semana, '+312'],
+                            ['Este Mês', dashboardData.engajamento.mes, '+1248'],
+                            [''],
+                            ['Taxa de Resolução', `${dashboardData.metricas.taxaResolucao}%`, ''],
+                            ['Tempo Médio', dashboardData.metricas.tempoMedioResposta, ''],
+                            ['Satisfação', `${dashboardData.metricas.satisfacaoCidadaos}%`, '']
+                        ];
+
+                        const wsEngajamento = XLSX.utils.aoa_to_sheet(engajamentoData);
+                        
+                        wsEngajamento['!cols'] = [
+                            { wch: 20 },
+                            { wch: 15 },
+                            { wch: 15 }
+                        ];
+
+                        XLSX.utils.book_append_sheet(wb, wsEngajamento, 'Engajamento');
+
+                        // Download
+                        XLSX.writeFile(wb, `HubBS_Dashboard_${dashboardData.dataGeracao.replace(/\//g, '-')}.xlsx`);
+                        
+                        // Reset button
+                        setTimeout(() => {
+                            exportExcelBtn.disabled = false;
+                            exportExcelBtn.innerHTML = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z" clip-rule="evenodd"></path></svg> Exportar Excel';
+                        }, 1000);
+
+                        console.log('✅ Excel gerado com sucesso!');
+                    } catch (error) {
+                        console.error('❌ Erro ao gerar Excel:', error);
+                        alert('Erro ao gerar Excel. Tente novamente.');
+                        exportExcelBtn.disabled = false;
+                        exportExcelBtn.innerHTML = '<svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z" clip-rule="evenodd"></path></svg> Exportar Excel';
+                    }
+                });
             }
         });
-
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        
-        if (mobileMenuBtn) {
-            mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-        }
-
-        // Logout Handlers
-        const logoutBtn = document.getElementById('logout-btn');
-        const logoutBtnMobile = document.getElementById('logout-btn-mobile');
-
-        function handleLogout() {
-            // Limpar sessão
-            sessionStorage.clear();
-            
-            // Redirecionar para página inicial
-            window.location.href = '../index.html';
-        }
-
-        if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
-        if (logoutBtnMobile) logoutBtnMobile.addEventListener('click', handleLogout);
     </script>
 </body>
 </html>

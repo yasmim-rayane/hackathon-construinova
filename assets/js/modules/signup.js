@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Verifica se já está autenticado
     if (auth.isAuthenticated()) {
         console.log('✅ Usuário já autenticado, redirecionando...');
-        window.location.href = 'dashboard.html';
+        window.location.href = '../sistema/dashboard.html';
         return;
     }
 
@@ -108,7 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(async () => {
                     const loginResult = await auth.login(userData.email, userData.senha);
                     if (loginResult.success) {
-                        window.location.href = 'dashboard.html';
+                        window.location.href = '../sistema/dashboard.html';
                     }
                 }, 1500);
 

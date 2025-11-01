@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Logout | HubBS</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-blue': '#005F73',
+                        'vibrant-teal': '#0A9396',
+                        'ods-green': '#94D2BD',
+                        'solar-yellow': '#E9D8A6',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Sistema de Logout Universal -->
+    <script src="../../assets/js/logout.js"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen">
+    <div class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-deep-blue to-vibrant-teal text-white p-8 rounded-lg shadow-xl mb-8">
+                <h1 class="text-3xl font-bold mb-2">
+                    <i class="fas fa-sign-out-alt mr-3"></i>
+                    Teste do Sistema de Logout
+                </h1>
+                <p class="text-lg opacity-90">Verificação de funcionalidade dos botões "Sair"</p>
+            </div>
+
+            <!-- Status da Sessão -->
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h2 class="text-2xl font-bold text-deep-blue mb-4">📊 Status da Sessão</h2>
+                <div id="session-status" class="space-y-3">
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded">
+                        <span class="font-semibold">Status:</span>
+                        <span id="status-text" class="px-4 py-2 rounded-full text-sm font-bold"></span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded">
+                        <span class="font-semibold">Usuário Logado:</span>
+                        <span id="user-name" class="text-gray-700"></span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded">
+                        <span class="font-semibold">Email:</span>
+                        <span id="user-email" class="text-gray-700"></span>
+                    </div>
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded">
+                        <span class="font-semibold">LocalStorage:</span>
+                        <span id="storage-info" class="text-sm text-gray-600"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botões de Teste -->
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h2 class="text-2xl font-bold text-deep-blue mb-4">🧪 Botões de Teste</h2>
+                <p class="text-gray-600 mb-6">Clique em qualquer botão abaixo para testar o logout:</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Botão 1 -->
+                    <button id="logout-button" class="bg-red-500 text-white px-6 py-4 rounded-lg hover:bg-red-600 transition font-bold flex items-center justify-center gap-2">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout (ID: logout-button)
+                    </button>
+
+                    <!-- Botão 2 -->
+                    <button id="logout-btn" class="bg-red-600 text-white px-6 py-4 rounded-lg hover:bg-red-700 transition font-bold flex items-center justify-center gap-2">
+                        <i class="fas fa-door-open"></i>
+                        Logout (ID: logout-btn)
+                    </button>
+
+                    <!-- Botão 3 -->
+                    <button id="logout-btn-mobile" class="bg-red-700 text-white px-6 py-4 rounded-lg hover:bg-red-800 transition font-bold flex items-center justify-center gap-2">
+                        <i class="fas fa-mobile-alt"></i>
+                        Logout Mobile
+                    </button>
+
+                    <!-- Botão 4 -->
+                    <button class="logout-btn bg-red-800 text-white px-6 py-4 rounded-lg hover:bg-red-900 transition font-bold flex items-center justify-center gap-2">
+                        <i class="fas fa-power-off"></i>
+                        Logout (Class: logout-btn)
+                    </button>
+
+                    <!-- Botão 5 -->
+                    <button data-logout class="bg-orange-500 text-white px-6 py-4 rounded-lg hover:bg-orange-600 transition font-bold flex items-center justify-center gap-2">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout (Data Attribute)
+                    </button>
+
+                    <!-- Botão 6 -->
+                    <button onclick="logoutManager.handleLogout()" class="bg-purple-500 text-white px-6 py-4 rounded-lg hover:bg-purple-600 transition font-bold flex items-center justify-center gap-2">
+                        <i class="fas fa-times-circle"></i>
+                        Logout (Manual Call)
+                    </button>
+                </div>
+            </div>
+
+            <!-- Simular Login -->
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h2 class="text-2xl font-bold text-deep-blue mb-4">🔑 Simular Sessão</h2>
+                <p class="text-gray-600 mb-4">Crie uma sessão falsa para testar o logout:</p>
+                
+                <div class="space-y-4">
+                    <input id="test-name" type="text" placeholder="Nome do usuário" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vibrant-teal focus:border-transparent">
+                    <input id="test-email" type="email" placeholder="Email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-vibrant-teal focus:border-transparent">
+                    
+                    <button onclick="createFakeSession()" class="bg-vibrant-teal text-white px-6 py-3 rounded-lg hover:bg-ods-green transition font-bold w-full">
+                        <i class="fas fa-user-plus mr-2"></i>
+                        Criar Sessão de Teste
+                    </button>
+                </div>
+            </div>
+
+            <!-- Console de Logs -->
+            <div class="bg-gray-900 text-green-400 p-6 rounded-lg shadow-lg font-mono text-sm">
+                <h2 class="text-xl font-bold mb-4 text-white">📝 Console de Logs</h2>
+                <div id="console-logs" class="space-y-1 max-h-64 overflow-y-auto">
+                    <div class="text-gray-500">Aguardando ações...</div>
+                </div>
+            </div>
+
+            <!-- Voltar -->
+            <div class="mt-8 text-center">
+                <a href="../../index.html" class="inline-block bg-deep-blue text-white px-8 py-3 rounded-lg hover:bg-vibrant-teal transition font-bold">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Voltar para Home
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Interceptar console.log
+        const originalLog = console.log;
+        const consoleContainer = document.getElementById('console-logs');
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.join(' ');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'text-green-400';
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            consoleContainer.appendChild(logEntry);
+            consoleContainer.scrollTop = consoleContainer.scrollHeight;
+        };
+
+        // Atualizar status da sessão
+        function updateSessionStatus() {
+            const session = localStorage.getItem('hubbs_session');
+            const statusText = document.getElementById('status-text');
+            const userName = document.getElementById('user-name');
+            const userEmail = document.getElementById('user-email');
+            const storageInfo = document.getElementById('storage-info');
+
+            if (session) {
+                try {
+                    const user = JSON.parse(session);
+                    statusText.textContent = '✅ LOGADO';
+                    statusText.className = 'px-4 py-2 rounded-full text-sm font-bold bg-green-100 text-green-800';
+                    userName.textContent = user.nome || 'N/A';
+                    userEmail.textContent = user.email || 'N/A';
+                    storageInfo.textContent = `${Object.keys(localStorage).length} chaves armazenadas`;
+                } catch (e) {
+                    statusText.textContent = '⚠️ ERRO';
+                    statusText.className = 'px-4 py-2 rounded-full text-sm font-bold bg-yellow-100 text-yellow-800';
+                }
+            } else {
+                statusText.textContent = '❌ DESLOGADO';
+                statusText.className = 'px-4 py-2 rounded-full text-sm font-bold bg-red-100 text-red-800';
+                userName.textContent = 'Nenhum';
+                userEmail.textContent = 'Nenhum';
+                storageInfo.textContent = `${Object.keys(localStorage).length} chaves armazenadas`;
+            }
+        }
+
+        // Criar sessão falsa
+        function createFakeSession() {
+            const name = document.getElementById('test-name').value || 'Usuário Teste';
+            const email = document.getElementById('test-email').value || 'teste@hubbs.com';
+            
+            const fakeUser = {
+                id: 999,
+                nome: name,
+                email: email,
+                tipo: 'cidadao',
+                pontos: 150,
+                nivel: 3,
+                loginTime: new Date().toISOString()
+            };
+
+            localStorage.setItem('hubbs_session', JSON.stringify(fakeUser));
+            console.log('✅ Sessão de teste criada:', name);
+            updateSessionStatus();
+        }
+
+        // Atualizar status a cada segundo
+        setInterval(updateSessionStatus, 1000);
+        
+        // Atualizar ao carregar
+        updateSessionStatus();
+
+        console.log('🚀 Página de teste de logout carregada');
+        console.log('🔧 LogoutManager está disponível globalmente');
+    </script>
+</body>
+</html>
