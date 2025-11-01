@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Métricas ODS | HUB - Construindo o Amanhã</title>
+    <meta name="description" content="Análise detalhada de métricas dos Objetivos de Desenvolvimento Sustentável">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-blue': '#005F73',
+                        'vibrant-teal': '#0A9396',
+                        'ods-green': '#94D2BD',
+                        'solar-yellow': '#E9D8A6',
+                        'warm-sand': '#FAF3E0',
+                        'dark-gray': '#2E2E2E',
+                        'ods-9': '#FF6B35',
+                        'ods-11': '#FFB627',
+                        'ods-13': '#3C6E47',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .ods-filter-btn.active {
+            background: linear-gradient(135deg, #005F73, #0A9396);
+            color: white;
+            border-color: #005F73;
+        }
+        .metric-card {
+            transition: all 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .filter-tag {
+            background: linear-gradient(135deg, #0A9396, #94D2BD);
+            color: white;
+            padding: 0.375rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .filter-tag button {
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            width: 1rem;
+            height: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.625rem;
+        }
+        .filter-tag button:hover {
+            background: rgba(255,255,255,0.5);
+        }
+        #active-filters.show {
+            display: flex !important;
+        }
+    </style>
+</head>
+
+<body class="bg-warm-sand">
+    <!-- Header/Navbar -->
+    <nav class="bg-deep-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="../index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
+                    <span class="text-2xl font-bold font-poppins">🌊 HUB</span>
+                    <span class="bg-solar-yellow text-deep-blue px-3 py-1 rounded-full text-xs font-bold">EMPRESA</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="empresa-dashboard.html" class="hover:text-solar-yellow transition font-medium">Dashboard</a>
+                    <a href="empresa-metricas-ods.html" class="text-solar-yellow border-b-2 border-solar-yellow font-bold">Métricas ODS</a>
+                    <span id="welcome-message" class="text-sm text-ods-green">Bem-vindo(a)!</span>
+                    <button id="logout-btn" class="bg-red-500 px-6 py-2 rounded-full hover:bg-red-600 transition font-semibold">
+                        Sair
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <a href="empresa-dashboard.html" class="block py-2 hover:text-solar-yellow transition">Dashboard</a>
+                <a href="empresa-metricas-ods.html" class="block py-2 text-solar-yellow font-bold">Métricas ODS</a>
+                <span id="welcome-message-mobile" class="block py-2 text-ods-green text-sm">Bem-vindo(a)!</span>
+                <button id="logout-btn-mobile" class="block w-full py-2 bg-red-500 rounded-lg hover:bg-red-600 transition mt-2">
+                    Sair
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-deep-blue to-vibrant-teal text-white py-16">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl">
+                <h1 class="text-4xl md:text-5xl font-bold font-poppins mb-4">🌍 Métricas ODS Detalhadas</h1>
+                <p class="text-xl mb-6">Análise de impacto por Objetivos de Desenvolvimento Sustentável da ONU</p>
+                <div class="flex flex-wrap gap-3">
+                    <span class="bg-ods-9 px-4 py-2 rounded-full text-sm font-semibold">ODS 9 - Inovação e Infraestrutura</span>
+                    <span class="bg-ods-11 px-4 py-2 rounded-full text-sm font-semibold">ODS 11 - Cidades Sustentáveis</span>
+                    <span class="bg-ods-13 px-4 py-2 rounded-full text-sm font-semibold text-white">ODS 13 - Ação Climática</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <section class="py-8 bg-white shadow-md sticky top-16 z-40">
+        <div class="container mx-auto px-6">
+            <h3 class="font-bold text-lg text-deep-blue mb-4">🔍 Filtros de Análise</h3>
+            
+            <!-- Filter Grid -->
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- ODS Filter -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-2">Objetivos ODS:</label>
+                    <div class="flex flex-wrap gap-2">
+                        <button class="ods-filter-btn active px-4 py-2 rounded-full border-2 border-gray-300 hover:border-deep-blue transition text-sm font-semibold" data-ods="all">
+                            Todos
+                        </button>
+                        <button class="ods-filter-btn px-4 py-2 rounded-full border-2 border-gray-300 hover:border-ods-9 transition text-sm font-semibold" data-ods="ods-9">
+                            ODS 9
+                        </button>
+                        <button class="ods-filter-btn px-4 py-2 rounded-full border-2 border-gray-300 hover:border-ods-11 transition text-sm font-semibold" data-ods="ods-11">
+                            ODS 11
+                        </button>
+                        <button class="ods-filter-btn px-4 py-2 rounded-full border-2 border-gray-300 hover:border-ods-13 transition text-sm font-semibold" data-ods="ods-13">
+                            ODS 13
+                        </button>
+                    </div>
+                </div>
+
+                <!-- City Filter -->
+                <div>
+                    <label for="city-filter" class="block text-sm font-semibold text-gray-700 mb-2">Cidades da Baixada Santista:</label>
+                    <select id="city-filter" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-deep-blue outline-none font-semibold text-sm">
+                        <option value="all">🌊 Todas as Cidades</option>
+                        <option value="santos">Santos</option>
+                        <option value="sao-vicente">São Vicente</option>
+                        <option value="guaruja">Guarujá</option>
+                        <option value="praia-grande">Praia Grande</option>
+                        <option value="cubatao">Cubatão</option>
+                        <option value="bertioga">Bertioga</option>
+                        <option value="mongagua">Mongaguá</option>
+                        <option value="itanhaem">Itanhaém</option>
+                        <option value="peruibe">Peruíbe</option>
+                    </select>
+                </div>
+
+                <!-- Period Filter -->
+                <div>
+                    <label for="period-filter" class="block text-sm font-semibold text-gray-700 mb-2">Período de Análise:</label>
+                    <select id="period-filter" class="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-deep-blue outline-none font-semibold text-sm">
+                        <option value="week">📅 Última semana</option>
+                        <option value="month" selected>📅 Último mês</option>
+                        <option value="quarter">📅 Último trimestre</option>
+                        <option value="year">📅 Último ano</option>
+                        <option value="all-time">📅 Todo o período</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Active Filters Display -->
+            <div id="active-filters" class="mt-4 flex flex-wrap gap-2 items-center hidden">
+                <span class="text-sm font-semibold text-gray-600">Filtros ativos:</span>
+                <div id="filter-tags" class="flex flex-wrap gap-2"></div>
+                <button id="clear-filters" class="text-sm text-red-600 hover:text-red-800 font-semibold ml-2">
+                    ✕ Limpar todos
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results Summary -->
+    <section class="py-4 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <p class="text-sm text-gray-600">
+                    Mostrando <span id="results-count" class="font-bold text-deep-blue">1,163</span> relatos
+                    <span id="filter-description" class="text-gray-500"></span>
+                </p>
+                <button id="refresh-data" class="text-sm text-vibrant-teal hover:text-deep-blue font-semibold flex items-center gap-2">
+                    🔄 Atualizar dados
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Summary Cards -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold font-poppins text-deep-blue mb-8">Resumo Geral</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- ODS 9 Summary -->
+                <div class="bg-gradient-to-br from-ods-9 to-orange-600 text-white p-8 rounded-2xl shadow-lg metric-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-5xl">🏗️</div>
+                        <div class="text-right">
+                            <div class="text-sm opacity-90">ODS 9</div>
+                            <div class="text-xs opacity-75">Inovação e Infraestrutura</div>
+                        </div>
+                    </div>
+                    <div class="text-4xl font-bold mb-2" id="ods9-total">347</div>
+                    <p class="text-sm opacity-90 mb-4">Relatos categorizados</p>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <div class="opacity-75">Resolvidos</div>
+                            <div class="font-bold text-lg" id="ods9-resolved">289</div>
+                        </div>
+                        <div>
+                            <div class="opacity-75">Em andamento</div>
+                            <div class="font-bold text-lg" id="ods9-pending">58</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ODS 11 Summary -->
+                <div class="bg-gradient-to-br from-ods-11 to-yellow-600 text-white p-8 rounded-2xl shadow-lg metric-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-5xl">🏙️</div>
+                        <div class="text-right">
+                            <div class="text-sm opacity-90">ODS 11</div>
+                            <div class="text-xs opacity-75">Cidades Sustentáveis</div>
+                        </div>
+                    </div>
+                    <div class="text-4xl font-bold mb-2" id="ods11-total">582</div>
+                    <p class="text-sm opacity-90 mb-4">Relatos categorizados</p>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <div class="opacity-75">Resolvidos</div>
+                            <div class="font-bold text-lg" id="ods11-resolved">461</div>
+                        </div>
+                        <div>
+                            <div class="opacity-75">Em andamento</div>
+                            <div class="font-bold text-lg" id="ods11-pending">121</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ODS 13 Summary -->
+                <div class="bg-gradient-to-br from-ods-13 to-green-700 text-white p-8 rounded-2xl shadow-lg metric-card">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="text-5xl">🌱</div>
+                        <div class="text-right">
+                            <div class="text-sm opacity-90">ODS 13</div>
+                            <div class="text-xs opacity-75">Ação Climática</div>
+                        </div>
+                    </div>
+                    <div class="text-4xl font-bold mb-2" id="ods13-total">234</div>
+                    <p class="text-sm opacity-90 mb-4">Relatos categorizados</p>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <div class="opacity-75">Resolvidos</div>
+                            <div class="font-bold text-lg" id="ods13-resolved">178</div>
+                        </div>
+                        <div>
+                            <div class="opacity-75">Em andamento</div>
+                            <div class="font-bold text-lg" id="ods13-pending">56</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Metrics -->
+            <h2 class="text-3xl font-bold font-poppins text-deep-blue mb-8">Métricas Detalhadas por Categoria</h2>
+
+            <!-- ODS 9 Detailed -->
+            <div class="metric-section mb-12" data-ods="ods-9">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="bg-gradient-to-r from-ods-9 to-orange-600 text-white p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="text-5xl">🏗️</div>
+                            <div>
+                                <h3 class="text-2xl font-bold font-poppins">ODS 9 - Indústria, Inovação e Infraestrutura</h3>
+                                <p class="text-sm opacity-90">Construir infraestruturas resilientes, promover a industrialização inclusiva e sustentável e fomentar a inovação</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8">
+                        <div class="grid md:grid-cols-2 gap-8 mb-8">
+                            <!-- Chart -->
+                            <div>
+                                <h4 class="font-bold text-lg mb-4 text-deep-blue">Distribuição de Relatos</h4>
+                                <canvas id="chart-ods9" height="100"></canvas>
+                            </div>
+                            
+                            <!-- Categories -->
+                            <div>
+                                <h4 class="font-bold text-lg mb-4 text-deep-blue">Categorias Principais</h4>
+                                <div class="space-y-4">
+                                    <div class="border-l-4 border-ods-9 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Infraestrutura de Transporte</span>
+                                            <span class="text-ods-9 font-bold">142</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-9 h-2 rounded-full" style="width: 41%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="border-l-4 border-ods-9 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Saneamento Básico</span>
+                                            <span class="text-ods-9 font-bold">98</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-9 h-2 rounded-full" style="width: 28%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="border-l-4 border-ods-9 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Telecomunicações</span>
+                                            <span class="text-ods-9 font-bold">67</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-9 h-2 rounded-full" style="width: 19%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="border-l-4 border-ods-9 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Energia e Iluminação</span>
+                                            <span class="text-ods-9 font-bold">40</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-9 h-2 rounded-full" style="width: 12%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Reports -->
+                        <div>
+                            <h4 class="font-bold text-lg mb-4 text-deep-blue">Relatos Recentes</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                    <div class="text-2xl">🚧</div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold text-sm mb-1">Buraco na Avenida Conselheiro Nébias</div>
+                                        <div class="text-xs text-gray-600">Categoria: Infraestrutura de Transporte • há 2 horas</div>
+                                    </div>
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold">Em análise</span>
+                                </div>
+                                
+                                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                    <div class="text-2xl">💧</div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold text-sm mb-1">Vazamento de água na Rua da Praia</div>
+                                        <div class="text-xs text-gray-600">Categoria: Saneamento Básico • há 5 horas</div>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">Resolvido</span>
+                                </div>
+                                
+                                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                    <div class="text-2xl">💡</div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold text-sm mb-1">Poste de iluminação apagado no Centro</div>
+                                        <div class="text-xs text-gray-600">Categoria: Energia e Iluminação • há 1 dia</div>
+                                    </div>
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold">Em progresso</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ODS 11 Detailed -->
+            <div class="metric-section mb-12" data-ods="ods-11">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="bg-gradient-to-r from-ods-11 to-yellow-600 text-white p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="text-5xl">🏙️</div>
+                            <div>
+                                <h3 class="text-2xl font-bold font-poppins">ODS 11 - Cidades e Comunidades Sustentáveis</h3>
+                                <p class="text-sm opacity-90">Tornar as cidades e os assentamentos humanos inclusivos, seguros, resilientes e sustentáveis</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8">
+                        <div class="grid md:grid-cols-2 gap-8 mb-8">
+                            <!-- Chart -->
+                            <div>
+                                <h4 class="font-bold text-lg mb-4 text-deep-blue">Distribuição de Relatos</h4>
+                                <canvas id="chart-ods11" height="100"></canvas>
+                            </div>
+                            
+                            <!-- Categories -->
+                            <div>
+                                <h4 class="font-bold text-lg mb-4 text-deep-blue">Categorias Principais</h4>
+                                <div class="space-y-4">
+                                    <div class="border-l-4 border-ods-11 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Espaços Públicos</span>
+                                            <span class="text-ods-11 font-bold">187</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-11 h-2 rounded-full" style="width: 32%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="border-l-4 border-ods-11 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Limpeza Urbana</span>
+                                            <span class="text-ods-11 font-bold">156</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-11 h-2 rounded-full" style="width: 27%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="border-l-4 border-ods-11 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Mobilidade Urbana</span>
+                                            <span class="text-ods-11 font-bold">134</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-11 h-2 rounded-full" style="width: 23%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="border-l-4 border-ods-11 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Segurança Pública</span>
+                                            <span class="text-ods-11 font-bold">105</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-11 h-2 rounded-full" style="width: 18%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Reports -->
+                        <div>
+                            <h4 class="font-bold text-lg mb-4 text-deep-blue">Relatos Recentes</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                    <div class="text-2xl">🗑️</div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold text-sm mb-1">Acúmulo de lixo na orla da praia</div>
+                                        <div class="text-xs text-gray-600">Categoria: Limpeza Urbana • há 1 hora</div>
+                                    </div>
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold">Em análise</span>
+                                </div>
+                                
+                                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                    <div class="text-2xl">🌳</div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold text-sm mb-1">Praça sem manutenção no Boqueirão</div>
+                                        <div class="text-xs text-gray-600">Categoria: Espaços Públicos • há 3 horas</div>
+                                    </div>
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold">Em progresso</span>
+                                </div>
+                                
+                                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                    <div class="text-2xl">🚌</div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold text-sm mb-1">Ponto de ônibus danificado</div>
+                                        <div class="text-xs text-gray-600">Categoria: Mobilidade Urbana • há 6 horas</div>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">Resolvido</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ODS 13 Detailed -->
+            <div class="metric-section mb-12" data-ods="ods-13">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden">
+                    <div class="bg-gradient-to-r from-ods-13 to-green-700 text-white p-6">
+                        <div class="flex items-center gap-4">
+                            <div class="text-5xl">🌱</div>
+                            <div>
+                                <h3 class="text-2xl font-bold font-poppins">ODS 13 - Ação Contra a Mudança Global do Clima</h3>
+                                <p class="text-sm opacity-90">Tomar medidas urgentes para combater a mudança climática e seus impactos</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-8">
+                        <div class="grid md:grid-cols-2 gap-8 mb-8">
+                            <!-- Chart -->
+                            <div>
+                                <h4 class="font-bold text-lg mb-4 text-deep-blue">Distribuição de Relatos</h4>
+                                <canvas id="chart-ods13" height="100"></canvas>
+                            </div>
+                            
+                            <!-- Categories -->
+                            <div>
+                                <h4 class="font-bold text-lg mb-4 text-deep-blue">Categorias Principais</h4>
+                                <div class="space-y-4">
+                                    <div class="border-l-4 border-ods-13 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Áreas Verdes</span>
+                                            <span class="text-ods-13 font-bold">89</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-13 h-2 rounded-full" style="width: 38%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="border-l-4 border-ods-13 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Poluição Ambiental</span>
+                                            <span class="text-ods-13 font-bold">67</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-13 h-2 rounded-full" style="width: 29%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="border-l-4 border-ods-13 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Gestão de Resíduos</span>
+                                            <span class="text-ods-13 font-bold">48</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-13 h-2 rounded-full" style="width: 21%"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="border-l-4 border-ods-13 pl-4 py-2">
+                                        <div class="flex justify-between items-center mb-1">
+                                            <span class="font-semibold">Eficiência Energética</span>
+                                            <span class="text-ods-13 font-bold">30</span>
+                                        </div>
+                                        <div class="w-full bg-gray-200 rounded-full h-2">
+                                            <div class="bg-ods-13 h-2 rounded-full" style="width: 13%"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recent Reports -->
+                        <div>
+                            <h4 class="font-bold text-lg mb-4 text-deep-blue">Relatos Recentes</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                    <div class="text-2xl">🌲</div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold text-sm mb-1">Árvores precisando de poda no Jardim Botânico</div>
+                                        <div class="text-xs text-gray-600">Categoria: Áreas Verdes • há 30 min</div>
+                                    </div>
+                                    <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-bold">Em análise</span>
+                                </div>
+                                
+                                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                    <div class="text-2xl">♻️</div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold text-sm mb-1">Falta de lixeiras para reciclagem</div>
+                                        <div class="text-xs text-gray-600">Categoria: Gestão de Resíduos • há 4 horas</div>
+                                    </div>
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-bold">Em progresso</span>
+                                </div>
+                                
+                                <div class="flex items-start gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                    <div class="text-2xl">🏭</div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold text-sm mb-1">Poluição do ar próximo ao porto</div>
+                                        <div class="text-xs text-gray-600">Categoria: Poluição Ambiental • há 1 dia</div>
+                                    </div>
+                                    <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-bold">Resolvido</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Export Section -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl font-bold font-poppins text-deep-blue mb-4">Exportar Relatórios</h2>
+            <p class="text-gray-600 mb-8">Baixe os dados completos para análise detalhada</p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="bg-gradient-to-r from-deep-blue to-vibrant-teal text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition">
+                    📊 Exportar Excel
+                </button>
+                <button class="bg-gradient-to-r from-ods-green to-green-600 text-white px-8 py-3 rounded-full font-bold hover:opacity-90 transition">
+                    📄 Exportar PDF
+                </button>
+                <button class="bg-gradient-to-r from-solar-yellow to-yellow-600 text-deep-blue px-8 py-3 rounded-full font-bold hover:opacity-90 transition">
+                    📈 Dashboard Interativo
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-gray text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <p class="text-gray-400 font-roboto text-sm">
+                    &copy; 2025 HUB - Hackathon Construinova Litoral. Desenvolvido com 💙 para construir o amanhã.
+                </p>
+                <p class="text-gray-500 text-xs mt-2">
+                    Métricas ODS alinhadas aos Objetivos de Desenvolvimento Sustentável da ONU
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Verificar autenticação
+        window.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = sessionStorage.getItem('isLoggedIn');
+            const userRole = sessionStorage.getItem('userRole');
+            const userName = sessionStorage.getItem('userName');
+
+            if (!isLoggedIn || userRole !== 'empresa') {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Atualizar mensagem de boas-vindas
+            const welcomeMessage = document.getElementById('welcome-message');
+            const welcomeMessageMobile = document.getElementById('welcome-message-mobile');
+            
+            if (userName) {
+                const message = `Bem-vindo(a), ${userName}!`;
+                if (welcomeMessage) welcomeMessage.textContent = message;
+                if (welcomeMessageMobile) welcomeMessageMobile.textContent = message;
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Logout Handlers
+        const logoutBtn = document.getElementById('logout-btn');
+        const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+
+        function handleLogout() {
+            sessionStorage.clear();
+            window.location.href = '../index.html';
+        }
+
+        if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+        if (logoutBtnMobile) logoutBtnMobile.addEventListener('click', handleLogout);
+
+        // ==========================================
+        // SISTEMA DE FILTROS MÚLTIPLOS E DINÂMICOS
+        // ==========================================
+
+        // Estado dos filtros
+        const filterState = {
+            ods: 'all',
+            city: 'all',
+            period: 'month'
+        };
+
+        // Dados simulados por cidade
+        const cityData = {
+            'santos': { ods9: 142, ods11: 234, ods13: 98, total: 474 },
+            'sao-vicente': { ods9: 67, ods11: 112, ods13: 45, total: 224 },
+            'guaruja': { ods9: 54, ods11: 89, ods13: 38, total: 181 },
+            'praia-grande': { ods9: 38, ods11: 67, ods13: 24, total: 129 },
+            'cubatao': { ods9: 23, ods11: 34, ods13: 15, total: 72 },
+            'bertioga': { ods9: 12, ods11: 18, ods13: 8, total: 38 },
+            'mongagua': { ods9: 6, ods11: 14, ods13: 4, total: 24 },
+            'itanhaem': { ods9: 3, ods11: 9, ods13: 2, total: 14 },
+            'peruibe': { ods9: 2, ods11: 5, ods13: 0, total: 7 }
+        };
+
+        const cityNames = {
+            'santos': 'Santos',
+            'sao-vicente': 'São Vicente',
+            'guaruja': 'Guarujá',
+            'praia-grande': 'Praia Grande',
+            'cubatao': 'Cubatão',
+            'bertioga': 'Bertioga',
+            'mongagua': 'Mongaguá',
+            'itanhaem': 'Itanhaém',
+            'peruibe': 'Peruíbe'
+        };
+
+        const periodNames = {
+            'week': 'última semana',
+            'month': 'último mês',
+            'quarter': 'último trimestre',
+            'year': 'último ano',
+            'all-time': 'todo o período'
+        };
+
+        // Elementos
+        const odsFilterButtons = document.querySelectorAll('.ods-filter-btn');
+        const cityFilter = document.getElementById('city-filter');
+        const periodFilter = document.getElementById('period-filter');
+        const metricSections = document.querySelectorAll('.metric-section');
+        const activeFiltersDiv = document.getElementById('active-filters');
+        const filterTagsDiv = document.getElementById('filter-tags');
+        const clearFiltersBtn = document.getElementById('clear-filters');
+        const resultsCount = document.getElementById('results-count');
+        const filterDescription = document.getElementById('filter-description');
+        const refreshDataBtn = document.getElementById('refresh-data');
+
+        // Função para atualizar tags de filtros ativos
+        function updateFilterTags() {
+            filterTagsDiv.innerHTML = '';
+            let hasActiveFilters = false;
+
+            // ODS filter tag
+            if (filterState.ods !== 'all') {
+                hasActiveFilters = true;
+                const tag = createFilterTag('ODS', filterState.ods.toUpperCase().replace('-', ' '), () => {
+                    filterState.ods = 'all';
+                    odsFilterButtons.forEach(b => b.classList.remove('active'));
+                    document.querySelector('[data-ods="all"]').classList.add('active');
+                    applyFilters();
+                });
+                filterTagsDiv.appendChild(tag);
+            }
+
+            // City filter tag
+            if (filterState.city !== 'all') {
+                hasActiveFilters = true;
+                const tag = createFilterTag('Cidade', cityNames[filterState.city], () => {
+                    filterState.city = 'all';
+                    cityFilter.value = 'all';
+                    applyFilters();
+                });
+                filterTagsDiv.appendChild(tag);
+            }
+
+            // Period filter tag
+            if (filterState.period !== 'month') {
+                hasActiveFilters = true;
+                const tag = createFilterTag('Período', periodNames[filterState.period], () => {
+                    filterState.period = 'month';
+                    periodFilter.value = 'month';
+                    applyFilters();
+                });
+                filterTagsDiv.appendChild(tag);
+            }
+
+            // Show/hide active filters section
+            if (hasActiveFilters) {
+                activeFiltersDiv.classList.add('show');
+                activeFiltersDiv.classList.remove('hidden');
+            } else {
+                activeFiltersDiv.classList.remove('show');
+                activeFiltersDiv.classList.add('hidden');
+            }
+        }
+
+        // Criar tag de filtro
+        function createFilterTag(label, value, onRemove) {
+            const tag = document.createElement('div');
+            tag.className = 'filter-tag';
+            tag.innerHTML = `
+                ${label}: ${value}
+                <button onclick="event.stopPropagation()">✕</button>
+            `;
+            tag.querySelector('button').addEventListener('click', (e) => {
+                e.preventDefault();
+                onRemove();
+            });
+            return tag;
+        }
+
+        // Aplicar filtros
+        function applyFilters() {
+            // Mostrar/ocultar seções baseado no filtro ODS
+            metricSections.forEach(section => {
+                const odsType = section.getAttribute('data-ods');
+                
+                if (filterState.ods === 'all') {
+                    section.style.display = 'block';
+                } else {
+                    section.style.display = odsType === filterState.ods ? 'block' : 'none';
+                }
+            });
+
+            // Atualizar contagem de resultados
+            updateResultsCount();
+
+            // Atualizar tags de filtros
+            updateFilterTags();
+
+            // Atualizar descrição
+            updateFilterDescription();
+
+            // Atualizar gráficos (se necessário)
+            console.log('Filtros aplicados:', filterState);
+        }
+
+        // Atualizar contagem de resultados
+        function updateResultsCount() {
+            let count = 0;
+
+            if (filterState.city === 'all') {
+                // Contagem total baseada em ODS
+                if (filterState.ods === 'all') {
+                    count = 1163; // Total geral
+                } else if (filterState.ods === 'ods-9') {
+                    count = 347;
+                } else if (filterState.ods === 'ods-11') {
+                    count = 582;
+                } else if (filterState.ods === 'ods-13') {
+                    count = 234;
+                }
+            } else {
+                // Contagem por cidade
+                const city = cityData[filterState.city];
+                if (filterState.ods === 'all') {
+                    count = city.total;
+                } else if (filterState.ods === 'ods-9') {
+                    count = city.ods9;
+                } else if (filterState.ods === 'ods-11') {
+                    count = city.ods11;
+                } else if (filterState.ods === 'ods-13') {
+                    count = city.ods13;
+                }
+            }
+
+            resultsCount.textContent = count.toLocaleString('pt-BR');
+        }
+
+        // Atualizar descrição dos filtros
+        function updateFilterDescription() {
+            let parts = [];
+
+            if (filterState.city !== 'all') {
+                parts.push(`em ${cityNames[filterState.city]}`);
+            }
+
+            if (filterState.ods !== 'all') {
+                parts.push(`categorizados em ${filterState.ods.toUpperCase().replace('-', ' ')}`);
+            }
+
+            if (filterState.period !== 'month') {
+                parts.push(`no período: ${periodNames[filterState.period]}`);
+            }
+
+            filterDescription.textContent = parts.length > 0 ? ` (${parts.join(', ')})` : '';
+        }
+
+        // Event Listeners para ODS
+        odsFilterButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                odsFilterButtons.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filterState.ods = this.getAttribute('data-ods');
+                applyFilters();
+            });
+        });
+
+        // Event Listener para Cidade
+        if (cityFilter) {
+            cityFilter.addEventListener('change', function() {
+                filterState.city = this.value;
+                applyFilters();
+            });
+        }
+
+        // Event Listener para Período
+        if (periodFilter) {
+            periodFilter.addEventListener('change', function() {
+                filterState.period = this.value;
+                applyFilters();
+            });
+        }
+
+        // Limpar todos os filtros
+        if (clearFiltersBtn) {
+            clearFiltersBtn.addEventListener('click', function() {
+                // Reset ODS
+                filterState.ods = 'all';
+                odsFilterButtons.forEach(b => b.classList.remove('active'));
+                document.querySelector('[data-ods="all"]').classList.add('active');
+
+                // Reset City
+                filterState.city = 'all';
+                cityFilter.value = 'all';
+
+                // Reset Period
+                filterState.period = 'month';
+                periodFilter.value = 'month';
+
+                applyFilters();
+            });
+        }
+
+        // Atualizar dados
+        if (refreshDataBtn) {
+            refreshDataBtn.addEventListener('click', function() {
+                this.innerHTML = '⏳ Atualizando...';
+                setTimeout(() => {
+                    this.innerHTML = '🔄 Atualizar dados';
+                    applyFilters();
+                    // Aqui você faria uma chamada real à API
+                }, 1000);
+            });
+        }
+
+        // Create Charts
+        function createChart(canvasId, labels, data, backgroundColor) {
+            const ctx = document.getElementById(canvasId);
+            if (!ctx) return;
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: backgroundColor,
+                        borderWidth: 2,
+                        borderColor: '#fff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 15,
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize Charts when DOM is loaded
+        window.addEventListener('load', function() {
+            // ODS 9 Chart
+            createChart(
+                'chart-ods9',
+                ['Resolvidos', 'Em Progresso', 'Em Análise'],
+                [289, 38, 20],
+                ['#10b981', '#3b82f6', '#f59e0b']
+            );
+
+            // ODS 11 Chart
+            createChart(
+                'chart-ods11',
+                ['Resolvidos', 'Em Progresso', 'Em Análise'],
+                [461, 87, 34],
+                ['#10b981', '#3b82f6', '#f59e0b']
+            );
+
+            // ODS 13 Chart
+            createChart(
+                'chart-ods13',
+                ['Resolvidos', 'Em Progresso', 'Em Análise'],
+                [178, 42, 14],
+                ['#10b981', '#3b82f6', '#f59e0b']
+            );
+
+            // Aplicar filtros iniciais
+            applyFilters();
+        });
+    </script>
+</body>
+</html>

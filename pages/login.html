@@ -102,18 +102,18 @@
                 <div id="login-alert" class="hidden mb-4 p-4 rounded-lg"></div>
 
                 <form id="login-form" class="space-y-6">
-                    <!-- Email -->
+                    <!-- Email/Username -->
                     <div>
                         <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
-                            E-mail
+                            E-mail ou Usuário
                         </label>
                         <input 
-                            type="email" 
+                            type="text" 
                             id="email" 
                             name="email" 
                             required
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition"
-                            placeholder="seu@email.com"
+                            placeholder="seu@email.com ou admin"
                         >
                         <p id="email-error" class="text-red-500 text-sm mt-1 hidden"></p>
                     </div>
@@ -132,6 +132,13 @@
                             placeholder="Digite sua senha"
                         >
                         <p id="password-error" class="text-red-500 text-sm mt-1 hidden"></p>
+                    </div>
+                    
+                    <!-- Demo Access Info -->
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-3">
+                        <p class="text-xs text-blue-800">
+                            <strong>🔑 Acesso Demo:</strong> Use <code class="bg-blue-100 px-1 rounded">admin</code> / <code class="bg-blue-100 px-1 rounded">admin</code> para testar o painel de empresa
+                        </p>
                     </div>
 
                     <!-- Remember Me & Forgot Password -->
@@ -199,6 +206,94 @@
             </div>
         </div>
     </footer>
+
+    <!-- Login Script -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuButton) {
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Login Form Handler
+        const loginForm = document.getElementById('login-form');
+        const loginAlert = document.getElementById('login-alert');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        // Credenciais de exemplo (em produção, isso seria validado no backend)
+        const adminCredentials = {
+            username: 'admin',
+            password: 'admin',
+            role: 'empresa'
+        };
+
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = emailInput.value.trim();
+            const password = passwordInput.value;
+
+            // Limpar mensagens de erro anteriores
+            loginAlert.classList.add('hidden');
+
+            // Validação Admin
+            if (email === adminCredentials.username && password === adminCredentials.password) {
+                // Login Admin bem-sucedido
+                showAlert('success', '✅ Login realizado com sucesso! Redirecionando...');
+                
+                // Salvar sessão (simulado)
+                sessionStorage.setItem('userRole', 'empresa');
+                sessionStorage.setItem('userName', 'Empresa Demo');
+                sessionStorage.setItem('userEmail', 'admin@empresa.com');
+                sessionStorage.setItem('isLoggedIn', 'true');
+                
+                // Redirecionar para dashboard de empresa
+                setTimeout(() => {
+                    window.location.href = 'empresa-dashboard.html';
+                }, 1500);
+                
+                return;
+            }
+
+            // Validação de email regular (simulada)
+            if (email.includes('@') && password.length >= 6) {
+                showAlert('success', '✅ Login realizado com sucesso! Redirecionando...');
+                
+                // Salvar sessão de usuário comum
+                sessionStorage.setItem('userRole', 'cidadao');
+                sessionStorage.setItem('userName', email.split('@')[0]);
+                sessionStorage.setItem('userEmail', email);
+                sessionStorage.setItem('isLoggedIn', 'true');
+                
+                // Redirecionar para dashboard do cidadão
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+                
+                return;
+            }
+
+            // Credenciais inválidas
+            showAlert('error', '❌ Usuário ou senha incorretos. Tente novamente.');
+        });
+
+        function showAlert(type, message) {
+            loginAlert.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'bg-red-100', 'text-red-800');
+            
+            if (type === 'success') {
+                loginAlert.classList.add('bg-green-100', 'text-green-800', 'border', 'border-green-300');
+            } else {
+                loginAlert.classList.add('bg-red-100', 'text-red-800', 'border', 'border-red-300');
+            }
+            
+            loginAlert.textContent = message;
+        }
+    </script>
 </body>
 
 </html>
