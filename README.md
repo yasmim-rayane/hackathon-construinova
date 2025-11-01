@@ -102,19 +102,28 @@ A identidade visual reflete a atmosfera praiana e sustentável da Baixada Santis
 ```
 Hackathon/
 │
-├── index.html          # Landing page principal
-├── sobre.html          # Sobre a HUB (missão, visão, pilares)
-├── dashboard.html      # Dashboard público com gráficos
-├── recompensas.html    # Sistema de recompensas e parcerias
-├── empresa.html        # Painel para empresas
-├── login.html          # Página de login
-├── signup.html         # Página de cadastro
+├── index.html              # Landing page principal
 │
-├── app.js              # JavaScript principal (validações, interatividade)
-├── dashboard.js        # Lógica dos gráficos Chart.js
-├── style.css           # Estilos customizados + media queries
+├── pages/                  # Páginas da aplicação
+│   ├── sobre.html          # Sobre a HUB (missão, visão, pilares)
+│   ├── dashboard.html      # Dashboard público com gráficos
+│   ├── recompensas.html    # Sistema de recompensas e parcerias
+│   ├── planos.html         # Planos de assinatura (Prefeituras e Empresas)
+│   ├── empresa.html        # Landing page para empresas
+│   ├── login.html          # Página de login
+│   ├── signup.html         # Página de cadastro
+│   │
+│   └── empresa/            # Área empresarial (após login)
+│       ├── dashboard.html      # Dashboard principal da empresa
+│       ├── metricas-ods.html   # Métricas detalhadas por ODS
+│       ├── relatorios.html     # Relatórios e exportações
+│       └── README.md           # Documentação da área empresarial
 │
-└── README.md           # Esta documentação
+├── app.js                  # JavaScript principal (validações, interatividade)
+├── dashboard.js            # Lógica dos gráficos Chart.js
+├── style.css               # Estilos customizados + media queries
+│
+└── README.md               # Esta documentação
 ```
 
 ## 🌍 Objetivos de Desenvolvimento Sustentável (ODS)

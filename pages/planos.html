@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos e Assinaturas | HUB - Construindo o Amanhã</title>
+    <meta name="description" content="Soluções personalizadas para prefeituras e empresas privadas">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-blue': '#005F73',
+                        'vibrant-teal': '#0A9396',
+                        'ods-green': '#94D2BD',
+                        'solar-yellow': '#E9D8A6',
+                        'warm-sand': '#FAF3E0',
+                        'dark-gray': '#2E2E2E',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .plan-card {
+            transition: all 0.3s ease;
+        }
+        .plan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+        .plan-featured {
+            border: 3px solid #0A9396;
+            position: relative;
+        }
+        .plan-featured::before {
+            content: '⭐ MAIS POPULAR';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #0A9396, #94D2BD);
+            color: white;
+            padding: 6px 24px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #0A9396;
+        }
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+    </style>
+</head>
+
+<body class="bg-warm-sand">
+    <!-- Header/Navbar -->
+    <nav class="bg-deep-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-4">
+                    <a href="../index.html" class="text-2xl font-bold font-poppins hover:text-ods-green transition">
+                        🌊 HUB
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="../index.html" class="hover:text-ods-green transition font-medium">Início</a>
+                    <a href="construindo.html" class="hover:text-ods-green transition font-medium">Sobre</a>
+                    <a href="planos.html" class="text-ods-green font-bold">Planos</a>
+                    <a href="login.html" class="bg-vibrant-teal hover:bg-ods-green px-6 py-2 rounded-lg font-semibold transition">
+                        Entrar
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <a href="../index.html" class="block py-2 hover:text-ods-green transition">Início</a>
+                <a href="construindo.html" class="block py-2 hover:text-ods-green transition">Sobre</a>
+                <a href="planos.html" class="block py-2 text-ods-green font-bold">Planos</a>
+                <a href="login.html" class="block py-2 hover:text-ods-green transition">Entrar</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-deep-blue to-vibrant-teal text-white py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold font-poppins mb-6">
+                Soluções para Transformar <br class="hidden md:block">Sua Cidade
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+                Planos personalizados para prefeituras e empresas comprometidas com a sustentabilidade e participação cidadã
+            </p>
+            
+            <!-- Toggle Mensal/Anual -->
+            <div class="flex items-center justify-center gap-4 mb-8">
+                <span id="monthly-label" class="text-lg font-semibold">Mensal</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="billing-toggle">
+                    <span class="slider"></span>
+                </label>
+                <span id="annual-label" class="text-lg opacity-60">Anual</span>
+                <span class="bg-solar-yellow text-deep-blue px-3 py-1 rounded-full text-sm font-bold">
+                    Economize 20%
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planos para Prefeituras -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold font-poppins text-deep-blue mb-4">🏛️ Planos para Prefeituras</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Soluções escaláveis para gestão pública eficiente e transparente
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Plano Starter -->
+                <div class="plan-card bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-200">
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-4">🌱</div>
+                        <h3 class="text-2xl font-bold font-poppins text-deep-blue mb-2">Starter</h3>
+                        <p class="text-gray-600 text-sm">Ideal para pequenas cidades</p>
+                    </div>
+                    
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-bold text-deep-blue mb-2">
+                            R$ <span class="price-monthly">2.499</span><span class="price-annual hidden">1.999</span>
+                        </div>
+                        <p class="text-gray-500 text-sm">por mês</p>
+                        <p class="text-xs text-gray-400 mt-1">Até 50.000 habitantes</p>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Até 5.000 relatos/mês</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">3 usuários administrativos</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Dashboard básico</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Métricas ODS</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Suporte por email</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-gray-400 text-xl">✗</span>
+                            <span class="text-gray-400">API customizada</span>
+                        </li>
+                    </ul>
+
+                    <button class="w-full bg-deep-blue text-white py-3 rounded-lg font-bold hover:bg-vibrant-teal transition">
+                        Solicitar Demo
+                    </button>
+                </div>
+
+                <!-- Plano Professional (Featured) -->
+                <div class="plan-card plan-featured bg-white rounded-2xl shadow-xl p-8">
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-4">🏙️</div>
+                        <h3 class="text-2xl font-bold font-poppins text-vibrant-teal mb-2">Professional</h3>
+                        <p class="text-gray-600 text-sm">Para cidades médias</p>
+                    </div>
+                    
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-bold text-vibrant-teal mb-2">
+                            R$ <span class="price-monthly">4.999</span><span class="price-annual hidden">3.999</span>
+                        </div>
+                        <p class="text-gray-500 text-sm">por mês</p>
+                        <p class="text-xs text-gray-400 mt-1">50.000 - 200.000 habitantes</p>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Até 20.000 relatos/mês</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">10 usuários administrativos</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Dashboard avançado + BI</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Métricas ODS detalhadas</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Mapa interativo</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Suporte prioritário 24/7</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">API básica</span>
+                        </li>
+                    </ul>
+
+                    <button class="w-full bg-gradient-to-r from-vibrant-teal to-ods-green text-white py-3 rounded-lg font-bold hover:opacity-90 transition">
+                        Começar Agora
+                    </button>
+                </div>
+
+                <!-- Plano Enterprise -->
+                <div class="plan-card bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-200">
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-4">🌆</div>
+                        <h3 class="text-2xl font-bold font-poppins text-deep-blue mb-2">Enterprise</h3>
+                        <p class="text-gray-600 text-sm">Grandes centros urbanos</p>
+                    </div>
+                    
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-bold text-deep-blue mb-2">
+                            Personalizado
+                        </div>
+                        <p class="text-gray-500 text-sm">sob medida</p>
+                        <p class="text-xs text-gray-400 mt-1">Acima de 200.000 habitantes</p>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Relatos ilimitados</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Usuários ilimitados</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Dashboard customizado</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">IA e Machine Learning</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Integrações avançadas</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Gerente de conta dedicado</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">API completa + White Label</span>
+                        </li>
+                    </ul>
+
+                    <button class="w-full bg-deep-blue text-white py-3 rounded-lg font-bold hover:bg-vibrant-teal transition">
+                        Fale com Especialista
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Planos para Empresas -->
+    <section class="py-16 bg-gradient-to-br from-warm-sand to-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold font-poppins text-deep-blue mb-4">🏢 Planos para Empresas Privadas</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Fortaleça sua responsabilidade social e engaje a comunidade
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Plano Business -->
+                <div class="plan-card bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-200">
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-4">💼</div>
+                        <h3 class="text-2xl font-bold font-poppins text-deep-blue mb-2">Business</h3>
+                        <p class="text-gray-600 text-sm">Pequenas e médias empresas</p>
+                    </div>
+                    
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-bold text-deep-blue mb-2">
+                            R$ <span class="price-monthly">1.499</span><span class="price-annual hidden">1.199</span>
+                        </div>
+                        <p class="text-gray-500 text-sm">por mês</p>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Dashboard de impacto social</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Relatórios ESG mensais</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Métricas ODS 9, 11 e 13</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Programa de recompensas básico</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Até 1.000 cidadãos alcançados</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Suporte por email</span>
+                        </li>
+                    </ul>
+
+                    <button class="w-full bg-deep-blue text-white py-3 rounded-lg font-bold hover:bg-vibrant-teal transition">
+                        Experimentar Grátis
+                    </button>
+                </div>
+
+                <!-- Plano Corporate (Featured) -->
+                <div class="plan-card plan-featured bg-white rounded-2xl shadow-xl p-8">
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-4">🏆</div>
+                        <h3 class="text-2xl font-bold font-poppins text-vibrant-teal mb-2">Corporate</h3>
+                        <p class="text-gray-600 text-sm">Grandes empresas</p>
+                    </div>
+                    
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-bold text-vibrant-teal mb-2">
+                            R$ <span class="price-monthly">3.999</span><span class="price-annual hidden">3.199</span>
+                        </div>
+                        <p class="text-gray-500 text-sm">por mês</p>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Tudo do plano Business</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Dashboard ESG avançado</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Simulador de ROI social</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Programa de recompensas premium</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Até 10.000 cidadãos alcançados</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Marca co-branded</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700 font-semibold">Suporte prioritário</span>
+                        </li>
+                    </ul>
+
+                    <button class="w-full bg-gradient-to-r from-vibrant-teal to-ods-green text-white py-3 rounded-lg font-bold hover:opacity-90 transition">
+                        Agendar Demonstração
+                    </button>
+                </div>
+
+                <!-- Plano Impact -->
+                <div class="plan-card bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-200">
+                    <div class="text-center mb-6">
+                        <div class="text-5xl mb-4">🌍</div>
+                        <h3 class="text-2xl font-bold font-poppins text-deep-blue mb-2">Impact</h3>
+                        <p class="text-gray-600 text-sm">Multinacionais e holdings</p>
+                    </div>
+                    
+                    <div class="text-center mb-6">
+                        <div class="text-4xl font-bold text-deep-blue mb-2">
+                            Sob Consulta
+                        </div>
+                        <p class="text-gray-500 text-sm">solução customizada</p>
+                    </div>
+
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Tudo do plano Corporate</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Multifiliais ilimitadas</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Relatórios GRI personalizados</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Consultoria ESG dedicada</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">Alcance ilimitado</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">White Label completo</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-green-500 text-xl">✓</span>
+                            <span class="text-gray-700">SLA garantido 99,9%</span>
+                        </li>
+                    </ul>
+
+                    <button class="w-full bg-deep-blue text-white py-3 rounded-lg font-bold hover:bg-vibrant-teal transition">
+                        Contato Executivo
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Comparação de Recursos -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold font-poppins text-deep-blue mb-4">📋 Comparativo Completo</h2>
+                <p class="text-lg text-gray-600">Veja todos os recursos em detalhes</p>
+            </div>
+
+            <div class="max-w-6xl mx-auto overflow-x-auto">
+                <table class="w-full bg-white shadow-lg rounded-lg">
+                    <thead>
+                        <tr class="bg-gradient-to-r from-deep-blue to-vibrant-teal text-white">
+                            <th class="p-4 text-left font-bold">Recurso</th>
+                            <th class="p-4 text-center font-bold">Starter</th>
+                            <th class="p-4 text-center font-bold">Professional</th>
+                            <th class="p-4 text-center font-bold">Enterprise</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-gray-700">
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4 font-medium">Relatos por mês</td>
+                            <td class="p-4 text-center">5.000</td>
+                            <td class="p-4 text-center">20.000</td>
+                            <td class="p-4 text-center">Ilimitado</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4 font-medium">Usuários administrativos</td>
+                            <td class="p-4 text-center">3</td>
+                            <td class="p-4 text-center">10</td>
+                            <td class="p-4 text-center">Ilimitado</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4 font-medium">Dashboard e Analytics</td>
+                            <td class="p-4 text-center">Básico</td>
+                            <td class="p-4 text-center">Avançado + BI</td>
+                            <td class="p-4 text-center">Customizado</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4 font-medium">Métricas ODS</td>
+                            <td class="p-4 text-center text-green-500">✓</td>
+                            <td class="p-4 text-center text-green-500">✓✓</td>
+                            <td class="p-4 text-center text-green-500">✓✓✓</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4 font-medium">Mapa interativo</td>
+                            <td class="p-4 text-center text-gray-400">✗</td>
+                            <td class="p-4 text-center text-green-500">✓</td>
+                            <td class="p-4 text-center text-green-500">✓</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4 font-medium">API de integração</td>
+                            <td class="p-4 text-center text-gray-400">✗</td>
+                            <td class="p-4 text-center">Básica</td>
+                            <td class="p-4 text-center">Completa</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="p-4 font-medium">Suporte</td>
+                            <td class="p-4 text-center">Email</td>
+                            <td class="p-4 text-center">24/7 Prioritário</td>
+                            <td class="p-4 text-center">Gerente Dedicado</td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="p-4 font-medium">Treinamento</td>
+                            <td class="p-4 text-center">Online</td>
+                            <td class="p-4 text-center">Online + Presencial</td>
+                            <td class="p-4 text-center">Customizado</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefícios Adicionais -->
+    <section class="py-16 bg-gradient-to-br from-deep-blue to-vibrant-teal text-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold font-poppins mb-4">✨ Todos os Planos Incluem</h2>
+            </div>
+
+            <div class="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+                <div class="text-center">
+                    <div class="text-5xl mb-4">🔒</div>
+                    <h3 class="font-bold text-lg mb-2">Segurança LGPD</h3>
+                    <p class="text-sm opacity-90">Conformidade total com proteção de dados</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl mb-4">📱</div>
+                    <h3 class="font-bold text-lg mb-2">App Mobile</h3>
+                    <p class="text-sm opacity-90">iOS e Android nativo</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl mb-4">🎓</div>
+                    <h3 class="font-bold text-lg mb-2">Treinamento</h3>
+                    <p class="text-sm opacity-90">Onboarding completo da equipe</p>
+                </div>
+                <div class="text-center">
+                    <div class="text-5xl mb-4">🔄</div>
+                    <h3 class="font-bold text-lg mb-2">Atualizações</h3>
+                    <p class="text-sm opacity-90">Melhorias contínuas sem custo extra</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-16 bg-warm-sand">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold font-poppins text-deep-blue mb-4">❓ Perguntas Frequentes</h2>
+            </div>
+
+            <div class="max-w-4xl mx-auto space-y-4">
+                <details class="bg-white p-6 rounded-lg shadow-md">
+                    <summary class="font-bold text-lg text-deep-blue cursor-pointer">Como funciona o período de teste?</summary>
+                    <p class="mt-4 text-gray-600">Oferecemos 30 dias de teste gratuito para todos os planos, sem necessidade de cartão de crédito. Você terá acesso completo aos recursos do plano escolhido.</p>
+                </details>
+
+                <details class="bg-white p-6 rounded-lg shadow-md">
+                    <summary class="font-bold text-lg text-deep-blue cursor-pointer">Posso trocar de plano depois?</summary>
+                    <p class="mt-4 text-gray-600">Sim! Você pode fazer upgrade ou downgrade a qualquer momento. As alterações são refletidas no próximo ciclo de faturamento.</p>
+                </details>
+
+                <details class="bg-white p-6 rounded-lg shadow-md">
+                    <summary class="font-bold text-lg text-deep-blue cursor-pointer">Quais são as formas de pagamento?</summary>
+                    <p class="mt-4 text-gray-600">Aceitamos boleto bancário, transferência, PIX e cartão de crédito. Para planos anuais, oferecemos condições especiais de parcelamento.</p>
+                </details>
+
+                <details class="bg-white p-6 rounded-lg shadow-md">
+                    <summary class="font-bold text-lg text-deep-blue cursor-pointer">O que acontece se eu exceder o limite de relatos?</summary>
+                    <p class="mt-4 text-gray-600">Entraremos em contato para oferecer um upgrade temporário ou permanente. Nunca bloqueamos o acesso aos relatos dos cidadãos.</p>
+                </details>
+
+                <details class="bg-white p-6 rounded-lg shadow-md">
+                    <summary class="font-bold text-lg text-deep-blue cursor-pointer">Vocês oferecem treinamento para a equipe?</summary>
+                    <p class="mt-4 text-gray-600">Sim! Todos os planos incluem treinamento inicial. Planos Professional e Enterprise também incluem sessões de treinamento contínuo.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Final -->
+    <section class="py-20 bg-gradient-to-r from-vibrant-teal to-ods-green text-white text-center">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl md:text-5xl font-bold font-poppins mb-6">
+                Pronto para Transformar Sua Cidade?
+            </h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">
+                Junte-se a centenas de prefeituras e empresas que já estão construindo o amanhã
+            </p>
+            <div class="flex flex-col md:flex-row gap-4 justify-center">
+                <a href="login.html" class="bg-white text-vibrant-teal px-8 py-4 rounded-lg font-bold text-lg hover:bg-gray-100 transition">
+                    Começar Teste Grátis
+                </a>
+                <a href="mailto:contato@hub.com.br" class="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-vibrant-teal transition">
+                    Falar com Especialista
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-deep-blue text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="font-bold text-xl mb-4 font-poppins">🌊 HUB</h3>
+                    <p class="text-sm opacity-80">Construindo o Amanhã, Hoje.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Planos</h4>
+                    <ul class="space-y-2 text-sm opacity-80">
+                        <li><a href="#" class="hover:text-ods-green transition">Prefeituras</a></li>
+                        <li><a href="#" class="hover:text-ods-green transition">Empresas</a></li>
+                        <li><a href="#" class="hover:text-ods-green transition">Comparativo</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Suporte</h4>
+                    <ul class="space-y-2 text-sm opacity-80">
+                        <li><a href="#" class="hover:text-ods-green transition">Central de Ajuda</a></li>
+                        <li><a href="#" class="hover:text-ods-green transition">Documentação</a></li>
+                        <li><a href="#" class="hover:text-ods-green transition">Contato</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm opacity-80">
+                        <li><a href="#" class="hover:text-ods-green transition">Termos de Uso</a></li>
+                        <li><a href="#" class="hover:text-ods-green transition">Privacidade</a></li>
+                        <li><a href="#" class="hover:text-ods-green transition">LGPD</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-white border-opacity-20 pt-8 text-center text-sm opacity-80">
+                <p>© 2025 HUB - Hackathon Construinova Litoral. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Billing Toggle (Monthly/Annual)
+        const billingToggle = document.getElementById('billing-toggle');
+        const monthlyLabel = document.getElementById('monthly-label');
+        const annualLabel = document.getElementById('annual-label');
+        const monthlyPrices = document.querySelectorAll('.price-monthly');
+        const annualPrices = document.querySelectorAll('.price-annual');
+
+        if (billingToggle) {
+            billingToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    // Anual
+                    monthlyLabel.classList.add('opacity-60');
+                    annualLabel.classList.remove('opacity-60');
+                    monthlyPrices.forEach(el => el.classList.add('hidden'));
+                    annualPrices.forEach(el => el.classList.remove('hidden'));
+                } else {
+                    // Mensal
+                    monthlyLabel.classList.remove('opacity-60');
+                    annualLabel.classList.add('opacity-60');
+                    monthlyPrices.forEach(el => el.classList.remove('hidden'));
+                    annualPrices.forEach(el => el.classList.add('hidden'));
+                }
+            });
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios | HUB - Construindo o Amanhã</title>
+    <meta name="description" content="Relatórios detalhados e análises de impacto social">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-blue': '#005F73',
+                        'vibrant-teal': '#0A9396',
+                        'ods-green': '#94D2BD',
+                        'solar-yellow': '#E9D8A6',
+                        'warm-sand': '#FAF3E0',
+                        'dark-gray': '#2E2E2E',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        .report-card {
+            transition: all 0.3s ease;
+        }
+        .report-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-warm-sand">
+    <!-- Header/Navbar -->
+    <nav class="bg-deep-blue text-white shadow-lg sticky top-0 z-50 no-print">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-4">
+                    <a href="dashboard.html" class="text-2xl font-bold font-poppins hover:text-ods-green transition">
+                        🏢 HUB Empresa
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="dashboard.html" class="hover:text-ods-green transition font-medium">Dashboard</a>
+                    <a href="metricas-ods.html" class="hover:text-ods-green transition font-medium">Métricas ODS</a>
+                    <a href="relatorios.html" class="text-ods-green font-bold">Relatórios</a>
+                    <button id="logout-btn" class="bg-vibrant-teal hover:bg-ods-green px-6 py-2 rounded-lg font-semibold transition">
+                        Sair
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                <a href="dashboard.html" class="block py-2 hover:text-ods-green transition">Dashboard</a>
+                <a href="metricas-ods.html" class="block py-2 hover:text-ods-green transition">Métricas ODS</a>
+                <a href="relatorios.html" class="block py-2 text-ods-green font-bold">Relatórios</a>
+                <button id="logout-btn-mobile" class="w-full text-left py-2 hover:text-ods-green transition">Sair</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="bg-gradient-to-r from-deep-blue to-vibrant-teal text-white py-12 no-print">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-bold font-poppins mb-4">📊 Relatórios e Análises</h1>
+                    <p class="text-xl">Insights detalhados sobre impacto social e sustentabilidade</p>
+                </div>
+                <button onclick="window.print()" class="hidden md:block bg-white text-deep-blue px-6 py-3 rounded-lg font-bold hover:bg-gray-100 transition">
+                    🖨️ Imprimir
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="py-12">
+        <div class="container mx-auto px-6">
+            <!-- Filtros de Período -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg mb-8 no-print">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex items-center gap-4 w-full md:w-auto">
+                        <label class="font-semibold text-deep-blue">Período:</label>
+                        <select id="report-period" class="flex-1 md:flex-initial px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-vibrant-teal focus:outline-none">
+                            <option value="week">Última Semana</option>
+                            <option value="month" selected>Último Mês</option>
+                            <option value="quarter">Último Trimestre</option>
+                            <option value="year">Último Ano</option>
+                            <option value="all-time">Todo o Período</option>
+                        </select>
+                    </div>
+                    <button id="generate-report" class="w-full md:w-auto bg-gradient-to-r from-vibrant-teal to-ods-green text-white px-6 py-2 rounded-lg font-bold hover:opacity-90 transition">
+                        🔄 Gerar Relatório
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resumo Executivo -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg mb-8">
+                <h2 class="text-2xl font-bold font-poppins text-deep-blue mb-6 flex items-center gap-2">
+                    📈 Resumo Executivo
+                    <span class="text-sm font-normal text-gray-500">(Último Mês)</span>
+                </h2>
+                
+                <div class="grid md:grid-cols-4 gap-6 mb-6">
+                    <div class="text-center p-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+                        <div class="text-3xl mb-2">📊</div>
+                        <div class="text-3xl font-bold text-blue-600">1.163</div>
+                        <p class="text-sm text-gray-600 mt-1">Total de Relatos</p>
+                    </div>
+                    <div class="text-center p-4 bg-gradient-to-br from-green-50 to-green-100 rounded-lg">
+                        <div class="text-3xl mb-2">✅</div>
+                        <div class="text-3xl font-bold text-green-600">928</div>
+                        <p class="text-sm text-gray-600 mt-1">Resolvidos (80%)</p>
+                    </div>
+                    <div class="text-center p-4 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-lg">
+                        <div class="text-3xl mb-2">⏳</div>
+                        <div class="text-3xl font-bold text-yellow-600">167</div>
+                        <p class="text-sm text-gray-600 mt-1">Em Progresso (14%)</p>
+                    </div>
+                    <div class="text-center p-4 bg-gradient-to-br from-orange-50 to-orange-100 rounded-lg">
+                        <div class="text-3xl mb-2">🔍</div>
+                        <div class="text-3xl font-bold text-orange-600">68</div>
+                        <p class="text-sm text-gray-600 mt-1">Em Análise (6%)</p>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-deep-blue to-vibrant-teal p-6 rounded-lg text-white">
+                    <h3 class="font-bold text-lg mb-2">🎯 Destaque do Período</h3>
+                    <p class="text-sm opacity-90">
+                        Houve um aumento de <strong>23%</strong> nos relatos relacionados à ODS 11 (Cidades Sustentáveis), 
+                        com destaque para Santos e Guarujá. Taxa de resolução manteve-se em <strong>80%</strong>, 
+                        superando a meta de 75%.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Gráficos de Análise -->
+            <div class="grid md:grid-cols-2 gap-8 mb-8">
+                <!-- Evolução Temporal -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg report-card">
+                    <h3 class="text-xl font-bold font-poppins text-deep-blue mb-4">📅 Evolução Temporal</h3>
+                    <canvas id="chart-timeline" height="250"></canvas>
+                </div>
+
+                <!-- Distribuição por Status -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg report-card">
+                    <h3 class="text-xl font-bold font-poppins text-deep-blue mb-4">📊 Distribuição por Status</h3>
+                    <canvas id="chart-status" height="250"></canvas>
+                </div>
+
+                <!-- Relatos por ODS -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg report-card">
+                    <h3 class="text-xl font-bold font-poppins text-deep-blue mb-4">🌍 Relatos por ODS</h3>
+                    <canvas id="chart-ods" height="250"></canvas>
+                </div>
+
+                <!-- Relatos por Cidade -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg report-card">
+                    <h3 class="text-xl font-bold font-poppins text-deep-blue mb-4">🏙️ Relatos por Cidade</h3>
+                    <canvas id="chart-cities" height="250"></canvas>
+                </div>
+            </div>
+
+            <!-- Análise por ODS -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg mb-8">
+                <h2 class="text-2xl font-bold font-poppins text-deep-blue mb-6">🌍 Análise Detalhada por ODS</h2>
+                
+                <div class="space-y-6">
+                    <!-- ODS 9 -->
+                    <div class="border-l-4 border-orange-500 bg-orange-50 p-6 rounded-lg">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-orange-700">🏭 ODS 9 - Indústria, Inovação e Infraestrutura</h3>
+                            <span class="text-2xl font-bold text-orange-600">347 relatos</span>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <p class="text-sm text-gray-600">Taxa de Resolução</p>
+                                <p class="text-2xl font-bold text-green-600">83%</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Tempo Médio</p>
+                                <p class="text-2xl font-bold text-blue-600">12 dias</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Satisfação</p>
+                                <p class="text-2xl font-bold text-yellow-600">4.6/5</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg">
+                            <p class="text-sm font-semibold text-gray-700 mb-2">Principais categorias:</p>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Transporte Público (42%)</li>
+                                <li>• Infraestrutura Urbana (31%)</li>
+                                <li>• Inovação Tecnológica (15%)</li>
+                                <li>• Conectividade (12%)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- ODS 11 -->
+                    <div class="border-l-4 border-yellow-500 bg-yellow-50 p-6 rounded-lg">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-yellow-700">🏙️ ODS 11 - Cidades e Comunidades Sustentáveis</h3>
+                            <span class="text-2xl font-bold text-yellow-600">582 relatos</span>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <p class="text-sm text-gray-600">Taxa de Resolução</p>
+                                <p class="text-2xl font-bold text-green-600">79%</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Tempo Médio</p>
+                                <p class="text-2xl font-bold text-blue-600">15 dias</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Satisfação</p>
+                                <p class="text-2xl font-bold text-yellow-600">4.7/5</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg">
+                            <p class="text-sm font-semibold text-gray-700 mb-2">Principais categorias:</p>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Espaços Públicos (38%)</li>
+                                <li>• Saneamento Básico (27%)</li>
+                                <li>• Habitação (20%)</li>
+                                <li>• Áreas Verdes (15%)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- ODS 13 -->
+                    <div class="border-l-4 border-green-600 bg-green-50 p-6 rounded-lg">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-xl font-bold text-green-700">🌡️ ODS 13 - Ação Contra a Mudança do Clima</h3>
+                            <span class="text-2xl font-bold text-green-700">234 relatos</span>
+                        </div>
+                        <div class="grid md:grid-cols-3 gap-4 mb-4">
+                            <div>
+                                <p class="text-sm text-gray-600">Taxa de Resolução</p>
+                                <p class="text-2xl font-bold text-green-600">76%</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Tempo Médio</p>
+                                <p class="text-2xl font-bold text-blue-600">18 dias</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Satisfação</p>
+                                <p class="text-2xl font-bold text-yellow-600">4.8/5</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-4 rounded-lg">
+                            <p class="text-sm font-semibold text-gray-700 mb-2">Principais categorias:</p>
+                            <ul class="text-sm text-gray-600 space-y-1">
+                                <li>• Gestão de Resíduos (45%)</li>
+                                <li>• Preservação Ambiental (28%)</li>
+                                <li>• Energia Limpa (18%)</li>
+                                <li>• Educação Ambiental (9%)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ranking de Cidades -->
+            <div class="bg-white p-8 rounded-2xl shadow-lg mb-8">
+                <h2 class="text-2xl font-bold font-poppins text-deep-blue mb-6">🏆 Ranking de Cidades</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full">
+                        <thead>
+                            <tr class="bg-gray-100 border-b-2 border-gray-200">
+                                <th class="text-left p-4 font-bold text-deep-blue">Posição</th>
+                                <th class="text-left p-4 font-bold text-deep-blue">Cidade</th>
+                                <th class="text-center p-4 font-bold text-deep-blue">Total de Relatos</th>
+                                <th class="text-center p-4 font-bold text-deep-blue">Resolvidos</th>
+                                <th class="text-center p-4 font-bold text-deep-blue">Taxa</th>
+                                <th class="text-center p-4 font-bold text-deep-blue">Tempo Médio</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b hover:bg-gray-50 transition">
+                                <td class="p-4 text-center">🥇</td>
+                                <td class="p-4 font-semibold">Santos</td>
+                                <td class="text-center p-4">474</td>
+                                <td class="text-center p-4 text-green-600 font-bold">389</td>
+                                <td class="text-center p-4 font-bold">82%</td>
+                                <td class="text-center p-4">13 dias</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50 transition">
+                                <td class="p-4 text-center">🥈</td>
+                                <td class="p-4 font-semibold">São Vicente</td>
+                                <td class="text-center p-4">224</td>
+                                <td class="text-center p-4 text-green-600 font-bold">179</td>
+                                <td class="text-center p-4 font-bold">80%</td>
+                                <td class="text-center p-4">14 dias</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50 transition">
+                                <td class="p-4 text-center">🥉</td>
+                                <td class="p-4 font-semibold">Guarujá</td>
+                                <td class="text-center p-4">181</td>
+                                <td class="text-center p-4 text-green-600 font-bold">143</td>
+                                <td class="text-center p-4 font-bold">79%</td>
+                                <td class="text-center p-4">15 dias</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50 transition">
+                                <td class="p-4 text-center">4</td>
+                                <td class="p-4 font-semibold">Praia Grande</td>
+                                <td class="text-center p-4">129</td>
+                                <td class="text-center p-4 text-green-600 font-bold">100</td>
+                                <td class="text-center p-4 font-bold">78%</td>
+                                <td class="text-center p-4">16 dias</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50 transition">
+                                <td class="p-4 text-center">5</td>
+                                <td class="p-4 font-semibold">Cubatão</td>
+                                <td class="text-center p-4">72</td>
+                                <td class="text-center p-4 text-green-600 font-bold">56</td>
+                                <td class="text-center p-4 font-bold">78%</td>
+                                <td class="text-center p-4">17 dias</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50 transition">
+                                <td class="p-4 text-center">6</td>
+                                <td class="p-4 font-semibold">Bertioga</td>
+                                <td class="text-center p-4">38</td>
+                                <td class="text-center p-4 text-green-600 font-bold">29</td>
+                                <td class="text-center p-4 font-bold">76%</td>
+                                <td class="text-center p-4">18 dias</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50 transition">
+                                <td class="p-4 text-center">7</td>
+                                <td class="p-4 font-semibold">Mongaguá</td>
+                                <td class="text-center p-4">24</td>
+                                <td class="text-center p-4 text-green-600 font-bold">18</td>
+                                <td class="text-center p-4 font-bold">75%</td>
+                                <td class="text-center p-4">19 dias</td>
+                            </tr>
+                            <tr class="border-b hover:bg-gray-50 transition">
+                                <td class="p-4 text-center">8</td>
+                                <td class="p-4 font-semibold">Itanhaém</td>
+                                <td class="text-center p-4">14</td>
+                                <td class="text-center p-4 text-green-600 font-bold">10</td>
+                                <td class="text-center p-4 font-bold">71%</td>
+                                <td class="text-center p-4">21 dias</td>
+                            </tr>
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="p-4 text-center">9</td>
+                                <td class="p-4 font-semibold">Peruíbe</td>
+                                <td class="text-center p-4">7</td>
+                                <td class="text-center p-4 text-green-600 font-bold">4</td>
+                                <td class="text-center p-4 font-bold">57%</td>
+                                <td class="text-center p-4">25 dias</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recomendações -->
+            <div class="bg-gradient-to-br from-deep-blue to-vibrant-teal p-8 rounded-2xl shadow-lg text-white mb-8">
+                <h2 class="text-2xl font-bold font-poppins mb-6">💡 Recomendações e Insights</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white bg-opacity-10 p-4 rounded-lg backdrop-blur">
+                        <h3 class="font-bold text-lg mb-2">🎯 Pontos de Atenção</h3>
+                        <ul class="text-sm space-y-2 opacity-90">
+                            <li>• Peruíbe apresenta taxa de resolução abaixo da meta (57%)</li>
+                            <li>• Tempo médio de resolução ODS 13 aumentou 12%</li>
+                            <li>• 23% de aumento em relatos de saneamento básico</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-white bg-opacity-10 p-4 rounded-lg backdrop-blur">
+                        <h3 class="font-bold text-lg mb-2">✅ Boas Práticas</h3>
+                        <ul class="text-sm space-y-2 opacity-90">
+                            <li>• Santos mantém liderança em taxa de resolução</li>
+                            <li>• ODS 9 superou meta de satisfação (4.6/5)</li>
+                            <li>• Engajamento cidadão cresceu 34% no trimestre</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ações de Exportação -->
+            <div class="bg-white p-6 rounded-2xl shadow-lg no-print">
+                <h3 class="text-xl font-bold font-poppins text-deep-blue mb-4">📥 Exportar Relatório</h3>
+                <div class="flex flex-wrap gap-4">
+                    <button class="flex-1 md:flex-initial bg-gradient-to-r from-deep-blue to-vibrant-teal text-white px-6 py-3 rounded-lg font-bold hover:opacity-90 transition">
+                        📄 Exportar PDF
+                    </button>
+                    <button class="flex-1 md:flex-initial bg-gradient-to-r from-ods-green to-green-600 text-white px-6 py-3 rounded-lg font-bold hover:opacity-90 transition">
+                        📊 Exportar Excel
+                    </button>
+                    <button class="flex-1 md:flex-initial bg-gradient-to-r from-solar-yellow to-yellow-500 text-deep-blue px-6 py-3 rounded-lg font-bold hover:opacity-90 transition">
+                        📧 Enviar por Email
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-deep-blue text-white py-8 no-print">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-sm opacity-80">
+                © 2025 HUB - Hackathon Construinova Litoral. Construindo o Amanhã, Hoje.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Session Protection
+        const userRole = sessionStorage.getItem('userRole');
+        if (userRole !== 'empresa') {
+            window.location.href = 'login.html';
+        }
+
+        // Mobile Menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        if (mobileMenuBtn) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Logout Function
+        function handleLogout() {
+            sessionStorage.clear();
+            window.location.href = '../index.html';
+        }
+
+        const logoutBtn = document.getElementById('logout-btn');
+        const logoutBtnMobile = document.getElementById('logout-btn-mobile');
+        
+        if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+        if (logoutBtnMobile) logoutBtnMobile.addEventListener('click', handleLogout);
+
+        // Generate Report
+        const generateReportBtn = document.getElementById('generate-report');
+        const reportPeriod = document.getElementById('report-period');
+
+        if (generateReportBtn) {
+            generateReportBtn.addEventListener('click', function() {
+                this.innerHTML = '⏳ Gerando...';
+                setTimeout(() => {
+                    this.innerHTML = '✅ Relatório Atualizado';
+                    setTimeout(() => {
+                        this.innerHTML = '🔄 Gerar Relatório';
+                    }, 2000);
+                }, 1000);
+            });
+        }
+
+        // Initialize Charts
+        window.addEventListener('load', function() {
+            // Timeline Chart
+            const ctxTimeline = document.getElementById('chart-timeline');
+            if (ctxTimeline) {
+                new Chart(ctxTimeline, {
+                    type: 'line',
+                    data: {
+                        labels: ['Sem 1', 'Sem 2', 'Sem 3', 'Sem 4'],
+                        datasets: [
+                            {
+                                label: 'Relatos Recebidos',
+                                data: [245, 298, 312, 308],
+                                borderColor: '#0A9396',
+                                backgroundColor: 'rgba(10, 147, 150, 0.1)',
+                                tension: 0.4
+                            },
+                            {
+                                label: 'Relatos Resolvidos',
+                                data: [198, 237, 249, 244],
+                                borderColor: '#94D2BD',
+                                backgroundColor: 'rgba(148, 210, 189, 0.1)',
+                                tension: 0.4
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Status Chart
+            const ctxStatus = document.getElementById('chart-status');
+            if (ctxStatus) {
+                new Chart(ctxStatus, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Resolvidos', 'Em Progresso', 'Em Análise'],
+                        datasets: [{
+                            data: [928, 167, 68],
+                            backgroundColor: ['#10b981', '#3b82f6', '#f59e0b'],
+                            borderWidth: 2,
+                            borderColor: '#fff'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom'
+                            }
+                        }
+                    }
+                });
+            }
+
+            // ODS Chart
+            const ctxODS = document.getElementById('chart-ods');
+            if (ctxODS) {
+                new Chart(ctxODS, {
+                    type: 'bar',
+                    data: {
+                        labels: ['ODS 9', 'ODS 11', 'ODS 13'],
+                        datasets: [{
+                            label: 'Relatos por ODS',
+                            data: [347, 582, 234],
+                            backgroundColor: ['#FF6B35', '#FFB627', '#3C6E47'],
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Cities Chart
+            const ctxCities = document.getElementById('chart-cities');
+            if (ctxCities) {
+                new Chart(ctxCities, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Santos', 'São Vicente', 'Guarujá', 'P. Grande', 'Cubatão', 'Outros'],
+                        datasets: [{
+                            label: 'Relatos por Cidade',
+                            data: [474, 224, 181, 129, 72, 83],
+                            backgroundColor: '#0A9396',
+                            borderWidth: 0
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
