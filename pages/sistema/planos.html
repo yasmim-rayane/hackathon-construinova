@@ -207,6 +207,9 @@
                             R$ <span class="price-monthly">3.515</span><span class="price-annual hidden">2.812</span>
                         </div>
                         <p class="text-gray-500 text-sm billing-period">por mês</p>
+                        <p class="total-bienal hidden text-xs font-semibold text-vibrant-teal mt-2 bg-vibrant-teal/10 py-2 px-3 rounded-lg">
+                            Total: R$ 33.744 (12x)
+                        </p>
                         <p class="text-xs text-gray-400 mt-1">Até 50.000 habitantes</p>
                     </div>
 
@@ -255,6 +258,9 @@
                             R$ <span class="price-monthly">9.375</span><span class="price-annual hidden">7.500</span>
                         </div>
                         <p class="text-gray-500 text-sm billing-period">por mês</p>
+                        <p class="total-bienal hidden text-xs font-semibold text-vibrant-teal mt-2 bg-vibrant-teal/10 py-2 px-3 rounded-lg">
+                            Total: R$ 90.000 (12x)
+                        </p>
                         <p class="text-xs text-gray-400 mt-1">50.000 - 200.000 habitantes</p>
                     </div>
 
@@ -373,6 +379,9 @@
                             R$ <span class="price-monthly">5.860</span><span class="price-annual hidden">4.688</span>
                         </div>
                         <p class="text-gray-500 text-sm">por mês</p>
+                        <p class="total-anual hidden text-xs font-semibold text-vibrant-teal mt-2 bg-vibrant-teal/10 py-2 px-3 rounded-lg">
+                            Total: R$ 56.256 (anual)
+                        </p>
                     </div>
 
                     <ul class="space-y-4 mb-8">
@@ -420,6 +429,9 @@
                             R$ <span class="price-monthly">11.720</span><span class="price-annual hidden">9.376</span>
                         </div>
                         <p class="text-gray-500 text-sm">por mês</p>
+                        <p class="total-anual hidden text-xs font-semibold text-vibrant-teal mt-2 bg-vibrant-teal/10 py-2 px-3 rounded-lg">
+                            Total: R$ 112.512 (anual)
+                        </p>
                     </div>
 
                     <ul class="space-y-4 mb-8">
@@ -737,6 +749,8 @@
         if (billingToggle) {
             billingToggle.addEventListener('change', function() {
                 const billingPeriods = document.querySelectorAll('.billing-period');
+                const totaisBienais = document.querySelectorAll('.total-bienal');
+                const totaisAnuais = document.querySelectorAll('.total-anual');
                 
                 if (this.checked) {
                     // Bienal (para Prefeituras) / Anual (para Empresas)
@@ -744,6 +758,10 @@
                     annualLabel.classList.remove('opacity-60');
                     monthlyPrices.forEach(el => el.classList.add('hidden'));
                     annualPrices.forEach(el => el.classList.remove('hidden'));
+                    
+                    // Mostra totais
+                    totaisBienais.forEach(el => el.classList.remove('hidden'));
+                    totaisAnuais.forEach(el => el.classList.remove('hidden'));
                     
                     // Atualiza texto do período apenas para prefeituras
                     billingPeriods.forEach(el => {
@@ -755,6 +773,10 @@
                     annualLabel.classList.add('opacity-60');
                     monthlyPrices.forEach(el => el.classList.remove('hidden'));
                     annualPrices.forEach(el => el.classList.add('hidden'));
+                    
+                    // Esconde totais
+                    totaisBienais.forEach(el => el.classList.add('hidden'));
+                    totaisAnuais.forEach(el => el.classList.add('hidden'));
                     
                     // Volta para "por mês"
                     billingPeriods.forEach(el => {

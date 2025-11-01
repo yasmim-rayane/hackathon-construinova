@@ -253,10 +253,10 @@
     </section>
 
     <!-- Data Flow -->
-    <section class="py-16 bg-white">
+    <section class="py-16 bg-gradient-to-br from-warm-sand to-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-dark-gray mb-4">
-                Fluxo de Dados
+                🔄 Fluxo de Dados
             </h2>
             <p class="text-center text-gray-600 mb-12 max-w-3xl mx-auto">
                 Entenda como transformamos reclamações de cidadãos em insights estratégicos para empresas
@@ -264,102 +264,191 @@
 
             <div class="relative">
                 <!-- Flow Steps -->
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    <!-- Step 1 -->
-                    <div class="text-center relative">
-                        <div class="bg-gradient-to-br from-deep-blue to-vibrant-teal text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-lg relative z-10">
-                            📱
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                    <!-- Step 1: Cidadão -->
+                    <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow relative">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                            <div class="bg-gradient-to-br from-deep-blue to-vibrant-teal text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-lg">
+                                📱
+                            </div>
                         </div>
-                        <h3 class="font-bold text-dark-gray mb-2">1. Cidadão</h3>
-                        <p class="text-sm text-gray-600">
-                            Envia reclamação via WhatsApp sobre problemas urbanos (buraco, iluminação, lixo, etc.)
-                        </p>
-                    </div>
-
-                    <!-- Arrow -->
-                    <div class="hidden md:flex items-center justify-center">
-                        <svg class="w-full h-8 text-vibrant-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                        </svg>
-                    </div>
-
-                    <!-- Step 2 -->
-                    <div class="text-center relative">
-                        <div class="bg-gradient-to-br from-orange-500 to-yellow-500 text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-lg relative z-10">
-                            🔥
+                        <div class="pt-10">
+                            <div class="bg-deep-blue/10 rounded-full px-4 py-1 inline-block mb-3">
+                                <span class="text-deep-blue font-bold text-sm">ETAPA 1</span>
+                            </div>
+                            <h3 class="font-bold text-xl text-dark-gray mb-3">Cidadão Relata</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Cidadão envia reclamação via WhatsApp sobre problemas urbanos como buracos, iluminação, lixo acumulado, entre outros.
+                            </p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <span class="bg-vibrant-teal/10 text-vibrant-teal px-3 py-1 rounded-full text-xs font-medium">WhatsApp</span>
+                                <span class="bg-vibrant-teal/10 text-vibrant-teal px-3 py-1 rounded-full text-xs font-medium">Foto</span>
+                                <span class="bg-vibrant-teal/10 text-vibrant-teal px-3 py-1 rounded-full text-xs font-medium">Localização</span>
+                            </div>
                         </div>
-                        <h3 class="font-bold text-dark-gray mb-2">2. Firebase</h3>
-                        <p class="text-sm text-gray-600">
-                            Dados armazenados no Firestore, processados automaticamente e categorizados
-                        </p>
                     </div>
 
-                    <!-- Arrow -->
-                    <div class="hidden md:flex items-center justify-center">
-                        <svg class="w-full h-8 text-vibrant-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                        </svg>
-                    </div>
-
-                    <!-- Step 3 -->
-                    <div class="text-center relative">
-                        <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-lg relative z-10">
-                            📊
+                    <!-- Arrow 1 -->
+                    <div class="hidden md:flex items-center justify-center -mx-4">
+                        <div class="text-vibrant-teal">
+                            <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                            </svg>
                         </div>
-                        <h3 class="font-bold text-dark-gray mb-2">3. Métricas ODS</h3>
-                        <p class="text-sm text-gray-600">
-                            Conversão em indicadores alinhados aos Objetivos de Desenvolvimento Sustentável
-                        </p>
                     </div>
 
-                    <!-- Arrow -->
-                    <div class="hidden md:flex items-center justify-center">
-                        <svg class="w-full h-8 text-vibrant-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
-                        </svg>
-                    </div>
-
-                    <!-- Step 4 -->
-                    <div class="text-center relative">
-                        <div class="bg-gradient-to-br from-green-600 to-emerald-600 text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-lg relative z-10">
-                            🏢
+                    <!-- Step 2: Processamento -->
+                    <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow relative">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                            <div class="bg-gradient-to-br from-purple-600 to-pink-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-lg">
+                                🤖
+                            </div>
                         </div>
-                        <h3 class="font-bold text-dark-gray mb-2">4. Empresas</h3>
-                        <p class="text-sm text-gray-600">
-                            Acesso a relatórios, mapas de calor e simulações de ROI para investimentos estratégicos
-                        </p>
+                        <div class="pt-10">
+                            <div class="bg-purple-600/10 rounded-full px-4 py-1 inline-block mb-3">
+                                <span class="text-purple-600 font-bold text-sm">ETAPA 2</span>
+                            </div>
+                            <h3 class="font-bold text-xl text-dark-gray mb-3">Processamento IA</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Sistema processa automaticamente, categoriza por IA e converte em métricas ODS alinhadas aos objetivos sustentáveis.
+                            </p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <span class="bg-purple-600/10 text-purple-600 px-3 py-1 rounded-full text-xs font-medium">IndexedDB</span>
+                                <span class="bg-purple-600/10 text-purple-600 px-3 py-1 rounded-full text-xs font-medium">Machine Learning</span>
+                                <span class="bg-purple-600/10 text-purple-600 px-3 py-1 rounded-full text-xs font-medium">ODS</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Arrow 2 -->
+                    <div class="hidden md:flex items-center justify-center -mx-4">
+                        <div class="text-vibrant-teal">
+                            <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Empresas -->
+                    <div class="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-shadow relative">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                            <div class="bg-gradient-to-br from-green-600 to-emerald-600 text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-lg">
+                                🏢
+                            </div>
+                        </div>
+                        <div class="pt-10">
+                            <div class="bg-green-600/10 rounded-full px-4 py-1 inline-block mb-3">
+                                <span class="text-green-600 font-bold text-sm">ETAPA 3</span>
+                            </div>
+                            <h3 class="font-bold text-xl text-dark-gray mb-3">Insights Empresariais</h3>
+                            <p class="text-gray-600 text-sm leading-relaxed">
+                                Empresas acessam relatórios detalhados, mapas de calor e simulações de ROI para investimentos sociais estratégicos.
+                            </p>
+                            <div class="mt-4 flex flex-wrap gap-2">
+                                <span class="bg-green-600/10 text-green-600 px-3 py-1 rounded-full text-xs font-medium">Dashboards</span>
+                                <span class="bg-green-600/10 text-green-600 px-3 py-1 rounded-full text-xs font-medium">Relatórios</span>
+                                <span class="bg-green-600/10 text-green-600 px-3 py-1 rounded-full text-xs font-medium">ROI</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Technical Details -->
-                <div class="mt-12 bg-sand/30 p-8 rounded-2xl">
-                    <h3 class="text-2xl font-bold text-dark-gray mb-6 text-center">Detalhes Técnicos</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div>
-                            <h4 class="font-bold text-deep-blue mb-2">📲 Coleta</h4>
-                            <ul class="text-sm text-gray-700 space-y-1">
-                                <li>• WhatsApp Business API</li>
-                                <li>• Processamento de linguagem natural</li>
-                                <li>• Geolocalização automática</li>
-                                <li>• Upload de imagens</li>
+                <!-- Technical Stack -->
+                <div class="bg-white rounded-2xl p-8 shadow-lg">
+                    <h3 class="text-2xl font-bold text-dark-gray mb-8 text-center flex items-center justify-center gap-3">
+                        <span class="text-3xl">⚙️</span>
+                        Stack Tecnológico
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Coleta -->
+                        <div class="border-l-4 border-deep-blue pl-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="text-2xl">📲</span>
+                                <h4 class="font-bold text-lg text-deep-blue">Coleta de Dados</h4>
+                            </div>
+                            <ul class="text-sm text-gray-700 space-y-2">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-vibrant-teal mt-1">•</span>
+                                    <span>WhatsApp Business API</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-vibrant-teal mt-1">•</span>
+                                    <span>Processamento de linguagem natural</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-vibrant-teal mt-1">•</span>
+                                    <span>Geolocalização automática</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-vibrant-teal mt-1">•</span>
+                                    <span>Upload de imagens e vídeos</span>
+                                </li>
                             </ul>
                         </div>
-                        <div>
-                            <h4 class="font-bold text-deep-blue mb-2">💾 Armazenamento</h4>
-                            <ul class="text-sm text-gray-700 space-y-1">
-                                <li>• Cloud Storage para mídias</li>
-                                <li>• Backup redundante</li>
-                                <li>• Criptografia end-to-end</li>
+
+                        <!-- Armazenamento -->
+                        <div class="border-l-4 border-purple-600 pl-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="text-2xl">💾</span>
+                                <h4 class="font-bold text-lg text-purple-600">Armazenamento</h4>
+                            </div>
+                            <ul class="text-sm text-gray-700 space-y-2">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-purple-600 mt-1">•</span>
+                                    <span>IndexedDB (local-first)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-purple-600 mt-1">•</span>
+                                    <span>Cloud Storage para mídias</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-purple-600 mt-1">•</span>
+                                    <span>Backup redundante</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-purple-600 mt-1">•</span>
+                                    <span>Criptografia de dados</span>
+                                </li>
                             </ul>
                         </div>
-                        <div>
-                            <h4 class="font-bold text-deep-blue mb-2">📈 Análise</h4>
-                            <ul class="text-sm text-gray-700 space-y-1">
-                                <li>• Machine Learning (categorização)</li>
-                                <li>• Dashboards em tempo real</li>
-                                <li>• API REST para empresas</li>
-                                <li>• Relatórios personalizados</li>
+
+                        <!-- Análise -->
+                        <div class="border-l-4 border-green-600 pl-6">
+                            <div class="flex items-center gap-2 mb-4">
+                                <span class="text-2xl">📈</span>
+                                <h4 class="font-bold text-lg text-green-600">Análise e Insights</h4>
+                            </div>
+                            <ul class="text-sm text-gray-700 space-y-2">
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-600 mt-1">•</span>
+                                    <span>Machine Learning (IA)</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-600 mt-1">•</span>
+                                    <span>Dashboards em tempo real</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-600 mt-1">•</span>
+                                    <span>API REST para empresas</span>
+                                </li>
+                                <li class="flex items-start gap-2">
+                                    <span class="text-green-600 mt-1">•</span>
+                                    <span>Exportação PDF/Excel</span>
+                                </li>
                             </ul>
+                        </div>
+                    </div>
+
+                    <!-- Tech Badges -->
+                    <div class="mt-8 pt-8 border-t border-gray-200">
+                        <p class="text-center text-sm text-gray-500 mb-4">Tecnologias Utilizadas</p>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <span class="bg-gradient-to-r from-deep-blue to-vibrant-teal text-white px-4 py-2 rounded-full text-xs font-bold shadow-md">JavaScript ES6+</span>
+                            <span class="bg-gradient-to-r from-orange-500 to-yellow-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-md">IndexedDB</span>
+                            <span class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-md">TailwindCSS</span>
+                            <span class="bg-gradient-to-r from-green-500 to-emerald-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-md">Chart.js</span>
+                            <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-md">WhatsApp API</span>
+                            <span class="bg-gradient-to-r from-red-500 to-rose-500 text-white px-4 py-2 rounded-full text-xs font-bold shadow-md">jsPDF</span>
                         </div>
                     </div>
                 </div>

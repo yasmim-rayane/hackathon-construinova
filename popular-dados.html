@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Popular Dados - HubBS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-blue-50 to-teal-50 min-h-screen flex items-center justify-center p-4">
+    
+    <div class="max-w-3xl w-full bg-white rounded-2xl shadow-2xl p-8">
+        <div class="text-center mb-8">
+            <div class="text-6xl mb-4">🌱</div>
+            <h1 class="text-4xl font-bold text-blue-900 mb-2">Popular Dados de Demonstração</h1>
+            <p class="text-gray-600">Sistema HubBS - Dados para Apresentação</p>
+        </div>
+
+        <!-- Status Card -->
+        <div id="status-card" class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6 rounded-lg hidden">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-info-circle text-blue-500 text-xl"></i>
+                </div>
+                <div class="ml-3">
+                    <p id="status-message" class="text-sm text-blue-700"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info -->
+        <div class="bg-gradient-to-r from-blue-500 to-teal-500 text-white p-6 rounded-xl mb-6">
+            <h2 class="text-2xl font-bold mb-3">📋 O que será adicionado:</h2>
+            <ul class="space-y-2">
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle mt-1 mr-2"></i>
+                    <span><strong>30 relatos</strong> distribuídos entre Santos, Guarujá e São Vicente</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle mt-1 mr-2"></i>
+                    <span><strong>Categorias variadas:</strong> Infraestrutura, Saneamento, Lixo, Iluminação, Meio Ambiente</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle mt-1 mr-2"></i>
+                    <span><strong>Status diversos:</strong> Resolvido, Em Progresso, Em Análise</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-check-circle mt-1 mr-2"></i>
+                    <span><strong>ODS relacionados:</strong> ODS 6, 7, 9, 11</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Estatísticas Previstas -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-green-50 p-4 rounded-lg text-center">
+                <div class="text-3xl font-bold text-green-600">30</div>
+                <div class="text-sm text-gray-600">Relatos</div>
+            </div>
+            <div class="bg-blue-50 p-4 rounded-lg text-center">
+                <div class="text-3xl font-bold text-blue-600">3</div>
+                <div class="text-sm text-gray-600">Cidades</div>
+            </div>
+            <div class="bg-purple-50 p-4 rounded-lg text-center">
+                <div class="text-3xl font-bold text-purple-600">5</div>
+                <div class="text-sm text-gray-600">Categorias</div>
+            </div>
+            <div class="bg-orange-50 p-4 rounded-lg text-center">
+                <div class="text-3xl font-bold text-orange-600">4</div>
+                <div class="text-sm text-gray-600">ODS</div>
+            </div>
+        </div>
+
+        <!-- Botão Principal -->
+        <div class="text-center mb-6">
+            <button 
+                id="btn-popular" 
+                onclick="iniciarPopulacao()"
+                class="bg-gradient-to-r from-blue-600 to-teal-600 text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200 w-full md:w-auto">
+                <i class="fas fa-database mr-2"></i>
+                Iniciar População de Dados
+            </button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div id="progress-container" class="hidden mb-6">
+            <div class="mb-2 flex justify-between text-sm text-gray-600">
+                <span>Progresso</span>
+                <span id="progress-text">0%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                <div id="progress-bar" class="bg-gradient-to-r from-blue-500 to-teal-500 h-4 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Logs -->
+        <div id="logs-container" class="hidden">
+            <h3 class="font-bold text-gray-700 mb-2">📝 Logs:</h3>
+            <div id="logs" class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-xs max-h-64 overflow-y-auto">
+                <!-- Logs serão inseridos aqui -->
+            </div>
+        </div>
+
+        <!-- Resultado Final -->
+        <div id="resultado" class="hidden mt-6">
+            <div class="bg-green-50 border-l-4 border-green-500 p-6 rounded-lg">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-check-circle text-green-500 text-3xl"></i>
+                    </div>
+                    <div class="ml-4 flex-1">
+                        <h3 class="text-lg font-bold text-green-900 mb-2">✅ População Concluída!</h3>
+                        <div id="stats-resultado" class="text-sm text-green-700 space-y-1">
+                            <!-- Estatísticas serão inseridas aqui -->
+                        </div>
+                        <div class="mt-4 flex gap-3">
+                            <a href="index.html" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition">
+                                <i class="fas fa-home mr-2"></i>Ir para Home
+                            </a>
+                            <a href="pages/sistema/dashboard.html" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition">
+                                <i class="fas fa-chart-line mr-2"></i>Ver Dashboard
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Avisos -->
+        <div class="mt-6 bg-yellow-50 border-l-4 border-yellow-500 p-4 rounded-lg">
+            <div class="flex items-start">
+                <div class="flex-shrink-0">
+                    <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                </div>
+                <div class="ml-3">
+                    <p class="text-sm text-yellow-700">
+                        <strong>Importante:</strong> Esta ação adicionará dados de demonstração ao banco de dados local (IndexedDB). 
+                        Se você já tem dados, novos registros serão adicionados.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/modules/database.js"></script>
+    <script src="assets/js/seed-relatos.js"></script>
+    
+    <script>
+        let logsElement;
+        let progressBar;
+        let progressText;
+        let btnPopular;
+
+        function log(message, type = 'info') {
+            if (!logsElement) {
+                logsElement = document.getElementById('logs');
+                document.getElementById('logs-container').classList.remove('hidden');
+            }
+            
+            const timestamp = new Date().toLocaleTimeString('pt-BR');
+            const colors = {
+                info: 'text-blue-400',
+                success: 'text-green-400',
+                error: 'text-red-400',
+                warning: 'text-yellow-400'
+            };
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = colors[type] || colors.info;
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logsElement.appendChild(logEntry);
+            logsElement.scrollTop = logsElement.scrollHeight;
+        }
+
+        function updateProgress(percent) {
+            if (!progressBar) {
+                progressBar = document.getElementById('progress-bar');
+                progressText = document.getElementById('progress-text');
+                document.getElementById('progress-container').classList.remove('hidden');
+            }
+            
+            progressBar.style.width = percent + '%';
+            progressText.textContent = Math.round(percent) + '%';
+        }
+
+        function showStatus(message, show = true) {
+            const statusCard = document.getElementById('status-card');
+            const statusMessage = document.getElementById('status-message');
+            
+            if (show) {
+                statusMessage.textContent = message;
+                statusCard.classList.remove('hidden');
+            } else {
+                statusCard.classList.add('hidden');
+            }
+        }
+
+        function showResultado(stats) {
+            const resultado = document.getElementById('resultado');
+            const statsDiv = document.getElementById('stats-resultado');
+            
+            statsDiv.innerHTML = `
+                <p><strong>Total de relatos:</strong> ${stats.total}</p>
+                <p><strong>Por Status:</strong></p>
+                <ul class="ml-6 list-disc">
+                    <li>Resolvidos: ${stats.porStatus.resolvido}</li>
+                    <li>Em Progresso: ${stats.porStatus.em_progresso}</li>
+                    <li>Em Análise: ${stats.porStatus.em_analise}</li>
+                </ul>
+                <p class="mt-2"><strong>Por Cidade:</strong></p>
+                <ul class="ml-6 list-disc">
+                    <li>Santos: ${stats.porCidade.santos || 0}</li>
+                    <li>Guarujá: ${stats.porCidade.guaruja || 0}</li>
+                    <li>São Vicente: ${stats.porCidade.sao_vicente || 0}</li>
+                </ul>
+            `;
+            
+            resultado.classList.remove('hidden');
+        }
+
+        async function iniciarPopulacao() {
+            btnPopular = document.getElementById('btn-popular');
+            btnPopular.disabled = true;
+            btnPopular.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            log('Iniciando população de dados...', 'info');
+            showStatus('Inicializando banco de dados...');
+            updateProgress(10);
+            
+            try {
+                // Aguardar o banco inicializar
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                log('Banco de dados inicializado', 'success');
+                updateProgress(20);
+                
+                // Executar população
+                showStatus('Adicionando relatos de demonstração...');
+                const stats = await popularRelatos();
+                
+                updateProgress(100);
+                log('População concluída com sucesso!', 'success');
+                showStatus('Dados populados com sucesso!', false);
+                
+                // Mostrar resultado
+                setTimeout(() => {
+                    showResultado(stats);
+                }, 500);
+                
+            } catch (error) {
+                log('Erro ao popular dados: ' + error.message, 'error');
+                showStatus('Erro ao popular dados. Verifique os logs.', true);
+                btnPopular.disabled = false;
+                btnPopular.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        // Sobrescrever console.log para capturar logs do seed-relatos.js
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.join(' ');
+            
+            if (message.includes('✅')) {
+                log(message, 'success');
+            } else if (message.includes('❌')) {
+                log(message, 'error');
+            } else if (message.includes('⚠️')) {
+                log(message, 'warning');
+            } else if (message.includes('📊') || message.includes('📈')) {
+                log(message, 'info');
+            }
+        };
+    </script>
+</body>
+</html>

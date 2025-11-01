@@ -1645,11 +1645,11 @@
                         
                         doc.text(`• Total de Registros: ${totalGeral}`, 14, yPos);
                         yPos += 6;
-                        doc.text(`• Resolvidos: ${totalResolvidos} (${((totalResolvidos/totalGeral)*100).toFixed(1)}%)`, 14, yPos);
+                        doc.text(`• Resolvidos: ${totalResolvidos} (${totalGeral > 0 ? ((totalResolvidos/totalGeral)*100).toFixed(1) : 0}%)`, 14, yPos);
                         yPos += 6;
-                        doc.text(`• Em Progresso: ${totalProgresso} (${((totalProgresso/totalGeral)*100).toFixed(1)}%)`, 14, yPos);
+                        doc.text(`• Em Progresso: ${totalProgresso} (${totalGeral > 0 ? ((totalProgresso/totalGeral)*100).toFixed(1) : 0}%)`, 14, yPos);
                         yPos += 6;
-                        doc.text(`• Em Análise: ${totalAnalise} (${((totalAnalise/totalGeral)*100).toFixed(1)}%)`, 14, yPos);
+                        doc.text(`• Em Análise: ${totalAnalise} (${totalGeral > 0 ? ((totalAnalise/totalGeral)*100).toFixed(1) : 0}%)`, 14, yPos);
 
                         // Rodapé
                         const pageCount = doc.internal.getNumberOfPages();
@@ -1716,7 +1716,7 @@
                                 m.resolvidos,
                                 m.emProgresso,
                                 m.emAnalise,
-                                `${((m.resolvidos / m.total) * 100).toFixed(1)}%`
+                                `${m.total > 0 ? ((m.resolvidos / m.total) * 100).toFixed(1) : 0}%`
                             ])
                         ];
                         const ws2 = XLSX.utils.aoa_to_sheet(metricsData);
@@ -1745,12 +1745,12 @@
                             [''],
                             ['Indicador', 'Valor', 'Percentual'],
                             ['Total de Registros', totalGeral, '100%'],
-                            ['Resolvidos', totalResolvidos, `${((totalResolvidos/totalGeral)*100).toFixed(1)}%`],
-                            ['Em Progresso', totalProgresso, `${((totalProgresso/totalGeral)*100).toFixed(1)}%`],
-                            ['Em Análise', totalAnalise, `${((totalAnalise/totalGeral)*100).toFixed(1)}%`],
+                            ['Resolvidos', totalResolvidos, `${totalGeral > 0 ? ((totalResolvidos/totalGeral)*100).toFixed(1) : 0}%`],
+                            ['Em Progresso', totalProgresso, `${totalGeral > 0 ? ((totalProgresso/totalGeral)*100).toFixed(1) : 0}%`],
+                            ['Em Análise', totalAnalise, `${totalGeral > 0 ? ((totalAnalise/totalGeral)*100).toFixed(1) : 0}%`],
                             [''],
-                            ['Taxa de Resolução', `${((totalResolvidos/totalGeral)*100).toFixed(1)}%`],
-                            ['Taxa de Pendência', `${(((totalProgresso+totalAnalise)/totalGeral)*100).toFixed(1)}%`]
+                            ['Taxa de Resolução', `${totalGeral > 0 ? ((totalResolvidos/totalGeral)*100).toFixed(1) : 0}%`],
+                            ['Taxa de Pendência', `${totalGeral > 0 ? (((totalProgresso+totalAnalise)/totalGeral)*100).toFixed(1) : 0}%`]
                         ];
                         const ws3 = XLSX.utils.aoa_to_sheet(resumoData);
                         ws3['!cols'] = [{ wch: 20 }, { wch: 15 }, { wch: 15 }];
