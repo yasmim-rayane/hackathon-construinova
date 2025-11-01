@@ -293,8 +293,8 @@ tailwind.config = {
 
 ## 📞 Contato
 
-- **Email**: contato@HubBS.com.br
-- **WhatsApp**: (13) 99999-9999
+- **Email**: hubbs@outlook.com.br
+- **WhatsApp**: (13) 99763-9273
 - **Endereço**: Santos, SP - Brasil
 
 ## 👥 Equipe

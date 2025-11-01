@@ -42,49 +42,51 @@
             font-family: 'Poppins', sans-serif;
         }
     </style>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-warm-sand">
     <!-- Header/Navbar -->
     <nav class="bg-deep-blue text-white shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <!-- Logo -->
-                <a href="../index.html" class="flex items-center space-x-2 hover:opacity-80 transition">
-                    <img src="../assets/img/logo.jpeg" alt="HubBS Logo" class="h-12 w-12 object-contain rounded">
-                    <span class="text-2xl font-bold font-poppins">HubBS</span>
+            <div class="flex items-center justify-between">
+                <a href="../../index.html" class="text-2xl font-bold font-poppins flex items-center gap-2">
+                    <img src="../../assets/img/logo.jpeg" alt="HubBS Logo" class="h-12 w-12 object-contain rounded">
+                    HubBS
                 </a>
-
-                <!-- Desktop Menu -->
-                <div class="hidden md:flex items-center space-x-8">
-                    <a href="../index.html" class="hover:text-solar-yellow transition font-medium">Início</a>
-                    <a href="sobre.html" class="hover:text-solar-yellow transition font-medium">Sobre</a>
-                    <a href="enviar-relato.html" class="hover:text-solar-yellow transition font-medium">Enviar Relato</a>
-                    <a href="whatsapp-bot.html" class="hover:text-solar-yellow transition font-medium"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
-                    <a href="dashboard.html" class="hover:text-solar-yellow transition font-medium">Dashboard</a>
-                    <a href="recompensas.html" class="text-solar-yellow border-b-2 border-solar-yellow font-bold">Recompensas</a>
-                    <a href="planos.html" class="hover:text-solar-yellow transition font-medium">Planos</a>
-                    <a href="login.html" class="bg-vibrant-teal px-6 py-2 rounded-full hover:bg-ods-green transition font-semibold">Login</a>
-                    </div>
-
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="../../index.html" class="hover:text-solar-yellow transition">Início</a>
+                    <a href="sobre.html" class="hover:text-solar-yellow transition">Sobre</a>
+                    <a href="../relatos/enviar-relato.html" class="hover:text-solar-yellow transition">Enviar Relato</a>
+                    <a href="../relatos/whatsapp-bot.html" class="hover:text-solar-yellow transition">
+                        <i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot
+                    </a>
+                    <a href="dashboard.html" class="hover:text-solar-yellow transition">Dashboard</a>
+                    <a href="recompensas.html" class="text-solar-yellow font-bold border-b-2 border-solar-yellow">Recompensas</a>
+                    <a href="planos.html" class="hover:text-solar-yellow transition">Planos</a>
+                    <a href="../login.html" class="bg-vibrant-teal px-4 py-2 rounded-lg hover:bg-ods-green transition">Login</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-solar-yellow focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
             </div>
-
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
-                <a href="../index.html" class="block py-2 hover:text-solar-yellow transition">Início</a>
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2">
+                <a href="../../index.html" class="block py-2 hover:text-solar-yellow transition">Início</a>
                 <a href="sobre.html" class="block py-2 hover:text-solar-yellow transition">Sobre</a>
-                <a href="enviar-relato.html" class="block py-2 hover:text-solar-yellow transition">Enviar Relato</a>
-                <a href="whatsapp-bot.html" class="block py-2 hover:text-solar-yellow transition"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
+                <a href="../relatos/enviar-relato.html" class="block py-2 hover:text-solar-yellow transition">Enviar Relato</a>
+                <a href="../relatos/whatsapp-bot.html" class="block py-2 hover:text-solar-yellow transition">
+                    <i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot
+                </a>
                 <a href="dashboard.html" class="block py-2 hover:text-solar-yellow transition">Dashboard</a>
                 <a href="recompensas.html" class="block py-2 text-solar-yellow font-bold">Recompensas</a>
                 <a href="planos.html" class="block py-2 hover:text-solar-yellow transition">Planos</a>
-                <a href="login.html" class="block py-2 hover:text-solar-yellow transition">Login</a>
+                <a href="../login.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Login</a>
             </div>
         </div>
     </nav>
@@ -99,7 +101,7 @@
                     Transforme sua participação cidadã em benefícios reais. Ganhe pontos a cada contribuição e troque por prêmios com nossos parceiros!
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <a href="signup.html" class="bg-solar-yellow text-deep-blue px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition shadow-lg">
+                    <a href="../signup.html" class="bg-solar-yellow text-deep-blue px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition shadow-lg">
                         Começar Agora
                     </a>
                     <a href="#como-funciona" class="bg-white/20 backdrop-blur-sm text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/30 transition">
@@ -190,7 +192,7 @@
                     Cadastre-se gratuitamente, envie seu primeiro relato e comece a acumular pontos. Juntos, construímos o amanhã! 🚀
                 </p>
                 <div class="flex flex-wrap justify-center gap-4">
-                    <a href="signup.html" class="bg-solar-yellow text-deep-blue px-10 py-4 rounded-full font-bold text-lg hover:bg-white transition shadow-xl">
+                    <a href="../signup.html" class="bg-solar-yellow text-deep-blue px-10 py-4 rounded-full font-bold text-lg hover:bg-white transition shadow-xl">
                         Criar Conta Grátis
                     </a>
                     <a href="https://wa.me/5513999999999?text=Olá!%20Quero%20saber%20mais%20sobre%20recompensas%20HUB" 
@@ -221,7 +223,7 @@
                 <div>
                     <h4 class="font-bold font-poppins mb-4 text-solar-yellow">Navegação</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="../index.html" class="text-gray-400 hover:text-vibrant-teal transition">Início</a></li>
+                        <li><a href="../../index.html" class="text-gray-400 hover:text-vibrant-teal transition">Início</a></li>
                         <li><a href="sobre.html" class="text-gray-400 hover:text-vibrant-teal transition">Sobre</a></li>
                         <li><a href="dashboard.html" class="text-gray-400 hover:text-vibrant-teal transition">Dashboard</a></li>
                         <li><a href="recompensas.html" class="text-gray-400 hover:text-vibrant-teal transition">Recompensas</a></li>
@@ -232,8 +234,8 @@
                 <div>
                     <h4 class="font-bold font-poppins mb-4 text-solar-yellow">Para Empresas</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="empresa.html" class="text-gray-400 hover:text-vibrant-teal transition">Seja Parceiro</a></li>
-                        <li><a href="login.html" class="text-gray-400 hover:text-vibrant-teal transition">Login Empresas</a></li>
+                        <li><a href="../empresa/empresa.html" class="text-gray-400 hover:text-vibrant-teal transition">Seja Parceiro</a></li>
+                        <li><a href="../login.html" class="text-gray-400 hover:text-vibrant-teal transition">Login Empresas</a></li>
                     </ul>
                 </div>
 
@@ -241,8 +243,8 @@
                 <div>
                     <h4 class="font-bold font-poppins mb-4 text-solar-yellow">Contato</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li>📧 contato@HubBS.com.br</li>
-                        <li>📱 (13) 99999-9999</li>
+                        <li>📧 hubbs@outlook.com.br</li>
+                        <li>📱 (13) 99763-9273</li>
                         <li>📍 Santos, SP - Brasil</li>
                     </ul>
                 </div>

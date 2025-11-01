@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Autenticação - Teste | HubBS</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-blue': '#005F73',
+                        'vibrant-teal': '#0A9396',
+                        'ods-green': '#94D2BD',
+                        'solar-yellow': '#E9D8A6',
+                        'warm-sand': '#FAF3E0',
+                        'dark-gray': '#2E2E2E',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Scripts do Sistema de Autenticação -->
+    <script src="../js/database.js"></script>
+    <script src="../js/auth.js"></script>
+</head>
+<body class="bg-warm-sand min-h-screen">
+    <div class="container mx-auto px-4 py-8 max-w-4xl">
+        <div class="bg-white rounded-lg shadow-xl p-8 mb-6">
+            <h1 class="text-3xl font-bold text-deep-blue mb-2">
+                <i class="fas fa-user-shield"></i> Sistema de Autenticação - Teste
+            </h1>
+            <p class="text-gray-600">Teste completo do sistema de cadastro e login do HubBS</p>
+        </div>
+
+        <!-- Status da Sessão -->
+        <div id="session-status" class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-info-circle"></i> Status da Sessão
+            </h2>
+            <div id="session-info" class="space-y-2">
+                <p class="text-gray-600">Carregando...</p>
+            </div>
+            <button id="btn-logout" class="hidden mt-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700">
+                <i class="fas fa-sign-out-alt mr-2"></i>Fazer Logout
+            </button>
+        </div>
+
+        <!-- Criar Usuário de Teste -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-user-plus"></i> Criar Usuário de Teste
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                    <input type="text" id="test-nome" value="João Silva" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                    <input type="email" id="test-email" value="joao.silva@email.com" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+                    <input type="password" id="test-senha" value="teste123" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Cidade</label>
+                    <select id="test-cidade" class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                        <option value="Santos">Santos</option>
+                        <option value="São Vicente">São Vicente</option>
+                        <option value="Guarujá">Guarujá</option>
+                        <option value="Praia Grande">Praia Grande</option>
+                    </select>
+                </div>
+            </div>
+            <button id="btn-register" class="w-full px-4 py-3 bg-deep-blue text-white rounded-lg hover:bg-vibrant-teal font-semibold">
+                <i class="fas fa-user-plus mr-2"></i>Criar Usuário
+            </button>
+            <div id="register-result" class="mt-4"></div>
+        </div>
+
+        <!-- Login -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-sign-in-alt"></i> Fazer Login
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">E-mail</label>
+                    <input type="email" id="login-email" value="joao.silva@email.com" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Senha</label>
+                    <input type="password" id="login-senha" value="teste123" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-lg">
+                </div>
+            </div>
+            <button id="btn-login" class="w-full px-4 py-3 bg-vibrant-teal text-white rounded-lg hover:bg-deep-blue font-semibold">
+                <i class="fas fa-sign-in-alt mr-2"></i>Fazer Login
+            </button>
+            <div id="login-result" class="mt-4"></div>
+        </div>
+
+        <!-- Listar Usuários -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-4">
+                <i class="fas fa-users"></i> Usuários Cadastrados
+            </h2>
+            <button id="btn-list-users" class="mb-4 px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700">
+                <i class="fas fa-sync mr-2"></i>Atualizar Lista
+            </button>
+            <div id="users-list" class="space-y-2">
+                <p class="text-gray-600">Clique em "Atualizar Lista" para ver os usuários</p>
+            </div>
+        </div>
+
+        <!-- Console de Logs -->
+        <div class="bg-gray-900 rounded-lg shadow-lg p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-xl font-bold text-white">
+                    <i class="fas fa-terminal"></i> Console de Logs
+                </h2>
+                <button id="btn-clear-logs" class="px-3 py-1 bg-red-600 text-white text-sm rounded hover:bg-red-700">
+                    <i class="fas fa-trash mr-1"></i>Limpar
+                </button>
+            </div>
+            <div id="console-logs" class="bg-black rounded p-4 text-green-400 font-mono text-sm h-64 overflow-y-auto">
+                <div>Sistema de autenticação carregado...</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Função para adicionar log
+        function addLog(message, type = 'info') {
+            const logsDiv = document.getElementById('console-logs');
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = {
+                info: 'text-blue-400',
+                success: 'text-green-400',
+                error: 'text-red-400',
+                warning: 'text-yellow-400'
+            };
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = colors[type] || 'text-gray-400';
+            logEntry.textContent = `[${timestamp}] ${message}`;
+            logsDiv.appendChild(logEntry);
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+        }
+
+        // Função para mostrar resultado
+        function showResult(elementId, message, isSuccess) {
+            const element = document.getElementById(elementId);
+            element.innerHTML = `
+                <div class="p-4 rounded-lg ${isSuccess ? 'bg-green-100 text-green-800 border border-green-300' : 'bg-red-100 text-red-800 border border-red-300'}">
+                    ${message}
+                </div>
+            `;
+        }
+
+        // Atualiza status da sessão
+        function updateSessionStatus() {
+            const sessionInfo = document.getElementById('session-info');
+            const logoutBtn = document.getElementById('btn-logout');
+            
+            if (auth.isAuthenticated()) {
+                const user = auth.getCurrentUser();
+                sessionInfo.innerHTML = `
+                    <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                        <p class="text-green-800 font-semibold mb-2">✅ Usuário Autenticado</p>
+                        <div class="space-y-1 text-sm">
+                            <p><strong>Nome:</strong> ${user.nome}</p>
+                            <p><strong>E-mail:</strong> ${user.email}</p>
+                            <p><strong>Cidade:</strong> ${user.cidade || 'Não informada'}</p>
+                            <p><strong>Tipo:</strong> ${user.tipo}</p>
+                            <p><strong>Pontos:</strong> ${user.pontos || 0}</p>
+                            <p><strong>Nível:</strong> ${user.nivel || 1}</p>
+                        </div>
+                    </div>
+                `;
+                logoutBtn.classList.remove('hidden');
+                addLog('Sessão ativa detectada', 'success');
+            } else {
+                sessionInfo.innerHTML = `
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                        <p class="text-yellow-800 font-semibold">⚠️ Nenhum usuário autenticado</p>
+                        <p class="text-sm text-yellow-700 mt-1">Faça login ou crie um usuário para testar</p>
+                    </div>
+                `;
+                logoutBtn.classList.add('hidden');
+                addLog('Nenhuma sessão ativa', 'warning');
+            }
+        }
+
+        // Criar usuário
+        document.getElementById('btn-register').addEventListener('click', async () => {
+            const nome = document.getElementById('test-nome').value;
+            const email = document.getElementById('test-email').value;
+            const senha = document.getElementById('test-senha').value;
+            const cidade = document.getElementById('test-cidade').value;
+
+            addLog(`Tentando criar usuário: ${email}`, 'info');
+
+            const result = await auth.register({
+                nome, email, senha, cidade, tipo: 'cidadao'
+            });
+
+            if (result.success) {
+                addLog(`✅ Usuário criado: ${result.user.nome}`, 'success');
+                showResult('register-result', `✅ Usuário criado com sucesso! ID: ${result.user.id}`, true);
+                updateSessionStatus();
+            } else {
+                addLog(`❌ Erro ao criar usuário: ${result.message}`, 'error');
+                showResult('register-result', `❌ ${result.message}`, false);
+            }
+        });
+
+        // Login
+        document.getElementById('btn-login').addEventListener('click', async () => {
+            const email = document.getElementById('login-email').value;
+            const senha = document.getElementById('login-senha').value;
+
+            addLog(`Tentando login: ${email}`, 'info');
+
+            const result = await auth.login(email, senha);
+
+            if (result.success) {
+                addLog(`✅ Login realizado: ${result.user.nome}`, 'success');
+                showResult('login-result', `✅ Login realizado com sucesso! Bem-vindo, ${result.user.nome}!`, true);
+                updateSessionStatus();
+            } else {
+                addLog(`❌ Erro no login: ${result.message}`, 'error');
+                showResult('login-result', `❌ ${result.message}`, false);
+            }
+        });
+
+        // Logout
+        document.getElementById('btn-logout').addEventListener('click', () => {
+            if (confirm('Deseja realmente fazer logout?')) {
+                addLog('Fazendo logout...', 'info');
+                auth.logout();
+                updateSessionStatus();
+                addLog('✅ Logout realizado', 'success');
+            }
+        });
+
+        // Listar usuários
+        document.getElementById('btn-list-users').addEventListener('click', async () => {
+            addLog('Carregando lista de usuários...', 'info');
+            const db = new HubDatabase();
+            await db.waitForInit();
+            
+            const usuarios = await db.getUsuarios();
+            const usersList = document.getElementById('users-list');
+
+            if (usuarios.length === 0) {
+                usersList.innerHTML = '<p class="text-gray-600">Nenhum usuário cadastrado</p>';
+                addLog('Nenhum usuário encontrado', 'warning');
+            } else {
+                usersList.innerHTML = usuarios.map((u, i) => `
+                    <div class="p-3 bg-gray-50 border border-gray-200 rounded-lg">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold" 
+                                 style="background-color: ${u.avatar?.cor || '#005F73'}">
+                                ${u.avatar?.iniciais || 'U'}
+                            </div>
+                            <div class="flex-1">
+                                <p class="font-semibold text-gray-800">${u.nome}</p>
+                                <p class="text-sm text-gray-600">${u.email} • ${u.cidade || 'Sem cidade'}</p>
+                                <p class="text-xs text-gray-500">Pontos: ${u.pontos || 0} • Nível: ${u.nivel || 1}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+                addLog(`✅ ${usuarios.length} usuário(s) encontrado(s)`, 'success');
+            }
+        });
+
+        // Limpar logs
+        document.getElementById('btn-clear-logs').addEventListener('click', () => {
+            document.getElementById('console-logs').innerHTML = '<div>Logs limpos...</div>';
+        });
+
+        // Inicialização
+        setTimeout(() => {
+            updateSessionStatus();
+            addLog('Sistema de autenticação pronto!', 'success');
+        }, 500);
+    </script>
+</body>
+</html>

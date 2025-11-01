@@ -4,7 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HubBS WhatsApp Bot - Relatos via Chat</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-blue': '#005F73',
+                        'vibrant-teal': '#0A9396',
+                        'ods-green': '#94D2BD',
+                        'solar-yellow': '#E9D8A6',
+                        'warm-sand': '#FAF3E0',
+                        'dark-gray': '#2E2E2E',
+                    }
+                }
+            }
+        }
+    </script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
@@ -17,7 +33,6 @@
         }
 
         body {
-            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--vibrant-teal) 100%);
             min-height: 100vh;
             font-family: 'Inter', -apple-system, sans-serif;
         }
@@ -215,25 +230,46 @@
         }
     </style>
 </head>
-<body>
+<body class="bg-white text-dark-gray">
     <!-- Navigation -->
-    <nav class="nav-header sticky top-0 z-50">
+    <nav class="bg-deep-blue text-white shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-6 py-4">
-            <div class="flex justify-between items-center">
-                <a href="../index.html" class="text-2xl font-bold flex items-center gap-2" style="color: var(--deep-blue);">
-                    <img src="../assets/img/logo.jpeg" alt="HubBS Logo" class="h-12 w-12 object-contain rounded">
+            <div class="flex items-center justify-between">
+                <a href="../../index.html" class="text-2xl font-bold font-poppins flex items-center gap-2">
+                    <img src="../../assets/img/logo.jpeg" alt="HubBS Logo" class="h-12 w-12 object-contain rounded">
                     HubBS
                 </a>
-                <div class="hidden md:flex space-x-6">
-                    <a href="../index.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Início</a>
-                    <a href="sobre.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Sobre</a>
-                    <a href="enviar-relato.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Enviar Relato</a>
-                    <a href="whatsapp-bot.html" class="text-teal-600 font-semibold"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
-                    <a href="dashboard.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Dashboard</a>
-                    <a href="recompensas.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Recompensas</a>
-                    <a href="planos.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Planos</a>
-                    <a href="login.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Login</a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="../../index.html" class="hover:text-solar-yellow transition">Início</a>
+                    <a href="../sistema/sobre.html" class="hover:text-solar-yellow transition">Sobre</a>
+                    <a href="enviar-relato.html" class="hover:text-solar-yellow transition">Enviar Relato</a>
+                    <a href="whatsapp-bot.html" class="text-solar-yellow font-bold border-b-2 border-solar-yellow">
+                        <i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot
+                    </a>
+                    <a href="../sistema/dashboard.html" class="hover:text-solar-yellow transition">Dashboard</a>
+                    <a href="../sistema/recompensas.html" class="hover:text-solar-yellow transition">Recompensas</a>
+                    <a href="../sistema/planos.html" class="hover:text-solar-yellow transition">Planos</a>
+                    <a href="../login.html" class="bg-vibrant-teal text-white px-4 py-2 rounded-lg hover:bg-ods-green transition">Login</a>
                 </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-solar-yellow focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2">
+                <a href="../../index.html" class="block py-2 hover:text-solar-yellow transition">Início</a>
+                <a href="../sistema/sobre.html" class="block py-2 hover:text-solar-yellow transition">Sobre</a>
+                <a href="enviar-relato.html" class="block py-2 hover:text-solar-yellow transition">Enviar Relato</a>
+                <a href="whatsapp-bot.html" class="block py-2 text-solar-yellow font-bold">
+                    <i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot
+                </a>
+                <a href="../sistema/dashboard.html" class="block py-2 hover:text-solar-yellow transition">Dashboard</a>
+                <a href="../sistema/recompensas.html" class="block py-2 hover:text-solar-yellow transition">Recompensas</a>
+                <a href="../sistema/planos.html" class="block py-2 hover:text-solar-yellow transition">Planos</a>
+                <a href="../login.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Login</a>
             </div>
         </div>
     </nav>
@@ -241,10 +277,10 @@
     <!-- Main Content -->
     <div class="container mx-auto px-4 py-8">
         <div class="text-center mb-6">
-            <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">
+            <h1 class="text-3xl md:text-4xl font-bold text-deep-blue mb-2">
                 <i class="fab fa-whatsapp mr-2"></i>HubBS WhatsApp Bot
             </h1>
-            <p class="text-white text-lg opacity-90">
+            <p class="text-dark-gray text-lg">
                 Envie relatos conversando com nosso assistente virtual
             </p>
         </div>
@@ -318,8 +354,8 @@
     </div>
 
     <!-- Database Scripts -->
-    <script src="../js/database.js"></script>
-    <script src="../js/api.js"></script>
+    <script src="../../assets/js/modules/database.js"></script>
+    <script src="../../assets/js/modules/api.js"></script>
 
     <script>
         // Estado da conversa
@@ -490,7 +526,21 @@
                             addBotMessage('Qual categoria melhor descreve o problema?', true, quickReplies);
                         }, 1000);
                     } else {
-                        addBotMessage('❌ Opção inválida. Por favor, escolha um número de 1 a 9.');
+                        addBotMessage('❌ Opção inválida. Por favor, clique em uma das opções:');
+                        setTimeout(() => {
+                            const quickReplies = [
+                                { value: '1', label: '1️⃣ Santos' },
+                                { value: '2', label: '2️⃣ S. Vicente' },
+                                { value: '3', label: '3️⃣ Guarujá' },
+                                { value: '4', label: '4️⃣ Praia Grande' },
+                                { value: '5', label: '5️⃣ Cubatão' },
+                                { value: '6', label: '6️⃣ Bertioga' },
+                                { value: '7', label: '7️⃣ Mongaguá' },
+                                { value: '8', label: '8️⃣ Itanhaém' },
+                                { value: '9', label: '9️⃣ Peruíbe' }
+                            ];
+                            addBotMessage('Em qual cidade da Baixada Santista está o problema?', true, quickReplies);
+                        }, 800);
                     }
                     break;
 
@@ -506,7 +556,20 @@
                             addBotMessage('Exemplo: "Buraco na Avenida Central"');
                         }, 1000);
                     } else {
-                        addBotMessage('❌ Opção inválida. Escolha um número de 1 a 8.');
+                        addBotMessage('❌ Opção inválida. Por favor, clique em uma das opções:');
+                        setTimeout(() => {
+                            const quickReplies = [
+                                { value: '1', label: '🚌 Transporte' },
+                                { value: '2', label: '🛣️ Infraestrutura' },
+                                { value: '3', label: '🌳 Espaços Públicos' },
+                                { value: '4', label: '💧 Saneamento' },
+                                { value: '5', label: '🏠 Habitação' },
+                                { value: '6', label: '🌿 Áreas Verdes' },
+                                { value: '7', label: '♻️ Resíduos' },
+                                { value: '8', label: '🌱 Meio Ambiente' }
+                            ];
+                            addBotMessage('Qual categoria melhor descreve o problema?', true, quickReplies);
+                        }, 800);
                     }
                     break;
 
@@ -562,12 +625,21 @@
                 case 'confirmar':
                     if (message.toLowerCase() === 'confirmar') {
                         await enviarRelato();
-                    } else {
+                    } else if (message.toLowerCase() === 'cancelar') {
                         addBotMessage('❌ Relato cancelado.');
                         setTimeout(() => {
                             addBotMessage('Digite "começar" para iniciar um novo relato.');
                         }, 1000);
                         conversationState.step = 'idle';
+                    } else {
+                        addBotMessage('❌ Opção inválida. Por favor, clique em uma das opções:');
+                        setTimeout(() => {
+                            const quickReplies = [
+                                { value: 'confirmar', label: '✅ Confirmar e Enviar' },
+                                { value: 'cancelar', label: '❌ Cancelar' }
+                            ];
+                            addBotMessage('Está tudo correto?', true, quickReplies);
+                        }, 800);
                     }
                     break;
 

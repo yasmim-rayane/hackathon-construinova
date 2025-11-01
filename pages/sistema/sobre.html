@@ -43,8 +43,11 @@
         }
     </style>
     
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <script src="../assets/js/app.js" defer></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <script src="../../assets/js/app.js" defer></script>
 </head>
 
 <body class="bg-warm-sand text-dark-gray">
@@ -53,19 +56,19 @@
     <nav class="bg-deep-blue text-white shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <a href="../index.html" class="text-2xl font-bold font-poppins flex items-center gap-2">
-                    <img src="../assets/img/logo.jpeg" alt="HubBS Logo" class="h-12 w-12 object-contain rounded">
+                <a href="../../index.html" class="text-2xl font-bold font-poppins flex items-center gap-2">
+                    <img src="../../assets/img/logo.jpeg" alt="HubBS Logo" class="h-12 w-12 object-contain rounded">
                     HubBS
                 </a>
                 <div class="hidden md:flex items-center gap-6">
-                    <a href="../index.html" class="hover:text-solar-yellow transition">Início</a>
+                    <a href="../../index.html" class="hover:text-solar-yellow transition">Início</a>
                     <a href="sobre.html" class="text-solar-yellow font-bold border-b-2 border-solar-yellow">Sobre</a>
-                    <a href="enviar-relato.html" class="hover:text-solar-yellow transition">Enviar Relato</a>
-                    <a href="whatsapp-bot.html" class="hover:text-solar-yellow transition"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
+                    <a href="../relatos/enviar-relato.html" class="hover:text-solar-yellow transition">Enviar Relato</a>
+                    <a href="../relatos/whatsapp-bot.html" class="hover:text-solar-yellow transition"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
                     <a href="dashboard.html" class="hover:text-solar-yellow transition">Dashboard</a>
                     <a href="recompensas.html" class="hover:text-solar-yellow transition">Recompensas</a>
                     <a href="planos.html" class="hover:text-solar-yellow transition">Planos</a>
-                    <a href="login.html" class="bg-vibrant-teal px-4 py-2 rounded-lg hover:bg-ods-green transition">Login</a>
+                    <a href="../login.html" class="bg-vibrant-teal px-4 py-2 rounded-lg hover:bg-ods-green transition">Login</a>
                 </div>
                 <div class="md:hidden">
                     <button id="mobile-menu-button" class="text-white hover:text-solar-yellow focus:outline-none">
@@ -76,14 +79,14 @@
                 </div>
             </div>
             <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2">
-                <a href="../index.html" class="block py-2 hover:text-solar-yellow transition">Início</a>
+                <a href="../../index.html" class="block py-2 hover:text-solar-yellow transition">Início</a>
                 <a href="sobre.html" class="block py-2 text-solar-yellow font-bold">Sobre</a>
-                <a href="enviar-relato.html" class="block py-2 hover:text-solar-yellow transition">Enviar Relato</a>
-                <a href="whatsapp-bot.html" class="block py-2 hover:text-solar-yellow transition"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
+                <a href="../relatos/enviar-relato.html" class="block py-2 hover:text-solar-yellow transition">Enviar Relato</a>
+                <a href="../relatos/whatsapp-bot.html" class="block py-2 hover:text-solar-yellow transition"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
                 <a href="dashboard.html" class="block py-2 hover:text-solar-yellow transition">Dashboard</a>
                 <a href="recompensas.html" class="block py-2 hover:text-solar-yellow transition">Recompensas</a>
                 <a href="planos.html" class="block py-2 hover:text-solar-yellow transition">Planos</a>
-                <a href="login.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Login</a>
+                <a href="../login.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Login</a>
             </div>
         </div>
     </nav>
@@ -380,7 +383,7 @@
                 <a href="dashboard.html" class="inline-block bg-white text-deep-blue px-8 py-3 rounded-full font-semibold hover:bg-sand transition shadow-xl">
                     Ver Dados Públicos
                 </a>
-                <a href="empresa.html" class="inline-block border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-deep-blue transition shadow-xl">
+                <a href="../empresa/empresa.html" class="inline-block border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-deep-blue transition shadow-xl">
                     Painel de Empresas
                 </a>
             </div>
@@ -401,7 +404,7 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Navegação</h3>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="../index.html" class="hover:text-turquoise transition">Início</a></li>
+                        <li><a href="../../index.html" class="hover:text-turquoise transition">Início</a></li>
                         <li><a href="sobre.html" class="hover:text-turquoise transition">Sobre</a></li>
                         <li><a href="dashboard.html" class="hover:text-turquoise transition">Dashboard</a></li>
                         <li><a href="recompensas.html" class="hover:text-turquoise transition">Recompensas</a></li>
@@ -410,15 +413,15 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Para Empresas</h3>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="empresa.html" class="hover:text-turquoise transition">Painel de Dados</a></li>
-                        <li><a href="login.html" class="hover:text-turquoise transition">Login</a></li>
+                        <li><a href="../empresa/empresa.html" class="hover:text-turquoise transition">Painel de Dados</a></li>
+                        <li><a href="../login.html" class="hover:text-turquoise transition">Login</a></li>
                     </ul>
                 </div>
                 <div>
                     <h3 class="text-lg font-bold mb-4">Contato</h3>
                     <ul class="space-y-2 text-gray-400">
-                        <li>📧 contato@HubBS.com.br</li>
-                        <li>📱 (13) 99999-9999</li>
+                        <li>📧 hubbs@outlook.com.br</li>
+                        <li>📱 (13) 99763-9273</li>
                         <li>📍 Santos, SP - Brasil</li>
                     </ul>
                 </div>

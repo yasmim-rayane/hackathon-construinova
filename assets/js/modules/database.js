@@ -410,6 +410,74 @@ class HubDatabase {
     }
 
     /**
+     * Buscar usuário por ID
+     */
+    async getUsuario(id) {
+        const transaction = this.db.transaction(['usuarios'], 'readonly');
+        const store = transaction.objectStore('usuarios');
+
+        return new Promise((resolve, reject) => {
+            const request = store.get(id);
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+        });
+    }
+
+    /**
+     * Atualizar usuário
+     */
+    async updateUsuario(id, updates) {
+        const transaction = this.db.transaction(['usuarios'], 'readwrite');
+        const store = transaction.objectStore('usuarios');
+
+        return new Promise((resolve, reject) => {
+            const getRequest = store.get(id);
+            
+            getRequest.onsuccess = () => {
+                const usuario = getRequest.result;
+                if (!usuario) {
+                    reject(new Error('Usuário não encontrado'));
+                    return;
+                }
+
+                const usuarioAtualizado = { ...usuario, ...updates };
+                const updateRequest = store.put(usuarioAtualizado);
+                
+                updateRequest.onsuccess = () => resolve(usuarioAtualizado);
+                updateRequest.onerror = () => reject(updateRequest.error);
+            };
+
+            getRequest.onerror = () => reject(getRequest.error);
+        });
+    }
+
+    /**
+     * Aguarda inicialização do banco
+     */
+    async waitForInit() {
+        if (this.db) {
+            return this.db;
+        }
+        
+        // Aguarda até 3 segundos pela inicialização
+        return new Promise((resolve, reject) => {
+            let attempts = 0;
+            const maxAttempts = 30;
+            
+            const checkInit = setInterval(() => {
+                attempts++;
+                if (this.db) {
+                    clearInterval(checkInit);
+                    resolve(this.db);
+                } else if (attempts >= maxAttempts) {
+                    clearInterval(checkInit);
+                    reject(new Error('Timeout ao inicializar banco de dados'));
+                }
+            }, 100);
+        });
+    }
+
+    /**
      * Exportar dados para JSON
      */
     async exportData() {

@@ -1,31 +1,17 @@
-<!DOCTYPE html><!DOCTYPE html>
-
-<html lang="pt-br"><html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 
 <head>
-
-    <meta charset="UTF-8"><head>
-
-    <meta http-equiv="refresh" content="0; url=auth/login.html">    <meta charset="UTF-8">
-
-    <title>Redirecionando...</title>    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <script>    <title>Login - HubBS</title>
-
-        window.location.href = 'auth/login.html';    
-
-    </script>    <!-- Google Fonts -->
-
-</head>    <link rel="preconnect" href="https://fonts.googleapis.com">
-
-<body>    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <p>Redirecionando para <a href="auth/login.html">Login</a>...</p>    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-
-</body>    
-
-</html>    <!-- Tailwind CSS -->
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HubBS</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -57,16 +43,16 @@
         }
     </style>
     
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../../assets/css/style.css">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Scripts -->
-    <script src="../js/database.js"></script>
-    <script src="../js/auth.js"></script>
-    <script src="../js/login.js" defer></script>
-    <script src="../assets/js/app.js" defer></script>
+    <script src="../../assets/js/modules/database.js"></script>
+    <script src="../../assets/js/modules/auth.js"></script>
+    <script src="../../assets/js/modules/login.js" defer></script>
+    <script src="../../assets/js/app.js" defer></script>
 </head>
 
 <body class="bg-warm-sand text-dark-gray">
@@ -75,18 +61,18 @@
     <nav class="bg-deep-blue text-white shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
-                <a href="../index.html" class="text-2xl font-bold font-poppins flex items-center gap-2">
-                    <img src="../assets/img/logo.jpeg" alt="HubBS Logo" class="h-12 w-12 object-contain rounded">
+                <a href="../../index.html" class="text-2xl font-bold font-poppins flex items-center gap-2">
+                    <img src="../../assets/img/logo.jpeg" alt="HubBS Logo" class="h-12 w-12 object-contain rounded">
                     HubBS
                 </a>
                 <div class="hidden md:flex items-center gap-6">
-                    <a href="../index.html" class="hover:text-solar-yellow transition">Início</a>
-                    <a href="sobre.html" class="hover:text-solar-yellow transition">Sobre</a>
-                    <a href="enviar-relato.html" class="hover:text-solar-yellow transition">Enviar Relato</a>
-                    <a href="whatsapp-bot.html" class="hover:text-solar-yellow transition"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
-                    <a href="dashboard.html" class="hover:text-solar-yellow transition">Dashboard</a>
-                    <a href="recompensas.html" class="hover:text-solar-yellow transition">Recompensas</a>
-                    <a href="planos.html" class="hover:text-solar-yellow transition">Planos</a>
+                    <a href="../../index.html" class="hover:text-solar-yellow transition">Início</a>
+                    <a href="../sistema/sobre.html" class="hover:text-solar-yellow transition">Sobre</a>
+                    <a href="../relatos/enviar-relato.html" class="hover:text-solar-yellow transition">Enviar Relato</a>
+                    <a href="../relatos/whatsapp-bot.html" class="hover:text-solar-yellow transition"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
+                    <a href="../sistema/dashboard.html" class="hover:text-solar-yellow transition">Dashboard</a>
+                    <a href="../sistema/recompensas.html" class="hover:text-solar-yellow transition">Recompensas</a>
+                    <a href="../sistema/planos.html" class="hover:text-solar-yellow transition">Planos</a>
                     <a href="signup.html" class="bg-vibrant-teal px-4 py-2 rounded-lg hover:bg-ods-green transition">Criar Conta</a>
                 </div>
                 <div class="md:hidden">
@@ -98,13 +84,13 @@
                 </div>
             </div>
             <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2">
-                <a href="../index.html" class="block py-2 hover:text-solar-yellow transition">Início</a>
-                <a href="sobre.html" class="block py-2 hover:text-solar-yellow transition">Sobre</a>
-                <a href="enviar-relato.html" class="block py-2 hover:text-solar-yellow transition">Enviar Relato</a>
-                <a href="whatsapp-bot.html" class="block py-2 hover:text-solar-yellow transition"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
-                <a href="dashboard.html" class="block py-2 hover:text-solar-yellow transition">Dashboard</a>
-                <a href="recompensas.html" class="block py-2 hover:text-solar-yellow transition">Recompensas</a>
-                <a href="planos.html" class="block py-2 hover:text-solar-yellow transition">Planos</a>
+                <a href="../../index.html" class="block py-2 hover:text-solar-yellow transition">Início</a>
+                <a href="../sistema/sobre.html" class="block py-2 hover:text-solar-yellow transition">Sobre</a>
+                <a href="../relatos/enviar-relato.html" class="block py-2 hover:text-solar-yellow transition">Enviar Relato</a>
+                <a href="../relatos/whatsapp-bot.html" class="block py-2 hover:text-solar-yellow transition"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
+                <a href="../sistema/dashboard.html" class="block py-2 hover:text-solar-yellow transition">Dashboard</a>
+                <a href="../sistema/recompensas.html" class="block py-2 hover:text-solar-yellow transition">Recompensas</a>
+                <a href="../sistema/planos.html" class="block py-2 hover:text-solar-yellow transition">Planos</a>
                 <a href="signup.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Criar Conta</a>
             </div>
         </div>
@@ -222,7 +208,7 @@
 
                 <!-- Enterprise Login -->
                 <div class="mt-6 pt-6 border-t border-gray-200 text-center">
-                    <a href="empresa.html" class="text-sm text-gray-600 hover:text-deep-blue">
+                    <a href="../empresa/empresa.html" class="text-sm text-gray-600 hover:text-deep-blue">
                         Acesso para empresas →
                     </a>
                 </div>

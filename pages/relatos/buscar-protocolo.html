@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buscar Protocolo - HubBS</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-blue': '#005F73',
+                        'vibrant-teal': '#0A9396',
+                        'ods-green': '#94D2BD',
+                        'solar-yellow': '#E9D8A6',
+                        'warm-sand': '#FAF3E0',
+                        'dark-gray': '#2E2E2E',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #005F73 0%, #0A9396 100%);
+            min-height: 100vh;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .search-card {
+            background: white;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+        }
+
+        .protocol-badge {
+            background: linear-gradient(135deg, #0A9396, #005F73);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 2rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            font-size: 1.125rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            display: inline-block;
+        }
+
+        .status-em_analise {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .status-em_progresso {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .status-resolvido {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            padding-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #E5E7EB;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #0A9396;
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .info-item {
+            background: #F9FAFB;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            border-left: 4px solid #0A9396;
+        }
+
+        .priority-baixa { color: #10B981; }
+        .priority-media { color: #F59E0B; }
+        .priority-alta { color: #EF4444; }
+        .priority-urgente { color: #DC2626; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <!-- Header/Navbar -->
+    <nav class="bg-deep-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../../index.html" class="text-2xl font-bold font-poppins flex items-center gap-2">
+                    <img src="../../assets/img/logo.jpeg" alt="HubBS Logo" class="h-12 w-12 object-contain rounded">
+                    HubBS
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="../../index.html" class="hover:text-solar-yellow transition">Início</a>
+                    <a href="../sistema/sobre.html" class="hover:text-solar-yellow transition">Sobre</a>
+                    <a href="enviar-relato.html" class="hover:text-solar-yellow transition">Enviar Relato</a>
+                    <a href="whatsapp-bot.html" class="hover:text-solar-yellow transition"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
+                    <a href="../sistema/dashboard.html" class="hover:text-solar-yellow transition">Dashboard</a>
+                    <a href="../sistema/recompensas.html" class="hover:text-solar-yellow transition">Recompensas</a>
+                    <a href="../sistema/planos.html" class="hover:text-solar-yellow transition">Planos</a>
+                    <a href="../auth/login.html" class="bg-vibrant-teal px-4 py-2 rounded-lg hover:bg-ods-green transition">Login</a>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white hover:text-solar-yellow focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2">
+                <a href="../../index.html" class="block py-2 hover:text-solar-yellow transition">Início</a>
+                <a href="../sistema/sobre.html" class="block py-2 hover:text-solar-yellow transition">Sobre</a>
+                <a href="enviar-relato.html" class="block py-2 hover:text-solar-yellow transition">Enviar Relato</a>
+                <a href="whatsapp-bot.html" class="block py-2 hover:text-solar-yellow transition"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
+                <a href="../sistema/dashboard.html" class="block py-2 hover:text-solar-yellow transition">Dashboard</a>
+                <a href="../sistema/recompensas.html" class="block py-2 hover:text-solar-yellow transition">Recompensas</a>
+                <a href="../sistema/planos.html" class="block py-2 hover:text-solar-yellow transition">Planos</a>
+                <a href="../auth/login.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-12">
+        <div class="max-w-5xl mx-auto">
+            
+            <!-- Header -->
+            <div class="text-center mb-12 text-white">
+                <div class="text-6xl mb-4">🔍</div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    Consultar Protocolo
+                </h1>
+                <p class="text-xl opacity-90">
+                    Acompanhe o status do seu relato em tempo real
+                </p>
+            </div>
+
+            <!-- Search Card -->
+            <div class="search-card p-8 mb-8">
+                <div class="mb-6">
+                    <label for="protocolo-input" class="block text-sm font-bold text-gray-700 mb-3">
+                        <i class="fas fa-hashtag mr-2 text-vibrant-teal"></i>
+                        Digite o número do protocolo
+                    </label>
+                    <div class="flex gap-3">
+                        <input 
+                            type="text" 
+                            id="protocolo-input"
+                            placeholder="Ex: HubBS-2025-000001"
+                            class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-vibrant-teal focus:outline-none text-lg font-mono"
+                        />
+                        <button 
+                            id="buscar-btn"
+                            class="bg-vibrant-teal text-white px-8 py-3 rounded-lg font-bold hover:bg-deep-blue transition-all transform hover:scale-105 shadow-lg">
+                            <i class="fas fa-search mr-2"></i>Buscar
+                        </button>
+                    </div>
+                    <p class="text-sm text-gray-500 mt-2">
+                        <i class="fas fa-info-circle mr-1"></i>
+                        Protocolo de teste disponível: <span class="font-mono font-bold text-vibrant-teal">HubBS-2025-000001</span>
+                        <button id="criar-teste-btn" class="ml-3 text-xs bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full hover:bg-yellow-200 transition">
+                            <i class="fas fa-plus-circle mr-1"></i>Criar Protocolo de Teste
+                        </button>
+                    </p>
+                </div>
+
+                <!-- Loading -->
+                <div id="loading" class="hidden text-center py-8">
+                    <i class="fas fa-spinner fa-spin text-4xl text-vibrant-teal mb-4"></i>
+                    <p class="text-gray-600">Buscando protocolo...</p>
+                </div>
+
+                <!-- Error -->
+                <div id="error" class="hidden bg-red-50 border-2 border-red-200 rounded-lg p-6">
+                    <div class="flex items-center gap-3 text-red-700">
+                        <i class="fas fa-exclamation-triangle text-3xl"></i>
+                        <div>
+                            <h3 class="font-bold text-lg mb-1">Protocolo não encontrado</h3>
+                            <p class="text-sm">Verifique o número e tente novamente ou entre em contato conosco.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Result -->
+                <div id="result" class="hidden">
+                    <div class="border-t-2 border-gray-200 pt-6">
+                        
+                        <!-- Protocol Header -->
+                        <div class="bg-gradient-to-r from-deep-blue to-vibrant-teal text-white p-6 rounded-xl mb-6">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                                <div>
+                                    <div class="text-sm opacity-80 mb-1">Protocolo</div>
+                                    <div class="text-2xl font-bold font-mono" id="result-protocolo">-</div>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-sm opacity-80 mb-1">Status Atual</div>
+                                    <div id="result-status-badge" class="text-lg font-bold">-</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Info Grid -->
+                        <div class="info-grid mb-6">
+                            <div class="info-item">
+                                <div class="text-xs text-gray-500 mb-1 uppercase font-semibold">
+                                    <i class="fas fa-tag mr-1"></i>Categoria
+                                </div>
+                                <div class="text-lg font-semibold text-gray-800" id="result-categoria">-</div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="text-xs text-gray-500 mb-1 uppercase font-semibold">
+                                    <i class="fas fa-map-marker-alt mr-1"></i>Cidade
+                                </div>
+                                <div class="text-lg font-semibold text-gray-800" id="result-cidade">-</div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="text-xs text-gray-500 mb-1 uppercase font-semibold">
+                                    <i class="fas fa-calendar-alt mr-1"></i>Data de Abertura
+                                </div>
+                                <div class="text-lg font-semibold text-gray-800" id="result-data">-</div>
+                            </div>
+
+                            <div class="info-item">
+                                <div class="text-xs text-gray-500 mb-1 uppercase font-semibold">
+                                    <i class="fas fa-exclamation-circle mr-1"></i>Prioridade
+                                </div>
+                                <div class="text-lg font-semibold" id="result-prioridade">-</div>
+                            </div>
+                        </div>
+
+                        <!-- Detalhes -->
+                        <div class="bg-gray-50 rounded-xl p-6 mb-6">
+                            <h3 class="font-bold text-xl mb-4 text-deep-blue">
+                                <i class="fas fa-file-alt mr-2"></i>Detalhes do Relato
+                            </h3>
+                            
+                            <div class="mb-4">
+                                <div class="text-sm font-bold text-gray-600 mb-2">Título</div>
+                                <div class="text-lg" id="result-titulo">-</div>
+                            </div>
+
+                            <div class="mb-4">
+                                <div class="text-sm font-bold text-gray-600 mb-2">Descrição</div>
+                                <div class="text-gray-700 leading-relaxed" id="result-descricao">-</div>
+                            </div>
+
+                            <div id="result-localizacao-container" class="hidden">
+                                <div class="text-sm font-bold text-gray-600 mb-2">Localização</div>
+                                <div class="text-gray-700" id="result-localizacao">-</div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline -->
+                        <div class="bg-white border-2 border-gray-200 rounded-xl p-6">
+                            <h3 class="font-bold text-xl mb-6 text-deep-blue">
+                                <i class="fas fa-history mr-2"></i>Histórico de Atualizações
+                            </h3>
+                            
+                            <div id="timeline">
+                                <!-- Timeline items will be inserted here -->
+                            </div>
+                        </div>
+
+                        <!-- Pontos Ganhos -->
+                        <div id="pontos-container" class="hidden mt-6 bg-gradient-to-r from-yellow-100 to-orange-100 border-2 border-yellow-300 rounded-xl p-6">
+                            <div class="flex items-center gap-4">
+                                <div class="text-5xl">🏆</div>
+                                <div>
+                                    <h3 class="font-bold text-xl text-gray-800 mb-1">Pontos Ganhos</h3>
+                                    <p class="text-gray-600">Você ganhou <span id="result-pontos" class="font-bold text-2xl text-orange-600">0</span> pontos por este relato!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="text-center">
+                <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-6 text-white">
+                    <p class="mb-4">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Não tem um protocolo ainda?
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <a href="enviar-relato.html" class="bg-solar-yellow text-deep-blue px-6 py-3 rounded-lg font-bold hover:bg-white transition inline-block">
+                            <i class="fas fa-plus-circle mr-2"></i>Enviar Novo Relato
+                        </a>
+                        <a href="whatsapp-bot.html" class="bg-green-500 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-600 transition inline-block">
+                            <i class="fab fa-whatsapp mr-2"></i>Enviar via WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark-gray text-white py-12 mt-12">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-4">
+                        <img src="../assets/img/logo.jpeg" alt="HubBS Logo" class="h-10 w-10 object-contain rounded">
+                        <h3 class="font-bold font-poppins text-xl">HubBS</h3>
+                    </div>
+                    <p class="text-sm text-gray-400">
+                        Plataforma de dados urbanos colaborativos para o Litoral Paulista.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Navegação</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="../../index.html" class="hover:text-white">Início</a></li>
+                        <li><a href="../sistema/sobre.html" class="hover:text-white">Sobre</a></li>
+                        <li><a href="../sistema/dashboard.html" class="hover:text-white">Dashboard</a></li>
+                        <li><a href="../sistema/recompensas.html" class="hover:text-white">Recompensas</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Serviços</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="enviar-relato.html" class="hover:text-white">Enviar Relato</a></li>
+                        <li><a href="whatsapp-bot.html" class="hover:text-white">WhatsApp Bot</a></li>
+                        <li><a href="buscar-protocolo.html" class="hover:text-white">Buscar Protocolo</a></li>
+                        <li><a href="../sistema/planos.html" class="hover:text-white">Planos</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Contato</h4>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li>📧 hubbs@outlook.com.br</li>
+                        <li>📱 (13) 99763-9273</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2025 HubBS - Hackathon Construinova Litoral. Desenvolvido com 💙 para cidades inteligentes.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Database Scripts -->
+    <script src="../../assets/js/modules/database.js"></script>
+    <script src="../../assets/js/modules/api.js"></script>
+    <script src="../../assets/js/modules/init-test-data.js"></script>
+
+    <!-- Search Script -->
+    <script>
+        // Variáveis globais
+        let hubDB;
+        let dbReady = false;
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            console.log('🚀 Iniciando página de busca de protocolo...');
+            
+            // Inicializar banco de dados
+            try {
+                hubDB = new HubDatabase();
+                await hubDB.init();
+                dbReady = true;
+                console.log('✅ Banco de dados pronto');
+                
+                // Criar protocolo de teste
+                await criarProtocoloTeste();
+            } catch (error) {
+                console.error('❌ Erro ao inicializar banco de dados:', error);
+                alert('Erro ao carregar o sistema. Por favor, recarregue a página.');
+                return;
+            }
+
+            const inputProtocolo = document.getElementById('protocolo-input');
+            const btnBuscar = document.getElementById('buscar-btn');
+            const loadingDiv = document.getElementById('loading');
+            const errorDiv = document.getElementById('error');
+            const resultDiv = document.getElementById('result');
+
+            // Funções auxiliares
+            function formatarData(timestamp) {
+                const data = new Date(timestamp);
+                return data.toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            function formatarStatus(status) {
+                const statusMap = {
+                    'em_analise': 'Em Análise 🔍',
+                    'em_progresso': 'Em Progresso 🔧',
+                    'resolvido': 'Resolvido ✅',
+                    'rejeitado': 'Rejeitado ❌'
+                };
+                return statusMap[status] || status;
+            }
+
+            function getStatusClass(status) {
+                return `status-${status}`;
+            }
+
+            function formatarPrioridade(prioridade) {
+                const prioMap = {
+                    'baixa': { text: '🟢 Baixa', class: 'priority-baixa' },
+                    'media': { text: '🟡 Média', class: 'priority-media' },
+                    'alta': { text: '🔴 Alta', class: 'priority-alta' },
+                    'urgente': { text: '🔥 Urgente', class: 'priority-urgente' }
+                };
+                return prioMap[prioridade] || { text: prioridade, class: '' };
+            }
+
+            function criarTimeline(relato) {
+                const timeline = document.getElementById('timeline');
+                timeline.innerHTML = '';
+
+                const eventos = [
+                    {
+                        data: relato.timestamp,
+                        titulo: 'Relato Criado',
+                        descricao: 'Protocolo registrado no sistema',
+                        icone: '📝'
+                    }
+                ];
+
+                if (relato.status === 'em_progresso') {
+                    eventos.push({
+                        data: relato.timestamp + 3600000,
+                        titulo: 'Em Análise',
+                        descricao: 'Relato sendo analisado pela equipe técnica',
+                        icone: '🔍'
+                    });
+                    eventos.push({
+                        data: relato.timestamp + 7200000,
+                        titulo: 'Em Progresso',
+                        descricao: 'Equipe iniciou trabalho de resolução',
+                        icone: '🔧'
+                    });
+                } else if (relato.status === 'resolvido') {
+                    eventos.push({
+                        data: relato.timestamp + 3600000,
+                        titulo: 'Em Análise',
+                        descricao: 'Relato sendo analisado pela equipe técnica',
+                        icone: '🔍'
+                    });
+                    eventos.push({
+                        data: relato.timestamp + 7200000,
+                        titulo: 'Em Progresso',
+                        descricao: 'Equipe iniciou trabalho de resolução',
+                        icone: '🔧'
+                    });
+                    eventos.push({
+                        data: relato.timestamp + 10800000,
+                        titulo: 'Resolvido',
+                        descricao: 'Problema solucionado com sucesso!',
+                        icone: '✅'
+                    });
+                }
+
+                eventos.forEach(evento => {
+                    const item = document.createElement('div');
+                    item.className = 'timeline-item';
+                    item.innerHTML = `
+                        <div class="flex items-start gap-3">
+                            <div class="text-2xl">${evento.icone}</div>
+                            <div class="flex-1">
+                                <div class="font-bold text-gray-800 mb-1">${evento.titulo}</div>
+                                <div class="text-sm text-gray-600 mb-1">${evento.descricao}</div>
+                                <div class="text-xs text-gray-400">${formatarData(evento.data)}</div>
+                            </div>
+                        </div>
+                    `;
+                    timeline.appendChild(item);
+                });
+            }
+
+            async function criarProtocoloTeste() {
+                console.log('📝 Verificando protocolo de teste...');
+                
+                try {
+                    // Aguardar um pouco para garantir que o DB está pronto
+                    await new Promise(resolve => setTimeout(resolve, 300));
+                    
+                    const relatos = await hubDB.getRelatos();
+                    console.log('📦 Relatos no banco:', relatos.length);
+                    
+                    const protocoloExiste = relatos.some(r => r.protocolo === 'HubBS-2025-000001');
+                    
+                    if (!protocoloExiste) {
+                        console.log('➕ Criando protocolo de teste...');
+                        
+                        const relatoTeste = {
+                            nome: 'Maria Silva',
+                            email: 'maria.silva@email.com',
+                            telefone: '(13) 98765-4321',
+                            cidade: 'Santos',
+                            categoria: 'Saneamento',
+                            titulo: 'Vazamento de esgoto na Av. Ana Costa',
+                            descricao: 'Há um vazamento de esgoto na Av. Ana Costa, altura do número 450, causando mau cheiro e risco à saúde. O problema persiste há mais de uma semana.',
+                            localizacao: 'Av. Ana Costa, 450 - Gonzaga, Santos/SP',
+                            prioridade: 'alta',
+                            imagens: [],
+                            status: 'em_progresso',
+                            protocolo: 'HubBS-2025-000001',
+                            timestamp: Date.now() - 86400000, // 1 dia atrás
+                            data: new Date(Date.now() - 86400000).toISOString(),
+                            pontos: 50
+                        };
+                        
+                        const id = await hubDB.addRelato(relatoTeste);
+                        console.log('✅ Protocolo de teste criado com ID:', id);
+                        
+                        // Verificar se foi realmente criado
+                        const verificacao = await hubDB.getRelatos();
+                        const criado = verificacao.find(r => r.protocolo === 'HubBS-2025-000001');
+                        
+                        if (criado) {
+                            console.log('✔️ Verificado! Protocolo existe no banco:', criado.protocolo);
+                        } else {
+                            console.warn('⚠️ Protocolo não encontrado após criação');
+                        }
+                    } else {
+                        console.log('ℹ️ Protocolo de teste já existe');
+                        const protocolo = relatos.find(r => r.protocolo === 'HubBS-2025-000001');
+                        console.log('📄 Detalhes:', protocolo);
+                    }
+                } catch (error) {
+                    console.error('❌ Erro ao criar protocolo de teste:', error);
+                    throw error;
+                }
+            }
+
+            async function buscarProtocolo() {
+                if (!dbReady) {
+                    alert('Banco de dados ainda não está pronto. Aguarde...');
+                    return;
+                }
+                
+                const protocolo = inputProtocolo.value.trim();
+
+                if (!protocolo) {
+                    alert('Por favor, digite um número de protocolo');
+                    return;
+                }
+
+                // Mostrar loading
+                loadingDiv.classList.remove('hidden');
+                errorDiv.classList.add('hidden');
+                resultDiv.classList.add('hidden');
+
+                try {
+                    const relatos = await hubDB.getRelatos();
+                    console.log('🔍 Buscando protocolo:', protocolo);
+                    console.log('📦 Relatos disponíveis:', relatos.length);
+                    console.log('📝 Protocolos:', relatos.map(r => r.protocolo));
+                    
+                    // Busca case-insensitive
+                    const relato = relatos.find(r => r.protocolo && r.protocolo.toUpperCase() === protocolo.toUpperCase());
+
+                    setTimeout(() => {
+                        loadingDiv.classList.add('hidden');
+
+                        if (relato) {
+                            // Preencher dados
+                            document.getElementById('result-protocolo').textContent = relato.protocolo;
+                            
+                            const statusBadge = document.getElementById('result-status-badge');
+                            statusBadge.textContent = formatarStatus(relato.status);
+                            statusBadge.className = `status-badge ${getStatusClass(relato.status)}`;
+
+                            document.getElementById('result-categoria').textContent = relato.categoria || '-';
+                            document.getElementById('result-cidade').textContent = relato.cidade || '-';
+                            document.getElementById('result-data').textContent = formatarData(relato.timestamp);
+                            
+                            const prioInfo = formatarPrioridade(relato.prioridade || 'media');
+                            const prioElement = document.getElementById('result-prioridade');
+                            prioElement.textContent = prioInfo.text;
+                            prioElement.className = `text-lg font-semibold ${prioInfo.class}`;
+
+                            document.getElementById('result-titulo').textContent = relato.titulo || '-';
+                            document.getElementById('result-descricao').textContent = relato.descricao || '-';
+
+                            if (relato.localizacao) {
+                                document.getElementById('result-localizacao').textContent = relato.localizacao;
+                                document.getElementById('result-localizacao-container').classList.remove('hidden');
+                            }
+
+                            // Mostrar pontos se houver
+                            if (relato.pontos) {
+                                document.getElementById('result-pontos').textContent = relato.pontos;
+                                document.getElementById('pontos-container').classList.remove('hidden');
+                            }
+
+                            // Criar timeline
+                            criarTimeline(relato);
+
+                            resultDiv.classList.remove('hidden');
+                            
+                            // Scroll suave até o resultado
+                            resultDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        } else {
+                            errorDiv.classList.remove('hidden');
+                        }
+                    }, 800);
+
+                } catch (error) {
+                    console.error('Erro ao buscar protocolo:', error);
+                    loadingDiv.classList.add('hidden');
+                    errorDiv.classList.remove('hidden');
+                }
+            }
+
+            // Event listeners
+            btnBuscar.addEventListener('click', buscarProtocolo);
+            inputProtocolo.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    buscarProtocolo();
+                }
+            });
+
+            // Botão criar protocolo de teste
+            const btnCriarTeste = document.getElementById('criar-teste-btn');
+            if (btnCriarTeste) {
+                btnCriarTeste.addEventListener('click', async function() {
+                    this.disabled = true;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin mr-1"></i>Criando...';
+                    
+                    try {
+                        console.log('🔄 Criando protocolo manualmente...');
+                        
+                        const relatoTeste = {
+                            nome: 'Maria Silva',
+                            email: 'maria.silva@email.com',
+                            telefone: '(13) 98765-4321',
+                            cidade: 'Santos',
+                            categoria: 'Saneamento',
+                            titulo: 'Vazamento de esgoto na Av. Ana Costa',
+                            descricao: 'Há um vazamento de esgoto na Av. Ana Costa, altura do número 450, causando mau cheiro e risco à saúde. O problema persiste há mais de uma semana.',
+                            localizacao: 'Av. Ana Costa, 450 - Gonzaga, Santos/SP',
+                            prioridade: 'alta',
+                            imagens: [],
+                            status: 'em_progresso',
+                            protocolo: 'HubBS-2025-000001',
+                            timestamp: Date.now() - 86400000,
+                            data: new Date(Date.now() - 86400000).toISOString(),
+                            pontos: 50
+                        };
+                        
+                        const id = await hubDB.addRelato(relatoTeste);
+                        console.log('✅ Criado com ID:', id);
+                        
+                        // Verificar
+                        const relatos = await hubDB.getRelatos();
+                        const criado = relatos.find(r => r.protocolo === 'HubBS-2025-000001');
+                        
+                        if (criado) {
+                            this.innerHTML = '<i class="fas fa-check-circle mr-1"></i>Criado!';
+                            this.classList.remove('bg-yellow-100', 'text-yellow-800', 'hover:bg-yellow-200');
+                            this.classList.add('bg-green-100', 'text-green-800');
+                            
+                            setTimeout(() => {
+                                alert('✅ Protocolo criado com sucesso!\n\nProtocolo: HubBS-2025-000001\nAgora você pode buscar!');
+                                inputProtocolo.value = 'HubBS-2025-000001';
+                                inputProtocolo.focus();
+                            }, 500);
+                        } else {
+                            throw new Error('Protocolo não encontrado após criação');
+                        }
+                    } catch (error) {
+                        console.error('❌ Erro ao criar protocolo:', error);
+                        this.innerHTML = '<i class="fas fa-times-circle mr-1"></i>Erro - Tente novamente';
+                        this.classList.remove('bg-yellow-100', 'text-yellow-800');
+                        this.classList.add('bg-red-100', 'text-red-800');
+                        alert('Erro ao criar protocolo: ' + error.message);
+                        
+                        setTimeout(() => {
+                            this.disabled = false;
+                            this.innerHTML = '<i class="fas fa-plus-circle mr-1"></i>Criar Protocolo de Teste';
+                            this.classList.remove('bg-red-100', 'text-red-800');
+                            this.classList.add('bg-yellow-100', 'text-yellow-800', 'hover:bg-yellow-200');
+                        }, 3000);
+                    }
+                });
+            }
+
+            // Mobile menu
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>
