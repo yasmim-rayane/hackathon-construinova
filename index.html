@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Construindo o Amanhã - HUB | Hackathon Construinova 2025</title>
+    <title>Construindo o Amanhã - HubBS | Hackathon Construinova 2025</title>
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,6 +41,9 @@
             font-family: 'Poppins', sans-serif;
         }
     </style>
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
 <body class="bg-warm-sand text-dark-gray">
 
@@ -49,16 +52,19 @@
         <div class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <a href="index.html" class="text-2xl font-bold font-poppins flex items-center gap-2">
-                    <span class="bg-vibrant-teal px-3 py-1 rounded">🌊</span>
-                    HUB
+                    <img src="assets/img/logo.jpeg" alt="HubBS Logo" class="h-12 w-12 object-contain rounded">
+                    HubBS
                 </a>
                 <div class="hidden md:flex items-center gap-6">
                     <a href="index.html" class="text-solar-yellow font-bold border-b-2 border-solar-yellow">Início</a>
                     <a href="pages/sobre.html" class="hover:text-solar-yellow transition">Sobre</a>
-                    <a href="pages/planos.html" class="hover:text-solar-yellow transition">Planos</a>
+                    <a href="pages/enviar-relato.html" class="hover:text-solar-yellow transition">Enviar Relato</a>
+                    <a href="pages/whatsapp-bot.html" class="hover:text-solar-yellow transition">
+                        <i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot
+                    </a>
                     <a href="pages/dashboard.html" class="hover:text-solar-yellow transition">Dashboard</a>
                     <a href="pages/recompensas.html" class="hover:text-solar-yellow transition">Recompensas</a>
-                    <a href="pages/empresa.html" class="hover:text-solar-yellow transition">Empresas</a>
+                    <a href="pages/planos.html" class="hover:text-solar-yellow transition">Planos</a>
                     <a href="pages/login.html" class="bg-vibrant-teal px-4 py-2 rounded-lg hover:bg-ods-green transition">Login</a>
                 </div>
                 <div class="md:hidden">
@@ -72,10 +78,13 @@
             <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2">
                 <a href="index.html" class="block py-2 text-solar-yellow font-bold">Início</a>
                 <a href="pages/sobre.html" class="block py-2 hover:text-solar-yellow transition">Sobre</a>
-                <a href="pages/planos.html" class="block py-2 hover:text-solar-yellow transition">Planos</a>
+                <a href="pages/enviar-relato.html" class="block py-2 hover:text-solar-yellow transition">Enviar Relato</a>
+                <a href="pages/whatsapp-bot.html" class="block py-2 hover:text-solar-yellow transition">
+                    <i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot
+                </a>
                 <a href="pages/dashboard.html" class="block py-2 hover:text-solar-yellow transition">Dashboard</a>
                 <a href="pages/recompensas.html" class="block py-2 hover:text-solar-yellow transition">Recompensas</a>
-                <a href="pages/empresa.html" class="block py-2 hover:text-solar-yellow transition">Empresas</a>
+                <a href="pages/planos.html" class="block py-2 hover:text-solar-yellow transition">Planos</a>
                 <a href="pages/login.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Login</a>
             </div>
         </div>
@@ -90,9 +99,17 @@
             <p class="text-2xl md:text-3xl font-light mb-8">
                 Inovação · Sustentabilidade · Acessibilidade · Conexões
             </p>
-            <p class="text-lg max-w-3xl mx-auto opacity-90">
+            <p class="text-lg max-w-3xl mx-auto opacity-90 mb-8">
                 Nossa proposta para construir <strong>cidades inteligentes, inovadoras e acessíveis</strong> no Litoral Paulista através de dados urbanos colaborativos.
             </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="pages/enviar-relato.html" class="bg-solar-yellow text-deep-blue px-8 py-4 rounded-lg font-bold text-lg hover:bg-warm-orange hover:text-white transition-all transform hover:scale-105 shadow-lg">
+                    📝 Enviar Relato
+                </a>
+                <a href="pages/planos.html" class="bg-white bg-opacity-20 backdrop-blur-sm text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-30 transition-all transform hover:scale-105 border-2 border-white">
+                    💼 Ver Planos
+                </a>
+            </div>
         </div>
     </section>
 
@@ -100,7 +117,7 @@
     <section class="py-16 bg-white">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold font-poppins text-center mb-12 text-deep-blue">
-                Os 4 Pilares da HUB
+                Os 4 Pilares da HubBS
             </h2>
             
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -185,7 +202,7 @@
                 <div class="bg-gradient-to-br from-vibrant-teal to-ods-green text-white p-8 rounded-2xl shadow-lg">
                     <div class="flex items-center gap-4 mb-6">
                         <span class="text-5xl">✅</span>
-                        <h2 class="text-3xl font-bold font-poppins">A Solução HUB</h2>
+                        <h2 class="text-3xl font-bold font-poppins">A Solução HubBS</h2>
                     </div>
                     <p class="text-lg mb-4">
                         Uma plataforma que <strong>transforma reclamações em dados estratégicos</strong>:
@@ -225,13 +242,204 @@
                 <div class="bg-solar-yellow text-dark-gray p-6 rounded-xl">
                     <div class="text-4xl font-bold font-poppins mb-2">74%</div>
                     <div class="text-sm opacity-90">Taxa de Resolução</div>
-                    <div class="text-xs mt-2 opacity-75">Com sistema HUB</div>
+                    <div class="text-xs mt-2 opacity-75">Com sistema HubBS</div>
                 </div>
                 
                 <div class="bg-vibrant-teal p-6 rounded-xl">
                     <div class="text-4xl font-bold font-poppins mb-2">5</div>
                     <div class="text-sm opacity-90">ODS Alinhados</div>
                     <div class="text-xs mt-2 opacity-75">ONU 2030</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WhatsApp Bot Feature -->
+    <section class="py-16 bg-gradient-to-br from-green-600 to-teal-600 text-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-5xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <div class="text-6xl mb-6">💬</div>
+                        <h2 class="text-4xl font-bold font-poppins mb-6">
+                            Envie Relatos via WhatsApp!
+                        </h2>
+                        <p class="text-xl mb-6 text-green-100">
+                            Converse com nosso assistente virtual e registre problemas urbanos de forma natural e rápida.
+                        </p>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-2xl text-green-300"></i>
+                                <span class="text-lg">Conversa natural como no WhatsApp</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-2xl text-green-300"></i>
+                                <span class="text-lg">IA categoriza automaticamente</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-2xl text-green-300"></i>
+                                <span class="text-lg">Protocolo gerado instantaneamente</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-2xl text-green-300"></i>
+                                <span class="text-lg">Integrado ao banco de dados</span>
+                            </li>
+                        </ul>
+                        <a href="pages/whatsapp-bot.html" class="inline-block bg-white text-green-600 px-8 py-4 rounded-full font-bold text-lg hover:bg-green-50 transition-all transform hover:scale-105 shadow-xl">
+                            <i class="fab fa-whatsapp mr-2"></i>Conversar com o Bot
+                        </a>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-2xl p-8 border-2 border-white border-opacity-20">
+                        <div class="bg-white rounded-xl p-6 shadow-2xl">
+                            <div class="flex items-center gap-3 mb-4 pb-4 border-b">
+                                <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center text-2xl">
+                                    🤖
+                                </div>
+                                <div>
+                                    <div class="font-bold text-gray-800">HubBS Assistente</div>
+                                    <div class="text-xs text-gray-500">online</div>
+                                </div>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="bg-gray-100 p-3 rounded-lg rounded-tl-none text-gray-800 text-sm">
+                                    Olá! 👋 Bem-vindo ao HubBS!
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded-lg rounded-tl-none text-gray-800 text-sm">
+                                    Qual problema urbano você quer reportar?
+                                </div>
+                                <div class="bg-green-100 p-3 rounded-lg rounded-tr-none text-gray-800 text-sm ml-12">
+                                    Buraco na rua principal
+                                </div>
+                                <div class="bg-gray-100 p-3 rounded-lg rounded-tl-none text-gray-800 text-sm">
+                                    ✅ Perfeito! Vou registrar...
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-4 border-t flex gap-2">
+                                <div class="flex-1 bg-gray-100 rounded-full px-4 py-2 text-gray-400 text-sm">
+                                    Digite uma mensagem...
+                                </div>
+                                <div class="bg-green-500 w-10 h-10 rounded-full flex items-center justify-center text-white">
+                                    <i class="fas fa-paper-plane"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Buscar Protocolo -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <div class="text-6xl mb-4">🔍</div>
+                    <h2 class="text-4xl font-bold font-poppins text-deep-blue mb-4">
+                        Consulte seu Protocolo
+                    </h2>
+                    <p class="text-lg text-gray-600">
+                        Digite o número do protocolo para acompanhar o status do seu relato
+                    </p>
+                </div>
+
+                <div class="bg-gradient-to-br from-deep-blue to-vibrant-teal p-8 rounded-2xl shadow-2xl">
+                    <div class="bg-white rounded-xl p-6">
+                        <div class="mb-6">
+                            <label for="protocolo-input" class="block text-sm font-bold text-gray-700 mb-2">
+                                Número do Protocolo
+                            </label>
+                            <div class="flex gap-3">
+                                <input 
+                                    type="text" 
+                                    id="protocolo-input"
+                                    placeholder="Ex: HubBS-2025-000001"
+                                    class="flex-1 px-4 py-3 border-2 border-gray-300 rounded-lg focus:border-vibrant-teal focus:outline-none text-lg font-mono"
+                                />
+                                <button 
+                                    id="buscar-protocolo-btn"
+                                    class="bg-vibrant-teal text-white px-8 py-3 rounded-lg font-bold hover:bg-deep-blue transition-all transform hover:scale-105 shadow-lg">
+                                    <i class="fas fa-search mr-2"></i>Buscar
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Resultado da Busca -->
+                        <div id="protocolo-result" class="hidden">
+                            <div class="border-t-2 border-gray-200 pt-6">
+                                <div class="bg-gradient-to-r from-ods-green to-vibrant-teal text-white p-4 rounded-lg mb-4">
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <div class="text-sm opacity-90">Protocolo</div>
+                                            <div class="text-xl font-bold font-mono" id="result-protocolo">-</div>
+                                        </div>
+                                        <div class="text-right">
+                                            <div class="text-sm opacity-90">Status</div>
+                                            <div class="text-lg font-bold" id="result-status">-</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                                    <div>
+                                        <div class="text-sm font-bold text-gray-600 mb-1">Categoria</div>
+                                        <div class="text-lg" id="result-categoria">-</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-bold text-gray-600 mb-1">Cidade</div>
+                                        <div class="text-lg" id="result-cidade">-</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-bold text-gray-600 mb-1">Data</div>
+                                        <div class="text-lg" id="result-data">-</div>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-bold text-gray-600 mb-1">Prioridade</div>
+                                        <div class="text-lg" id="result-prioridade">-</div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <div class="text-sm font-bold text-gray-600 mb-1">Título</div>
+                                    <div class="text-lg" id="result-titulo">-</div>
+                                </div>
+
+                                <div>
+                                    <div class="text-sm font-bold text-gray-600 mb-1">Descrição</div>
+                                    <div class="text-gray-700" id="result-descricao">-</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mensagem de Erro -->
+                        <div id="protocolo-error" class="hidden">
+                            <div class="bg-red-50 border-2 border-red-200 text-red-700 p-4 rounded-lg">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-exclamation-circle text-2xl"></i>
+                                    <div>
+                                        <div class="font-bold">Protocolo não encontrado</div>
+                                        <div class="text-sm">Verifique o número e tente novamente</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mensagem de Loading -->
+                        <div id="protocolo-loading" class="hidden">
+                            <div class="bg-blue-50 border-2 border-blue-200 text-blue-700 p-4 rounded-lg text-center">
+                                <i class="fas fa-spinner fa-spin text-2xl mb-2"></i>
+                                <div>Buscando protocolo...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-white text-sm">
+                            <i class="fas fa-info-circle mr-1"></i>
+                            Não tem um protocolo ainda? 
+                            <a href="pages/enviar-relato.html" class="font-bold underline hover:text-solar-yellow">Envie seu relato aqui</a>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -312,7 +520,7 @@
         <div class="container mx-auto px-6">
             <div class="grid md:grid-cols-4 gap-8">
                 <div>
-                    <h3 class="font-bold font-poppins text-xl mb-4">HUB</h3>
+                    <h3 class="font-bold font-poppins text-xl mb-4">HubBS</h3>
                     <p class="text-sm text-gray-400">
                         Plataforma de dados urbanos colaborativos para o Litoral Paulista.
                     </p>
@@ -339,14 +547,14 @@
                 <div>
                     <h4 class="font-bold mb-4">Contato</h4>
                     <ul class="space-y-2 text-sm text-gray-400">
-                        <li>📧 yasmim@hub.com.br</li>
+                        <li>📧 yasmim@HubBS.com.br</li>
                         <li>📱 (13) 99999-9999</li>
                         <li>🐙 @yasmim-rayane</li>
                     </ul>
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm text-gray-400">
-                <p>&copy; 2025 HUB - Hackathon Construinova Litoral. Desenvolvido com 💙 para cidades inteligentes.</p>
+                <p>&copy; 2025 HubBS - Hackathon Construinova Litoral. Desenvolvido com 💙 para cidades inteligentes.</p>
             </div>
         </div>
     </footer>
@@ -358,5 +566,112 @@
         📱
     </a>
 
+    <!-- HubBS Database -->
+    <script src="js/database.js"></script>
+    <script src="js/api.js"></script>
+
+    <!-- Script de Busca de Protocolo -->
+    <script>
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Inicializar banco de dados
+            const hubDB = new HubDatabase();
+            await hubDB.init();
+
+            const inputProtocolo = document.getElementById('protocolo-input');
+            const btnBuscar = document.getElementById('buscar-protocolo-btn');
+            const resultDiv = document.getElementById('protocolo-result');
+            const errorDiv = document.getElementById('protocolo-error');
+            const loadingDiv = document.getElementById('protocolo-loading');
+
+            // Função para formatar data
+            function formatarData(timestamp) {
+                const data = new Date(timestamp);
+                return data.toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            }
+
+            // Função para formatar status
+            function formatarStatus(status) {
+                const statusMap = {
+                    'em_analise': 'Em Análise',
+                    'em_progresso': 'Em Progresso',
+                    'resolvido': 'Resolvido',
+                    'rejeitado': 'Rejeitado'
+                };
+                return statusMap[status] || status;
+            }
+
+            // Função para formatar prioridade
+            function formatarPrioridade(prioridade) {
+                const prioridadeMap = {
+                    'baixa': '🟢 Baixa',
+                    'media': '🟡 Média',
+                    'alta': '🔴 Alta',
+                    'urgente': '🔥 Urgente'
+                };
+                return prioridadeMap[prioridade] || prioridade;
+            }
+
+            // Função de busca
+            async function buscarProtocolo() {
+                const protocolo = inputProtocolo.value.trim();
+
+                if (!protocolo) {
+                    alert('Por favor, digite um número de protocolo');
+                    return;
+                }
+
+                // Esconder resultados anteriores
+                resultDiv.classList.add('hidden');
+                errorDiv.classList.add('hidden');
+                loadingDiv.classList.remove('hidden');
+
+                try {
+                    // Buscar todos os relatos
+                    const relatos = await hubDB.getRelatos();
+                    
+                    // Procurar o protocolo
+                    const relato = relatos.find(r => r.protocolo === protocolo);
+
+                    loadingDiv.classList.add('hidden');
+
+                    if (relato) {
+                        // Preencher informações
+                        document.getElementById('result-protocolo').textContent = relato.protocolo;
+                        document.getElementById('result-status').textContent = formatarStatus(relato.status);
+                        document.getElementById('result-categoria').textContent = relato.categoria || '-';
+                        document.getElementById('result-cidade').textContent = relato.cidade || '-';
+                        document.getElementById('result-data').textContent = formatarData(relato.timestamp);
+                        document.getElementById('result-prioridade').textContent = formatarPrioridade(relato.prioridade || 'media');
+                        document.getElementById('result-titulo').textContent = relato.titulo || '-';
+                        document.getElementById('result-descricao').textContent = relato.descricao || '-';
+
+                        resultDiv.classList.remove('hidden');
+                    } else {
+                        errorDiv.classList.remove('hidden');
+                    }
+                } catch (error) {
+                    console.error('Erro ao buscar protocolo:', error);
+                    loadingDiv.classList.add('hidden');
+                    errorDiv.classList.remove('hidden');
+                }
+            }
+
+            // Event listeners
+            btnBuscar.addEventListener('click', buscarProtocolo);
+            inputProtocolo.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    buscarProtocolo();
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
+

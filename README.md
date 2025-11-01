@@ -1,10 +1,10 @@
-# 🌊 HUB - Dados Urbanos Inteligentes | Baixada Santista
+# 🌊 HubBS - Dados Urbanos Inteligentes | Baixada Santista
 
-![HUB - Plataforma de Dados Urbanos](https://via.placeholder.com/800x200/0077B6/ffffff?text=HUB+-+Dados+Urbanos+da+Baixada+Santista)
+![HubBS - Plataforma de Dados Urbanos](https://via.placeholder.com/800x200/0077B6/ffffff?text=HubBS+-+Dados+Urbanos+da+Baixada+Santista)
 
 ## 📋 Sobre o Projeto
 
-**HUB** é uma plataforma inovadora focada em coletar, processar e comercializar dados e métricas de reclamações de cidadãos sobre problemas urbanos e de infraestrutura na **Baixada Santista**. 
+**HubBS** é uma plataforma inovadora focada em coletar, processar e comercializar dados e métricas de reclamações de cidadãos sobre problemas urbanos e de infraestrutura na **Baixada Santista**. 
 
 ### 🎯 Missão
 Transformar reclamações de cidadãos em dados estratégicos para empresas investirem de forma sustentável, alinhados aos **Objetivos de Desenvolvimento Sustentável (ODS)** da ONU.
@@ -39,7 +39,7 @@ A identidade visual reflete a atmosfera praiana e sustentável da Baixada Santis
 - Estatísticas em tempo real
 - Call-to-actions para WhatsApp, Dashboard e Empresas
 
-### 📖 Sobre a HUB (`sobre.html`)
+### 📖 Sobre a HubBS (`sobre.html`)
 - Missão e Visão da empresa
 - 3 Pilares Fundamentais:
   - **ODS**: Alinhamento com Objetivos de Desenvolvimento Sustentável
@@ -105,7 +105,7 @@ Hackathon/
 ├── index.html              # Landing page principal
 │
 ├── pages/                  # Páginas da aplicação
-│   ├── sobre.html          # Sobre a HUB (missão, visão, pilares)
+│   ├── sobre.html          # Sobre a HubBS (missão, visão, pilares)
 │   ├── dashboard.html      # Dashboard público com gráficos
 │   ├── recompensas.html    # Sistema de recompensas e parcerias
 │   ├── planos.html         # Planos de assinatura (Prefeituras e Empresas)
@@ -293,7 +293,7 @@ tailwind.config = {
 
 ## 📞 Contato
 
-- **Email**: contato@hub.com.br
+- **Email**: contato@HubBS.com.br
 - **WhatsApp**: (13) 99999-9999
 - **Endereço**: Santos, SP - Brasil
 
@@ -307,6 +307,7 @@ Projeto desenvolvido para fins educacionais e competição de hackathon.
 
 ---
 
-**🌊 HUB - Transformando dados urbanos em oportunidades sustentáveis**
+**🌊 HubBS - Transformando dados urbanos em oportunidades sustentáveis**
 
 *Alinhado com os Objetivos de Desenvolvimento Sustentável da ONU*
+

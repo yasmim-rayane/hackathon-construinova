@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin DB | HubBS Database</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-blue': '#005F73',
+                        'vibrant-teal': '#0A9396',
+                        'ods-green': '#94D2BD',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto px-4 py-8">
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h1 class="text-3xl font-bold text-deep-blue mb-2">🗄️ HubBS Database Admin</h1>
+            <p class="text-gray-600">Painel de administração do banco de dados local (IndexedDB)</p>
+        </div>
+
+        <!-- Status do Banco -->
+        <div class="grid md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-gray-500 text-sm mb-1">Total de Relatos</div>
+                <div id="stat-total" class="text-3xl font-bold text-deep-blue">-</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-gray-500 text-sm mb-1">Resolvidos</div>
+                <div id="stat-resolvidos" class="text-3xl font-bold text-green-600">-</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-gray-500 text-sm mb-1">Em Progresso</div>
+                <div id="stat-progresso" class="text-3xl font-bold text-blue-600">-</div>
+            </div>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <div class="text-gray-500 text-sm mb-1">Em Análise</div>
+                <div id="stat-analise" class="text-3xl font-bold text-yellow-600">-</div>
+            </div>
+        </div>
+
+        <!-- Ações -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-bold text-deep-blue mb-4">⚡ Ações Rápidas</h2>
+            <div class="grid md:grid-cols-3 gap-4">
+                <button onclick="carregarEstatisticas()" class="bg-vibrant-teal text-white px-6 py-3 rounded-lg hover:bg-ods-green transition font-semibold">
+                    🔄 Atualizar Dados
+                </button>
+                <button onclick="exportarDados()" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition font-semibold">
+                    📥 Exportar JSON
+                </button>
+                <button onclick="resetarBanco()" class="bg-red-600 text-white px-6 py-3 rounded-lg hover:bg-red-700 transition font-semibold">
+                    🗑️ Resetar Banco
+                </button>
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <h2 class="text-xl font-bold text-deep-blue mb-4">🔍 Filtros</h2>
+            <div class="grid md:grid-cols-4 gap-4">
+                <select id="filter-cidade" class="border-2 border-gray-300 rounded-lg px-4 py-2">
+                    <option value="">Todas as Cidades</option>
+                    <option value="santos">Santos</option>
+                    <option value="sao-vicente">São Vicente</option>
+                    <option value="guaruja">Guarujá</option>
+                    <option value="praia-grande">Praia Grande</option>
+                    <option value="cubatao">Cubatão</option>
+                    <option value="bertioga">Bertioga</option>
+                    <option value="mongagua">Mongaguá</option>
+                    <option value="itanhaem">Itanhaém</option>
+                    <option value="peruibe">Peruíbe</option>
+                </select>
+
+                <select id="filter-ods" class="border-2 border-gray-300 rounded-lg px-4 py-2">
+                    <option value="">Todas as ODS</option>
+                    <option value="ods-9">ODS 9</option>
+                    <option value="ods-11">ODS 11</option>
+                    <option value="ods-13">ODS 13</option>
+                </select>
+
+                <select id="filter-status" class="border-2 border-gray-300 rounded-lg px-4 py-2">
+                    <option value="">Todos os Status</option>
+                    <option value="resolvido">Resolvido</option>
+                    <option value="em_progresso">Em Progresso</option>
+                    <option value="em_analise">Em Análise</option>
+                </select>
+
+                <button onclick="aplicarFiltros()" class="bg-deep-blue text-white px-6 py-2 rounded-lg hover:bg-vibrant-teal transition font-semibold">
+                    Aplicar Filtros
+                </button>
+            </div>
+        </div>
+
+        <!-- Tabela de Relatos -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-xl font-bold text-deep-blue">📊 Relatos Recentes</h2>
+                <span id="total-filtrado" class="text-gray-600 text-sm">-</span>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="bg-gray-100 border-b">
+                            <th class="text-left p-3 font-semibold">ID</th>
+                            <th class="text-left p-3 font-semibold">Cidade</th>
+                            <th class="text-left p-3 font-semibold">Categoria</th>
+                            <th class="text-left p-3 font-semibold">ODS</th>
+                            <th class="text-left p-3 font-semibold">Status</th>
+                            <th class="text-left p-3 font-semibold">Data</th>
+                            <th class="text-left p-3 font-semibold">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabela-relatos">
+                        <tr>
+                            <td colspan="7" class="text-center p-8 text-gray-500">Carregando...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Console de Logs -->
+        <div class="bg-gray-900 text-green-400 rounded-lg shadow-lg p-6">
+            <h2 class="text-xl font-bold mb-4">💻 Console</h2>
+            <div id="console" class="font-mono text-sm h-64 overflow-y-auto">
+                <div>> HubBS Database Admin iniciado...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/database.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        let relatosFiltrados = [];
+
+        // Aguardar banco inicializar
+        setTimeout(() => {
+            carregarEstatisticas();
+        }, 1000);
+
+        async function carregarEstatisticas() {
+            log('Carregando estatísticas...');
+            
+            try {
+                const result = await hubAPI.getEstatisticas();
+                
+                if (result.success) {
+                    const stats = result.data;
+                    
+                    document.getElementById('stat-total').textContent = stats.total;
+                    document.getElementById('stat-resolvidos').textContent = stats.porStatus.resolvido;
+                    document.getElementById('stat-progresso').textContent = stats.porStatus.em_progresso;
+                    document.getElementById('stat-analise').textContent = stats.porStatus.em_analise;
+                    
+                    log(`✅ ${stats.total} relatos carregados`);
+                    
+                    await aplicarFiltros();
+                } else {
+                    log('❌ Erro ao carregar estatísticas');
+                }
+            } catch (error) {
+                log('❌ Erro: ' + error.message);
+            }
+        }
+
+        async function aplicarFiltros() {
+            const cidade = document.getElementById('filter-cidade').value;
+            const ods = document.getElementById('filter-ods').value;
+            const status = document.getElementById('filter-status').value;
+
+            const filtros = {};
+            if (cidade) filtros.cidade = cidade;
+            if (ods) filtros.ods = ods;
+            if (status) filtros.status = status;
+
+            log(`Aplicando filtros: ${JSON.stringify(filtros)}`);
+
+            const result = await hubAPI.buscarRelatos(filtros);
+            
+            if (result.success) {
+                relatosFiltrados = result.data;
+                renderizarTabela(relatosFiltrados.slice(0, 50)); // Mostrar primeiros 50
+                document.getElementById('total-filtrado').textContent = `${relatosFiltrados.length} relatos encontrados`;
+                log(`✅ ${relatosFiltrados.length} relatos filtrados`);
+            }
+        }
+
+        function renderizarTabela(relatos) {
+            const tbody = document.getElementById('tabela-relatos');
+            
+            if (relatos.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center p-8 text-gray-500">Nenhum relato encontrado</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = relatos.map(r => `
+                <tr class="border-b hover:bg-gray-50">
+                    <td class="p-3">#${r.id}</td>
+                    <td class="p-3 capitalize">${r.cidade.replace(/-/g, ' ')}</td>
+                    <td class="p-3 text-sm">${r.categoria.replace(/-/g, ' ')}</td>
+                    <td class="p-3">
+                        <span class="px-2 py-1 rounded text-xs font-bold ${
+                            r.ods === 'ods-9' ? 'bg-orange-100 text-orange-800' :
+                            r.ods === 'ods-11' ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-green-100 text-green-800'
+                        }">
+                            ${r.ods.toUpperCase()}
+                        </span>
+                    </td>
+                    <td class="p-3">
+                        <span class="px-2 py-1 rounded text-xs font-bold ${
+                            r.status === 'resolvido' ? 'bg-green-100 text-green-800' :
+                            r.status === 'em_progresso' ? 'bg-blue-100 text-blue-800' :
+                            'bg-yellow-100 text-yellow-800'
+                        }">
+                            ${r.status.replace(/_/g, ' ')}
+                        </span>
+                    </td>
+                    <td class="p-3 text-sm">${new Date(r.data).toLocaleDateString('pt-BR')}</td>
+                    <td class="p-3">
+                        <button onclick="verDetalhes(${r.id})" class="text-blue-600 hover:underline text-sm">Ver</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        async function exportarDados() {
+            log('Exportando dados...');
+            const result = await hubAPI.exportarRelatorio();
+            if (result.success) {
+                log('✅ Arquivo exportado com sucesso');
+            } else {
+                log('❌ Erro ao exportar');
+            }
+        }
+
+        async function resetarBanco() {
+            if (!confirm('⚠️ Tem certeza? Isso irá apagar todos os dados e recriar o banco com dados simulados.')) {
+                return;
+            }
+
+            log('Resetando banco de dados...');
+            const result = await hubAPI.resetDemo();
+            
+            if (result.success) {
+                log('✅ Banco resetado com sucesso');
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
+            } else {
+                log('❌ Erro ao resetar');
+            }
+        }
+
+        function verDetalhes(id) {
+            const relato = relatosFiltrados.find(r => r.id === id);
+            if (relato) {
+                alert(JSON.stringify(relato, null, 2));
+                log(`Visualizando relato #${id}`);
+            }
+        }
+
+        function log(mensagem) {
+            const consoleDiv = document.getElementById('console');
+            const timestamp = new Date().toLocaleTimeString('pt-BR');
+            consoleDiv.innerHTML += `\n<div>> [${timestamp}] ${mensagem}</div>`;
+            consoleDiv.scrollTop = consoleDiv.scrollHeight;
+        }
+
+        // Event listeners
+        document.getElementById('filter-cidade').addEventListener('change', aplicarFiltros);
+        document.getElementById('filter-ods').addEventListener('change', aplicarFiltros);
+        document.getElementById('filter-status').addEventListener('change', aplicarFiltros);
+    </script>
+</body>
+</html>
+

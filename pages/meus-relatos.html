@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meus Relatos - HubBS Baixada Santista</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --deep-blue: #005F73;
+            --vibrant-teal: #0A9396;
+            --ods-green: #94D2BD;
+            --solar-yellow: #E9D8A6;
+            --warm-orange: #EE9B00;
+            --terra-red: #CA6702;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--deep-blue) 0%, var(--vibrant-teal) 100%);
+            min-height: 100vh;
+            font-family: 'Inter', -apple-system, sans-serif;
+        }
+
+        .relato-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+        }
+
+        .relato-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .status-em_analise {
+            background: #FEF3C7;
+            color: #92400E;
+        }
+
+        .status-em_progresso {
+            background: #DBEAFE;
+            color: #1E40AF;
+        }
+
+        .status-resolvido {
+            background: #D1FAE5;
+            color: #065F46;
+        }
+
+        .protocol-number {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            color: var(--deep-blue);
+            font-size: 1.125rem;
+            letter-spacing: 0.05em;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid white;
+            border-radius: 0.5rem;
+            background: transparent;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: white;
+            color: var(--deep-blue);
+        }
+
+        .nav-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav-header sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="../index.html" class="text-2xl font-bold flex items-center gap-2" style="color: var(--deep-blue);">
+                    <img src="../assets/img/logo.jpeg" alt="HubBS Logo" class="h-12 w-12 object-contain rounded">
+                    HubBS
+                </a>
+                <div class="hidden md:flex space-x-6">
+                    <a href="../index.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Início</a>
+                    <a href="sobre.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Sobre</a>
+                    <a href="enviar-relato.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Enviar Relato</a>
+                    <a href="whatsapp-bot.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);"><i class="fab fa-whatsapp mr-1"></i>WhatsApp Bot</a>
+                    <a href="dashboard.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Dashboard</a>
+                    <a href="meus-relatos.html" class="text-teal-600 font-semibold">Meus Relatos</a>
+                    <a href="recompensas.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Recompensas</a>
+                    <a href="planos.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Planos</a>
+                    <a href="login.html" class="hover:text-teal-600 transition" style="color: var(--deep-blue);">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-6 py-12">
+        <div class="max-w-6xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">
+                    📋 Protocolos Registrados
+                </h1>
+                <p class="text-xl text-white opacity-90">
+                    Acompanhe todos os relatos enviados pela comunidade
+                </p>
+            </div>
+
+            <!-- Filters -->
+            <div class="mb-8 flex flex-wrap gap-4 justify-center">
+                <button class="filter-btn active" data-filter="todos" onclick="filterRelatos('todos')">
+                    Todos
+                </button>
+                <button class="filter-btn" data-filter="em_analise" onclick="filterRelatos('em_analise')">
+                    Em Análise
+                </button>
+                <button class="filter-btn" data-filter="em_progresso" onclick="filterRelatos('em_progresso')">
+                    Em Progresso
+                </button>
+                <button class="filter-btn" data-filter="resolvido" onclick="filterRelatos('resolvido')">
+                    Resolvidos
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-4 text-center">
+                    <div class="text-3xl font-bold" style="color: var(--deep-blue);" id="total-relatos">0</div>
+                    <div class="text-sm text-gray-600 mt-1">Total de Relatos</div>
+                </div>
+                <div class="bg-yellow-100 rounded-lg p-4 text-center">
+                    <div class="text-3xl font-bold text-yellow-800" id="em-analise">0</div>
+                    <div class="text-sm text-yellow-700 mt-1">Em Análise</div>
+                </div>
+                <div class="bg-blue-100 rounded-lg p-4 text-center">
+                    <div class="text-3xl font-bold text-blue-800" id="em-progresso">0</div>
+                    <div class="text-sm text-blue-700 mt-1">Em Progresso</div>
+                </div>
+                <div class="bg-green-100 rounded-lg p-4 text-center">
+                    <div class="text-3xl font-bold text-green-800" id="resolvidos">0</div>
+                    <div class="text-sm text-green-700 mt-1">Resolvidos</div>
+                </div>
+            </div>
+
+            <!-- Loading -->
+            <div id="loading" class="loading">
+                <i class="fas fa-spinner fa-spin text-4xl mb-4"></i>
+                <p class="text-lg">Carregando relatos...</p>
+            </div>
+
+            <!-- Empty State -->
+            <div id="empty-state" class="empty-state" style="display: none;">
+                <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
+                <h3 class="text-2xl font-bold text-gray-700 mb-2">Nenhum relato encontrado</h3>
+                <p class="text-gray-500 mb-6">Seja o primeiro a contribuir com a comunidade!</p>
+                <a href="enviar-relato.html" class="inline-block bg-gradient-to-r from-teal-500 to-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition">
+                    <i class="fas fa-plus mr-2"></i>Enviar Primeiro Relato
+                </a>
+            </div>
+
+            <!-- Relatos List -->
+            <div id="relatos-list" style="display: none;"></div>
+        </div>
+    </div>
+
+    <!-- Database Scripts -->
+    <script src="../js/database.js"></script>
+    <script src="../js/api.js"></script>
+
+    <script>
+        let todosRelatos = [];
+        let filtroAtual = 'todos';
+
+        // Mapear nomes de categorias
+        const categoriaMap = {
+            'transporte-publico': 'Transporte Público',
+            'infraestrutura-urbana': 'Infraestrutura Urbana',
+            'espacos-publicos': 'Espaços Públicos',
+            'saneamento-basico': 'Saneamento Básico',
+            'habitacao': 'Habitação',
+            'areas-verdes': 'Áreas Verdes',
+            'gestao-residuos': 'Gestão de Resíduos',
+            'preservacao-ambiental': 'Preservação Ambiental'
+        };
+
+        const cidadeMap = {
+            'santos': 'Santos',
+            'sao-vicente': 'São Vicente',
+            'guaruja': 'Guarujá',
+            'praia-grande': 'Praia Grande',
+            'cubatao': 'Cubatão',
+            'bertioga': 'Bertioga',
+            'mongagua': 'Mongaguá',
+            'itanhaem': 'Itanhaém',
+            'peruibe': 'Peruíbe'
+        };
+
+        const statusMap = {
+            'em_analise': 'Em Análise',
+            'em_progresso': 'Em Progresso',
+            'resolvido': 'Resolvido'
+        };
+
+        // Carregar relatos
+        async function carregarRelatos() {
+            try {
+                // Aguardar inicialização do banco
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                const result = await window.hubAPI.buscarRelatos();
+                
+                if (result.success && result.data) {
+                    todosRelatos = result.data;
+                    atualizarEstatisticas();
+                    renderizarRelatos();
+                } else {
+                    mostrarEstadoVazio();
+                }
+            } catch (error) {
+                console.error('Erro ao carregar relatos:', error);
+                mostrarEstadoVazio();
+            }
+        }
+
+        // Atualizar estatísticas
+        function atualizarEstatisticas() {
+            const total = todosRelatos.length;
+            const emAnalise = todosRelatos.filter(r => r.status === 'em_analise').length;
+            const emProgresso = todosRelatos.filter(r => r.status === 'em_progresso').length;
+            const resolvidos = todosRelatos.filter(r => r.status === 'resolvido').length;
+
+            document.getElementById('total-relatos').textContent = total;
+            document.getElementById('em-analise').textContent = emAnalise;
+            document.getElementById('em-progresso').textContent = emProgresso;
+            document.getElementById('resolvidos').textContent = resolvidos;
+        }
+
+        // Renderizar relatos
+        function renderizarRelatos() {
+            const container = document.getElementById('relatos-list');
+            const loading = document.getElementById('loading');
+            const emptyState = document.getElementById('empty-state');
+
+            loading.style.display = 'none';
+
+            // Filtrar relatos
+            let relatosFiltrados = todosRelatos;
+            if (filtroAtual !== 'todos') {
+                relatosFiltrados = todosRelatos.filter(r => r.status === filtroAtual);
+            }
+
+            // Ordenar por data (mais recentes primeiro)
+            relatosFiltrados.sort((a, b) => new Date(b.data) - new Date(a.data));
+
+            if (relatosFiltrados.length === 0) {
+                container.style.display = 'none';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            container.style.display = 'block';
+            emptyState.style.display = 'none';
+
+            container.innerHTML = relatosFiltrados.map(relato => {
+                const data = new Date(relato.data);
+                const dataFormatada = data.toLocaleDateString('pt-BR', {
+                    day: '2-digit',
+                    month: 'long',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+
+                const ano = data.getFullYear();
+                const protocolo = `HubBS-${ano}-${String(relato.id).padStart(6, '0')}`;
+
+                return `
+                    <div class="relato-card">
+                        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-4">
+                            <div class="mb-2 md:mb-0">
+                                <div class="protocol-number">${protocolo}</div>
+                                <div class="text-sm text-gray-500 mt-1">
+                                    <i class="fas fa-calendar mr-1"></i>${dataFormatada}
+                                </div>
+                            </div>
+                            <span class="status-badge status-${relato.status}">
+                                ${statusMap[relato.status] || relato.status}
+                            </span>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">
+                            ${relato.titulo || 'Sem título'}
+                        </h3>
+
+                        <p class="text-gray-600 mb-4 line-clamp-2">
+                            ${relato.descricao}
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="inline-flex items-center px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">
+                                <i class="fas fa-map-marker-alt mr-1"></i>
+                                ${cidadeMap[relato.cidade] || relato.cidade}
+                            </span>
+                            <span class="inline-flex items-center px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm">
+                                <i class="fas fa-tag mr-1"></i>
+                                ${categoriaMap[relato.categoria] || relato.categoria}
+                            </span>
+                            ${relato.ods ? `
+                                <span class="inline-flex items-center px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">
+                                    <i class="fas fa-leaf mr-1"></i>
+                                    ${relato.ods.toUpperCase()}
+                                </span>
+                            ` : ''}
+                            ${relato.prioridade ? `
+                                <span class="inline-flex items-center px-3 py-1 ${
+                                    relato.prioridade === 'alta' ? 'bg-red-100 text-red-800' :
+                                    relato.prioridade === 'media' ? 'bg-yellow-100 text-yellow-800' :
+                                    'bg-gray-100 text-gray-800'
+                                } rounded-full text-sm">
+                                    <i class="fas fa-exclamation-triangle mr-1"></i>
+                                    ${relato.prioridade.charAt(0).toUpperCase() + relato.prioridade.slice(1)}
+                                </span>
+                            ` : ''}
+                        </div>
+
+                        ${relato.localizacao ? `
+                            <div class="text-sm text-gray-500">
+                                <i class="fas fa-location-dot mr-1"></i>
+                                ${relato.localizacao}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filtrar relatos
+        function filterRelatos(filtro) {
+            filtroAtual = filtro;
+            
+            // Atualizar botões
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-filter="${filtro}"]`).classList.add('active');
+
+            // Re-renderizar
+            renderizarRelatos();
+        }
+
+        // Mostrar estado vazio
+        function mostrarEstadoVazio() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('empty-state').style.display = 'block';
+            document.getElementById('relatos-list').style.display = 'none';
+        }
+
+        // Inicializar ao carregar página
+        window.addEventListener('load', () => {
+            carregarRelatos();
+        });
+    </script>
+</body>
+</html>
+
