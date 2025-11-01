@@ -5,72 +5,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre a HUB | Dados Urbanos Inteligentes</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'ocean-blue': '#0077B6',
-                        'turquoise': '#90E0EF',
-                        'sand': '#F5E6CA',
-                        'aqua-green': '#00B4D8',
+                        'deep-blue': '#005F73',
+                        'vibrant-teal': '#0A9396',
+                        'ods-green': '#94D2BD',
+                        'solar-yellow': '#E9D8A6',
+                        'warm-sand': '#FAF3E0',
                         'dark-gray': '#2E2E2E',
-                        'ice-white': '#FAFAFA',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    <link rel="stylesheet" href="style.css">
-    <script src="app.js" defer></script>
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="../assets/js/app.js" defer></script>
 </head>
 
-<body class="bg-ice-white">
-    <!-- Navbar -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <a href="index.html" class="flex items-center">
-                        <span class="text-2xl font-bold text-ocean-blue">🌊 HUB</span>
-                        <span class="hidden md:inline ml-2 text-sm text-gray-600">Baixada Santista</span>
-                    </a>
-                </div>
-                
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="index.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Início</a>
-                    <a href="sobre.html" class="text-ocean-blue px-3 py-2 font-medium border-b-2 border-ocean-blue">Sobre</a>
-                    <a href="dashboard.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Dashboard</a>
-                    <a href="recompensas.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Recompensas</a>
-                    <a href="empresa.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Empresas</a>
-                    <a href="login.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Entrar</a>
-                    <a href="signup.html" class="bg-ocean-blue text-white px-5 py-2 rounded-full hover:bg-aqua-green transition shadow-md">Criar conta</a>
-                </div>
+<body class="bg-warm-sand text-dark-gray">
 
+    <!-- Header/Navbar -->
+    <nav class="bg-deep-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="text-2xl font-bold font-poppins flex items-center gap-2">
+                    <span class="bg-vibrant-teal px-3 py-1 rounded">🌊</span>
+                    HUB
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="../index.html" class="hover:text-solar-yellow transition">Início</a>
+                    <a href="sobre.html" class="text-solar-yellow font-bold border-b-2 border-solar-yellow">Sobre</a>
+                    <a href="dashboard.html" class="hover:text-solar-yellow transition">Dashboard</a>
+                    <a href="recompensas.html" class="hover:text-solar-yellow transition">Recompensas</a>
+                    <a href="empresa.html" class="hover:text-solar-yellow transition">Empresas</a>
+                    <a href="login.html" class="bg-vibrant-teal px-4 py-2 rounded-lg hover:bg-ods-green transition">Login</a>
+                </div>
                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-dark-gray hover:text-ocean-blue focus:outline-none">
+                    <button id="mobile-menu-button" class="text-white hover:text-solar-yellow focus:outline-none">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
                     </button>
                 </div>
             </div>
-
-            <div id="mobile-menu" class="hidden md:hidden pb-4">
-                <a href="index.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Início</a>
-                <a href="sobre.html" class="block text-ocean-blue px-3 py-2 font-semibold">Sobre</a>
-                <a href="dashboard.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Dashboard</a>
-                <a href="recompensas.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Recompensas</a>
-                <a href="empresa.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Empresas</a>
-                <a href="login.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Entrar</a>
-                <a href="signup.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Criar conta</a>
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2">
+                <a href="../index.html" class="block py-2 hover:text-solar-yellow transition">Início</a>
+                <a href="sobre.html" class="block py-2 text-solar-yellow font-bold">Sobre</a>
+                <a href="dashboard.html" class="block py-2 hover:text-solar-yellow transition">Dashboard</a>
+                <a href="recompensas.html" class="block py-2 hover:text-solar-yellow transition">Recompensas</a>
+                <a href="empresa.html" class="block py-2 hover:text-solar-yellow transition">Empresas</a>
+                <a href="login.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Login</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-ocean-blue to-aqua-green text-white py-20">
+    <section class="bg-gradient-to-br from-deep-blue to-vibrant-teal text-white py-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-6">Sobre a HUB</h1>
             <p class="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto">
@@ -109,7 +124,7 @@
     </section>
 
     <!-- Our Pillars -->
-    <section class="py-16 bg-gradient-to-r from-sand to-ice-white">
+    <section class="py-16 bg-gradient-to-r from-sand to-warm-sand">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h2 class="text-3xl md:text-4xl font-bold text-center text-dark-gray mb-4">
                 Nossos Pilares
@@ -121,7 +136,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Pilar 1: ODS -->
                 <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition">
-                    <div class="bg-ocean-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+                    <div class="bg-deep-blue text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
                         🌍
                     </div>
                     <h3 class="text-2xl font-bold text-dark-gray mb-4 text-center">
@@ -133,23 +148,23 @@
                     </p>
                     <ul class="space-y-2 text-sm">
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>ODS 6 - Água e Saneamento</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>ODS 7 - Energia Limpa</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>ODS 9 - Infraestrutura</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>ODS 11 - Cidades Sustentáveis</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>ODS 14 - Vida na Água</span>
                         </li>
                     </ul>
@@ -157,7 +172,7 @@
 
                 <!-- Pilar 2: Sustentabilidade -->
                 <div class="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition">
-                    <div class="bg-aqua-green text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+                    <div class="bg-vibrant-teal text-white w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
                         🌱
                     </div>
                     <h3 class="text-2xl font-bold text-dark-gray mb-4 text-center">
@@ -169,23 +184,23 @@
                     </p>
                     <ul class="space-y-2 text-sm">
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>Preservação da orla marítima</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>Gestão consciente de recursos</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>Infraestrutura verde</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>Mobilidade sustentável</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>Economia circular</span>
                         </li>
                     </ul>
@@ -205,23 +220,23 @@
                     </p>
                     <ul class="space-y-2 text-sm">
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>Conformidade com LGPD</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>Consentimento informado</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>Anonimização de dados</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>Transparência no uso</span>
                         </li>
                         <li class="flex items-center">
-                            <span class="text-aqua-green mr-2">✓</span>
+                            <span class="text-vibrant-teal mr-2">✓</span>
                             <span>Segurança da informação</span>
                         </li>
                     </ul>
@@ -245,7 +260,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                     <!-- Step 1 -->
                     <div class="text-center relative">
-                        <div class="bg-gradient-to-br from-ocean-blue to-aqua-green text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-lg relative z-10">
+                        <div class="bg-gradient-to-br from-deep-blue to-vibrant-teal text-white w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 shadow-lg relative z-10">
                             📱
                         </div>
                         <h3 class="font-bold text-dark-gray mb-2">1. Cidadão</h3>
@@ -256,7 +271,7 @@
 
                     <!-- Arrow -->
                     <div class="hidden md:flex items-center justify-center">
-                        <svg class="w-full h-8 text-aqua-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-full h-8 text-vibrant-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                         </svg>
                     </div>
@@ -274,7 +289,7 @@
 
                     <!-- Arrow -->
                     <div class="hidden md:flex items-center justify-center">
-                        <svg class="w-full h-8 text-aqua-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-full h-8 text-vibrant-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                         </svg>
                     </div>
@@ -292,7 +307,7 @@
 
                     <!-- Arrow -->
                     <div class="hidden md:flex items-center justify-center">
-                        <svg class="w-full h-8 text-aqua-green" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-full h-8 text-vibrant-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
                         </svg>
                     </div>
@@ -314,7 +329,7 @@
                     <h3 class="text-2xl font-bold text-dark-gray mb-6 text-center">Detalhes Técnicos</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div>
-                            <h4 class="font-bold text-ocean-blue mb-2">📲 Coleta</h4>
+                            <h4 class="font-bold text-deep-blue mb-2">📲 Coleta</h4>
                             <ul class="text-sm text-gray-700 space-y-1">
                                 <li>• WhatsApp Business API</li>
                                 <li>• Processamento de linguagem natural</li>
@@ -323,7 +338,7 @@
                             </ul>
                         </div>
                         <div>
-                            <h4 class="font-bold text-ocean-blue mb-2">💾 Armazenamento</h4>
+                            <h4 class="font-bold text-deep-blue mb-2">💾 Armazenamento</h4>
                             <ul class="text-sm text-gray-700 space-y-1">
                                 <li>• Firebase Firestore (NoSQL)</li>
                                 <li>• Cloud Storage para mídias</li>
@@ -332,7 +347,7 @@
                             </ul>
                         </div>
                         <div>
-                            <h4 class="font-bold text-ocean-blue mb-2">📈 Análise</h4>
+                            <h4 class="font-bold text-deep-blue mb-2">📈 Análise</h4>
                             <ul class="text-sm text-gray-700 space-y-1">
                                 <li>• Machine Learning (categorização)</li>
                                 <li>• Dashboards em tempo real</li>
@@ -347,7 +362,7 @@
     </section>
 
     <!-- Team -->
-    <section class="py-16 bg-gradient-to-r from-ocean-blue to-aqua-green text-white">
+    <section class="py-16 bg-gradient-to-r from-deep-blue to-vibrant-teal text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl md:text-4xl font-bold mb-6">
                 Nosso Compromisso
@@ -358,10 +373,10 @@
                 em informação valiosa para o desenvolvimento sustentável da Baixada Santista.
             </p>
             <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="dashboard.html" class="inline-block bg-white text-ocean-blue px-8 py-3 rounded-full font-semibold hover:bg-sand transition shadow-xl">
+                <a href="dashboard.html" class="inline-block bg-white text-deep-blue px-8 py-3 rounded-full font-semibold hover:bg-sand transition shadow-xl">
                     Ver Dados Públicos
                 </a>
-                <a href="empresa.html" class="inline-block border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-ocean-blue transition shadow-xl">
+                <a href="empresa.html" class="inline-block border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-deep-blue transition shadow-xl">
                     Painel de Empresas
                 </a>
             </div>
@@ -379,7 +394,7 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Navegação</h3>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="index.html" class="hover:text-turquoise transition">Início</a></li>
+                        <li><a href="../index.html" class="hover:text-turquoise transition">Início</a></li>
                         <li><a href="sobre.html" class="hover:text-turquoise transition">Sobre</a></li>
                         <li><a href="dashboard.html" class="hover:text-turquoise transition">Dashboard</a></li>
                         <li><a href="recompensas.html" class="hover:text-turquoise transition">Recompensas</a></li>

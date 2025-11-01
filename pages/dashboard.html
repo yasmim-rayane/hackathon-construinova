@@ -5,75 +5,91 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Público | HUB - Dados Urbanos</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'ocean-blue': '#0077B6',
-                        'turquoise': '#90E0EF',
-                        'sand': '#F5E6CA',
-                        'aqua-green': '#00B4D8',
+                        'deep-blue': '#005F73',
+                        'vibrant-teal': '#0A9396',
+                        'ods-green': '#94D2BD',
+                        'solar-yellow': '#E9D8A6',
+                        'warm-sand': '#FAF3E0',
                         'dark-gray': '#2E2E2E',
-                        'ice-white': '#FAFAFA',
+                    },
+                    fontFamily: {
+                        'poppins': ['Poppins', 'sans-serif'],
+                        'roboto': ['Roboto', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
+    
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
     <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <script src="app.js" defer></script>
-    <script src="dashboard.js" defer></script>
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <script src="../assets/js/app.js" defer></script>
+    <script src="../assets/js/dashboard.js" defer></script>
 </head>
 
-<body class="bg-ice-white">
-    <!-- Navbar -->
-    <nav class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex items-center">
-                    <a href="index.html" class="flex items-center">
-                        <span class="text-2xl font-bold text-ocean-blue">🌊 HUB</span>
-                        <span class="hidden md:inline ml-2 text-sm text-gray-600">Baixada Santista</span>
-                    </a>
-                </div>
-                
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="index.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Início</a>
-                    <a href="sobre.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Sobre</a>
-                    <a href="dashboard.html" class="text-ocean-blue px-3 py-2 font-medium border-b-2 border-ocean-blue">Dashboard</a>
-                    <a href="recompensas.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Recompensas</a>
-                    <a href="empresa.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Empresas</a>
-                    <a href="login.html" class="text-dark-gray hover:text-ocean-blue px-3 py-2 font-medium transition">Entrar</a>
-                    <a href="signup.html" class="bg-ocean-blue text-white px-5 py-2 rounded-full hover:bg-aqua-green transition shadow-md">Criar conta</a>
-                </div>
+<body class="bg-warm-sand text-dark-gray">
 
+    <!-- Header/Navbar -->
+    <nav class="bg-deep-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <a href="../index.html" class="text-2xl font-bold font-poppins flex items-center gap-2">
+                    <span class="bg-vibrant-teal px-3 py-1 rounded">🌊</span>
+                    HUB
+                </a>
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="../index.html" class="hover:text-solar-yellow transition">Início</a>
+                    <a href="sobre.html" class="hover:text-solar-yellow transition">Sobre</a>
+                    <a href="dashboard.html" class="text-solar-yellow font-bold border-b-2 border-solar-yellow">Dashboard</a>
+                    <a href="recompensas.html" class="hover:text-solar-yellow transition">Recompensas</a>
+                    <a href="empresa.html" class="hover:text-solar-yellow transition">Empresas</a>
+                    
+                    <a href="login.html" class="bg-vibrant-teal px-4 py-2 rounded-lg hover:bg-ods-green transition">Login</a>
+                </div>
                 <div class="md:hidden">
-                    <button id="mobile-menu-button" class="text-dark-gray hover:text-ocean-blue focus:outline-none">
+                    <button id="mobile-menu-button" class="text-white hover:text-solar-yellow focus:outline-none">
                         <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
                         </svg>
                     </button>
                 </div>
             </div>
-
-            <div id="mobile-menu" class="hidden md:hidden pb-4">
-                <a href="index.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Início</a>
-                <a href="sobre.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Sobre</a>
-                <a href="dashboard.html" class="block text-ocean-blue px-3 py-2 font-semibold">Dashboard</a>
-                <a href="recompensas.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Recompensas</a>
-                <a href="empresa.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Empresas</a>
-                <a href="login.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Entrar</a>
-                <a href="signup.html" class="block text-dark-gray hover:text-ocean-blue px-3 py-2">Criar conta</a>
+            <div id="mobile-menu" class="hidden md:hidden pt-4 pb-2">
+                <a href="../index.html" class="block py-2 hover:text-solar-yellow transition">Início</a>
+                <a href="sobre.html" class="block py-2 hover:text-solar-yellow transition">Sobre</a>
+                <a href="dashboard.html" class="block py-2 text-solar-yellow font-bold">Dashboard</a>
+                <a href="recompensas.html" class="block py-2 hover:text-solar-yellow transition">Recompensas</a>
+                <a href="empresa.html" class="block py-2 hover:text-solar-yellow transition">Empresas</a>
+                
+                <a href="login.html" class="block py-2 bg-vibrant-teal px-4 rounded-lg text-center mt-2">Login</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="bg-gradient-to-br from-ocean-blue to-aqua-green text-white py-12">
+    <section class="bg-gradient-to-br from-deep-blue to-vibrant-teal text-white py-12">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <h1 class="text-3xl md:text-5xl font-bold mb-4">Dashboard Público</h1>
             <p class="text-lg md:text-xl text-blue-100">
@@ -86,7 +102,7 @@
     <section class="py-8 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-gradient-to-br from-ocean-blue to-aqua-green text-white p-6 rounded-xl shadow-lg text-center">
+                <div class="bg-gradient-to-br from-deep-blue to-vibrant-teal text-white p-6 rounded-xl shadow-lg text-center">
                     <div class="text-3xl md:text-4xl font-bold mb-2">2,548</div>
                     <div class="text-sm text-blue-100">Total de Reclamações</div>
                 </div>
@@ -107,7 +123,7 @@
     </section>
 
     <!-- Charts Section -->
-    <section class="py-12 bg-ice-white">
+    <section class="py-12 bg-warm-sand">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <!-- Reclamações por Categoria -->
             <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
@@ -223,7 +239,7 @@
                     <p class="text-gray-700 mb-2">
                         33% das reclamações estão relacionadas a problemas de infraestrutura urbana.
                     </p>
-                    <span class="text-sm text-ocean-blue font-semibold">ODS 9, 11</span>
+                    <span class="text-sm text-deep-blue font-semibold">ODS 9, 11</span>
                 </div>
 
                 <div class="bg-gradient-to-br from-turquoise/20 to-sand p-6 rounded-xl">
@@ -232,7 +248,7 @@
                     <p class="text-gray-700 mb-2">
                         28% das reclamações envolvem questões de água e esgoto.
                     </p>
-                    <span class="text-sm text-ocean-blue font-semibold">ODS 6, 14</span>
+                    <span class="text-sm text-deep-blue font-semibold">ODS 6, 14</span>
                 </div>
 
                 <div class="bg-gradient-to-br from-sand to-turquoise/20 p-6 rounded-xl">
@@ -241,14 +257,14 @@
                     <p class="text-gray-700 mb-2">
                         18% das reclamações são sobre iluminação pública e energia.
                     </p>
-                    <span class="text-sm text-ocean-blue font-semibold">ODS 7</span>
+                    <span class="text-sm text-deep-blue font-semibold">ODS 7</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="py-12 bg-gradient-to-r from-ocean-blue to-aqua-green text-white">
+    <section class="py-12 bg-gradient-to-r from-deep-blue to-vibrant-teal text-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <h2 class="text-3xl font-bold mb-4">
                 Quer acesso a dados mais detalhados?
@@ -256,7 +272,7 @@
             <p class="text-lg mb-6 text-blue-100">
                 Empresas e investidores podem acessar relatórios completos, filtros avançados e simulações de ROI
             </p>
-            <a href="empresa.html" class="inline-block bg-white text-ocean-blue px-8 py-3 rounded-full font-semibold hover:bg-sand transition shadow-xl">
+            <a href="empresa.html" class="inline-block bg-white text-deep-blue px-8 py-3 rounded-full font-semibold hover:bg-sand transition shadow-xl">
                 Acessar Painel de Empresas
             </a>
         </div>
@@ -273,7 +289,7 @@
                 <div>
                     <h3 class="text-lg font-bold mb-4">Navegação</h3>
                     <ul class="space-y-2 text-gray-400">
-                        <li><a href="index.html" class="hover:text-turquoise transition">Início</a></li>
+                        <li><a href="../index.html" class="hover:text-turquoise transition">Início</a></li>
                         <li><a href="sobre.html" class="hover:text-turquoise transition">Sobre</a></li>
                         <li><a href="dashboard.html" class="hover:text-turquoise transition">Dashboard</a></li>
                         <li><a href="recompensas.html" class="hover:text-turquoise transition">Recompensas</a></li>
