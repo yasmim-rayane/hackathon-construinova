@@ -1,7 +1,5 @@
 # 🌊 HubBS - Dados Urbanos Inteligentes | Baixada Santista
 
-![HubBS - Plataforma de Dados Urbanos](https://via.placeholder.com/800x200/0077B6/ffffff?text=HubBS+-+Dados+Urbanos+da+Baixada+Santista)
-
 ## 📋 Sobre o Projeto
 
 **HubBS** é uma plataforma inovadora focada em coletar, processar e comercializar dados e métricas de reclamações de cidadãos sobre problemas urbanos e de infraestrutura na **Baixada Santista**. 
